@@ -2,21 +2,21 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.dagger.hilt.android)   
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlinSerialization)
     id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.example.valorant_app"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.valorant_app"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,6 +29,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -43,42 +44,29 @@ android {
 }
 
 dependencies {
-    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    // Core AndroidX
-    implementation("androidx.core:core-ktx:1.16.0")
-
-    // Lifecycle + ViewModel
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3)
-
-    // Compose Activity
-    implementation(libs.androidx.activity.compose)
-
-    // Coil (imagem)
-    implementation(libs.coil.ok.http)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.navigation.reimagined.compose)
+    implementation(libs.kotlinx.serialization.json)
+    //implementation(libs.coil.ok.http)
     implementation(libs.coil.compose)
-
-    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
-    // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.ui.tooling.preview)
 }

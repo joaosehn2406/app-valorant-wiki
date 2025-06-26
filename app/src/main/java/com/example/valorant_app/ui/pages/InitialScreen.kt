@@ -25,6 +25,7 @@ import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun InitialScreen(
+    navigateToHomePage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -47,7 +48,7 @@ fun InitialScreen(
                     contentColor = Color.White
                 ),
                 border = BorderStroke(1.dp, Color.Black),
-                onClick = {}
+                onClick = { navigateToHomePage() }
             ) {
                 Text(
                     text = "Vamos la?",
@@ -69,5 +70,7 @@ fun InitialScreen(
 @Preview
 @Composable
 private fun InitialScreenPreview() {
-    InitialScreen()
+    InitialScreen(
+        navigateToHomePage = {}
+    )
 }
