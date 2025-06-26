@@ -3,5 +3,4 @@ plugins {
     alias(libs.plugins.kotlin.android)        apply false
     alias(libs.plugins.kotlin.compose)        apply false
     alias(libs.plugins.dagger.hilt.android)   apply false
-    alias(libs.plugins.kotlinSerialization)   apply false
 }

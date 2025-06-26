@@ -2,19 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.kotlinSerialization)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.dagger.hilt.android)   // Hilt
+    id("org.jetbrains.kotlin.kapt")           // KAPT
 }
 
 android {
     namespace = "com.example.valorant_app"
-    compileSdk = 34
+    compileSdk = 36  // Atualizado para 36
 
     defaultConfig {
         applicationId = "com.example.valorant_app"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36  // Atualizado para 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,29 +43,46 @@ android {
 }
 
 dependencies {
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.androidx.core.ktx)
+
+    // Core AndroidX
+    implementation("androidx.core:core-ktx:1.16.0")
+
+    // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.navigation.reimagined.compose)
-    implementation(libs.kotlinx.serialization.json)
-    //implementation(libs.coil.ok.http)
+
+    // Compose Activity
+    implementation(libs.androidx.activity.compose)
+
+    // Coil (imagem)
+    implementation(libs.coil.ok.http)
     implementation(libs.coil.compose)
+
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    // Google Play Services - Location
+    implementation(libs.play.services.location)
+
+    // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.navigation:navigation-compose:2.6.0")
 }
