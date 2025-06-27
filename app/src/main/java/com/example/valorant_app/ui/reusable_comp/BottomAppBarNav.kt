@@ -1,0 +1,89 @@
+package com.example.valorant_app.ui.reusable_comp
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.valorant_app.R
+import com.example.valorant_app.ui.destinations.AgentRoute
+import com.example.valorant_app.ui.destinations.HomePageRoute
+import com.example.valorant_app.ui.destinations.Route
+import com.example.valorant_app.ui.destinations.WeaponRoute
+
+@Composable
+fun BottomAppBarNav(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    BottomAppBar(
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(64.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButtonReusable(
+                navController = navController,
+                destination = HomePageRoute,
+                iconPainter = painterResource(id = R.drawable.home_icon_silhouette),
+                contentDescription = "Home icon"
+            )
+            IconButtonReusable(
+                navController = navController,
+                destination = AgentRoute,
+                iconPainter = painterResource(id = R.drawable.ic_agents_icon),
+                contentDescription = "Agent icon",
+                modifier = Modifier.size(70.dp)
+            )
+            IconButtonReusable(
+                navController = navController,
+                destination = WeaponRoute,
+                iconPainter = painterResource(id = R.drawable.weapon_icon_filled_black),
+                contentDescription = "Weapon icon",
+                modifier = Modifier.size(70.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun IconButtonReusable(
+    navController: NavController,
+    destination: Route,
+    iconPainter: Painter,
+    contentDescription: String,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = { navController.navigate(destination.route) },
+        modifier = modifier
+    ) {
+        Image(
+            painter = iconPainter,
+            contentDescription = contentDescription
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun BottomAppBarNavPreview() {
+    val navController = rememberNavController()
+
+    BottomAppBarNav(
+        navController = navController
+    )
+}

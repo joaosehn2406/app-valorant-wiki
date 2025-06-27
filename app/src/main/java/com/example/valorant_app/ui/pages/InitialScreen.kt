@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.valorant_app.R
-import com.example.valorant_app.ui.background.ValorantBackground
+import com.example.valorant_app.ui.reusable_comp.ValorantBackground
 import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable

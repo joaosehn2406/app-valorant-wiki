@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.background
+package com.example.valorant_app.ui.reusable_comp
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

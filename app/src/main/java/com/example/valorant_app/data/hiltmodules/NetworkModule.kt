@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object NetworkModule {
 
     @Provides
-    fun provideApiService(): Retrofit {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://valorant-api.com/v1/")
             .addConverterFactory(GsonConverterFactory.create())

@@ -31,18 +31,18 @@ fun ValorantWikiApp(modifier: Modifier = Modifier) {
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = InitialPageRoute.toString()
+            startDestination = InitialPageRoute.route
         ) {
-            composable(InitialPageRoute.toString()) {
+            composable(InitialPageRoute.route) {
                 InitialScreen(
                     navigateToHomePage = {
-                        navController.navigate(route = HomePageRoute.toString())
+                        navController.navigate(route = HomePageRoute.route)
                     },
                     modifier = Modifier
                 )
             }
 
-            composable(HomePageRoute.toString()) {
+            composable(HomePageRoute.route) {
                 HomePageScreen()
             }
         }
