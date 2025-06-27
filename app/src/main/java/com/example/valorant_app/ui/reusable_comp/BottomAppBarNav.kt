@@ -32,28 +32,29 @@ fun BottomAppBarNav(
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(64.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButtonReusable(
                 navController = navController,
                 destination = HomePageRoute,
                 iconPainter = painterResource(id = R.drawable.home_icon_silhouette),
-                contentDescription = "Home icon"
+                contentDescription = "Home icon",
+                modifier = Modifier.size(30.dp)
             )
             IconButtonReusable(
                 navController = navController,
                 destination = AgentRoute,
                 iconPainter = painterResource(id = R.drawable.ic_agents_icon),
                 contentDescription = "Agent icon",
-                modifier = Modifier.size(70.dp)
+                modifier = Modifier.size(55.dp)
             )
             IconButtonReusable(
                 navController = navController,
                 destination = WeaponRoute,
                 iconPainter = painterResource(id = R.drawable.weapon_icon_filled_black),
                 contentDescription = "Weapon icon",
-                modifier = Modifier.size(70.dp)
+                modifier = Modifier.size(55.dp)
             )
         }
     }

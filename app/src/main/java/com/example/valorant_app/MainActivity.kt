@@ -43,7 +43,7 @@ fun ValorantWikiApp(modifier: Modifier = Modifier) {
             }
 
             composable(HomePageRoute.route) {
-                HomePageScreen()
+                HomePageScreen(navController)
             }
         }
     }
