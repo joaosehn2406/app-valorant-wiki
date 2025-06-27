@@ -10,5 +10,5 @@ interface ApiService {
     suspend fun getAllAgentsCard() : ApiResponse<List<AgentCard>>
 
     @GET("weapon")
-    suspend fun getWeaponCard() : ApiResponse<List<WeaponCard>>
+    suspend fun getAllWeaponCard() : ApiResponse<List<WeaponCard>>
 }
