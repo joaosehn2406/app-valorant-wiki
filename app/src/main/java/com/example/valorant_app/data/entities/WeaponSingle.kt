@@ -2,7 +2,7 @@ package com.example.valorant_app.data.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class GunSingle(
+data class WeaponSingle(
     @SerializedName("displayName")
     val displayName: String = "",
 
