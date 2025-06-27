@@ -9,7 +9,7 @@ interface WeaponRepository {
     suspend fun getAllWeaponCard(): ApiResponse<List<WeaponCard>>
 }
 
-class WeatherRepositoryImpl @Inject constructor(
+class WeaponRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : WeaponRepository {
     override suspend fun getAllWeaponCard(): ApiResponse<List<WeaponCard>> {
