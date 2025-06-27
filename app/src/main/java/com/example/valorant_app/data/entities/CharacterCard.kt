@@ -2,13 +2,13 @@ package com.example.valorant_app.data.entities
 
 import com.google.gson.annotations.SerializedName
 
-class CharacterCard {
+data class CharacterCard (
     @SerializedName("displayName")
-    val displayName: String = ""
+    val displayName: String = "",
 
     @SerializedName("displayIconSmall")
-    val displayIconSmall: String = ""
+    val displayIconSmall: String = "",
 
     @SerializedName("characterTags")
     val characterTags: List<String> = listOf()
-}
+)
