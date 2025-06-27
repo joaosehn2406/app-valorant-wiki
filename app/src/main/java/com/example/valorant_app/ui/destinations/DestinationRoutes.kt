@@ -7,3 +7,6 @@ object InitialPageRoute
 
 @Serializable
 object HomePageRoute
+
+@Serializable
+object GunsRoute
