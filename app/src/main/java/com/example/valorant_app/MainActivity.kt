@@ -4,15 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.valorant_app.ui.destinations.HomePageRoute
-import com.example.valorant_app.ui.destinations.InitialPageRoute
-import com.example.valorant_app.ui.pages.InitialScreen
-import com.example.valorant_app.ui.pages.HomePageScreen
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.*
+import com.example.valorant_app.ui.destinations.*
+import com.example.valorant_app.ui.pages.*
+import com.example.valorant_app.ui.pages.agent.AgentsScreen
+import com.example.valorant_app.ui.pages.skin.SkinsScreen
+import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.theme.ValorantappTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,24 +27,43 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ValorantWikiApp(modifier: Modifier = Modifier) {
+fun ValorantWikiApp() {
     ValorantappTheme {
         val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = InitialPageRoute.route
-        ) {
-            composable(InitialPageRoute.route) {
-                InitialScreen(
-                    navigateToHomePage = {
-                        navController.navigate(HomePageRoute.route)
-                    },
-                    modifier = Modifier
-                )
-            }
-            composable(HomePageRoute.route) {
-                HomePageScreen(navController)
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = backStackEntry?.destination?.route ?: ""
+
+        Scaffold(
+            bottomBar = {
+                if (currentRoute != InitialPageRoute.route) {
+                    BottomAppBarNav(navController, currentRoute)
+                }
+            },
+            containerColor = Color.Transparent
+        ) { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = InitialPageRoute.route,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(InitialPageRoute.route) {
+                    InitialScreen(
+                        navigateToHomePage = {
+                            navController.navigate(HomePageRoute.route)
+                        }
+                    )
+                }
+                composable(HomePageRoute.route) {
+                    HomePageScreen(navController)
+                }
+                composable(AgentRoute.route) {
+                    AgentsScreen(navController)
+                }
+                composable(WeaponRoute.route) {
+                    SkinsScreen(navController)
+                }
             }
         }
     }
