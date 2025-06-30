@@ -17,9 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valorant_app.R
-import com.example.valorant_app.ui.destinations.HomePageRoute
-import com.example.valorant_app.ui.destinations.AgentRoute
-import com.example.valorant_app.ui.destinations.WeaponRoute
+import com.example.valorant_app.ui.navigation.HomePageRoute
+import com.example.valorant_app.ui.navigation.AgentRoute
+import com.example.valorant_app.ui.navigation.WeaponRoute
 import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.destinations
+package com.example.valorant_app.ui.navigation
 
 import kotlinx.serialization.Serializable
 

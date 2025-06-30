@@ -47,10 +47,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.material3)
     implementation(libs.ui.graphics)
+    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX
-    implementation("androidx.core:core-ktx:1.16.0")
+    implementation(libs.androidx.core.ktx)
 
     // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)

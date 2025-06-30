@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages
+package com.example.valorant_app.ui.pages.initial_screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -9,11 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.*
 import com.example.valorant_app.R
-import com.example.valorant_app.ui.reusable_comp.ValorantBackground
 import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
