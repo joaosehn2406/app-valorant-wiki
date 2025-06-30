@@ -62,7 +62,7 @@ fun BottomAppBarNav(
                 destination = WeaponRoute,
                 iconPainter = painterResource(id = R.drawable.arma_fe),
                 contentDescription = "Weapon icon",
-                modifier = Modifier.size(36.dp),
+                modifier = Modifier.size(34.dp),
                 buttonText = "Armas"
             )
         }

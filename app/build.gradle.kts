@@ -45,6 +45,7 @@ android {
 dependencies {
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.material3)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX
