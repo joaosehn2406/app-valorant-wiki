@@ -1,10 +1,13 @@
 package com.example.valorant_app.ui.pages.agent
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,12 +28,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.valorant_app.data.utils.toComposeColor
 import com.example.valorant_app.ui.AgentUiState
 import com.example.valorant_app.ui.theme.ValorantRed
 
@@ -40,7 +47,6 @@ fun AgentsScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-
     val state by agentScreenViewModel.uiState.collectAsState()
 
     when (state) {
@@ -62,18 +68,28 @@ fun AgentsScreen(
 
         is AgentUiState.Success -> {
             val agents = (state as AgentUiState.Success).agents
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(agents) { agent ->
+                    val gradientColors = agent
+                        .backgroundGradientColors
+                        .map { it.toComposeColor() }
+
                     Card(
                         modifier = modifier
-                            .fillMaxSize()
-                            .wrapContentHeight(),
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .size(128.dp)
+                            .background(
+                                brush = Brush.horizontalGradient(colors = gradientColors),
+                                shape = RoundedCornerShape(8.dp)
+                            ),
                         shape = RoundedCornerShape(8.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF191A1C)),
+                        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                     ) {
                         Row(
@@ -85,14 +101,20 @@ fun AgentsScreen(
                             AsyncImage(
                                 model = agent.displayIconSmall,
                                 contentDescription = agent.displayName,
-                                modifier = Modifier.size(48.dp)
+                                modifier = Modifier.size(100.dp)
                             )
                             Spacer(Modifier.width(12.dp))
-                            Text(
-                                text = agent.displayName,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.White
-                            )
+                            Column(
+                                modifier = Modifier.fillMaxHeight()
+                            ) {
+                                Text(
+                                    text = agent.displayName,
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.titleLarge.copy(
+                                        textDecoration = TextDecoration.Underline
+                                    )
+                                )
+                            }
                         }
                     }
                 }
