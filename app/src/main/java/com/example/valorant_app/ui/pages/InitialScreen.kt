@@ -1,24 +1,17 @@
 package com.example.valorant_app.ui.pages
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import com.example.valorant_app.R
 import com.example.valorant_app.ui.reusable_comp.ValorantBackground
 import com.example.valorant_app.ui.theme.ValorantRed
@@ -28,49 +21,34 @@ fun InitialScreen(
     navigateToHomePage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
+    Box(modifier = modifier.fillMaxSize()) {
         ValorantBackground(
             backgroundImg = R.drawable.ic_initial_screen_background,
-            modifier = Modifier
+            modifier = Modifier.matchParentSize()
         )
         Column(
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxSize()
+            verticalArrangement = Arrangement.Center
         ) {
             Button(
-                modifier = Modifier.padding(top = 180.dp),
+                onClick = navigateToHomePage,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = ValorantRed,
                     contentColor = Color.White
                 ),
                 border = BorderStroke(1.dp, Color.Black),
-                onClick = { navigateToHomePage() }
+                modifier = Modifier.padding(top = 148.dp)
             ) {
                 Text(
-                    text = "Vamos la?",
+                    "Vamos lá?",
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.Black,
-                        shadow = Shadow(
-                            color = Color.Black,
-                            offset = Offset(0f, 0f)
-                        )
+                        shadow = Shadow(Color.Black, Offset.Zero)
                     )
                 )
             }
         }
-
     }
-}
-
-@Preview
-@Composable
-private fun InitialScreenPreview() {
-    InitialScreen(
-        navigateToHomePage = {}
-    )
 }
