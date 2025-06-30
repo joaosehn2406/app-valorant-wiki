@@ -47,8 +47,16 @@ fun SectionCard(
 
 @Composable
 fun FeatureRow(icon: ImageVector, text: String) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
-        Icon(icon, contentDescription = text, modifier = Modifier.size(20.dp), tint = Color(0xFFFF4655))
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        Icon(
+            icon,
+            contentDescription = text,
+            modifier = Modifier.size(20.dp),
+            tint = Color(0xFFFF4655)
+        )
         Spacer(modifier = Modifier.width(8.dp))
         Text(text, style = MaterialTheme.typography.bodySmall, color = Color.White)
     }

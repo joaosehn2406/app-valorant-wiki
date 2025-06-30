@@ -28,8 +28,8 @@ fun BottomAppBarNav(
     currentRoute: String,
     modifier: Modifier = Modifier
 ) {
-    val black   = Color(0xFF000000)
-    val dGray   = Color(0xFF111111)
+    val black = Color(0xFF000000)
+    val dGray = Color(0xFF111111)
     val midGray = Color(0xFF1F1B24)
     val neonRed = Color(0xFFFF2231)
 
@@ -40,9 +40,9 @@ fun BottomAppBarNav(
                 Brush.horizontalGradient(
                     0.0f to black,
                     0.25f to dGray,
-                    0.5f  to midGray,
+                    0.5f to midGray,
                     0.75f to dGray,
-                    1.0f  to black
+                    1.0f to black
                 )
             )
     ) {
@@ -52,27 +52,31 @@ fun BottomAppBarNav(
             modifier = Modifier.fillMaxWidth()
         ) {
             val items = listOf(
-                Triple("Home",   HomePageRoute.route,  painterResource(R.drawable.home_icon_silhouette)),
-                Triple("Agente", AgentRoute.route,     painterResource(R.drawable.imagem_fe)),
-                Triple("Armas",  WeaponRoute.route,    painterResource(R.drawable.arma_fe))
+                Triple(
+                    "Home",
+                    HomePageRoute.route,
+                    painterResource(R.drawable.home_icon_silhouette)
+                ),
+                Triple("Agente", AgentRoute.route, painterResource(R.drawable.imagem_fe)),
+                Triple("Armas", WeaponRoute.route, painterResource(R.drawable.arma_fe))
             )
 
             items.forEach { (label, route, icon) ->
                 NavigationBarItem(
                     selected = currentRoute == route,
-                    onClick  = { if (currentRoute != route) navController.navigate(route) },
-                    icon     = {
+                    onClick = { if (currentRoute != route) navController.navigate(route) },
+                    icon = {
                         Icon(
                             painter = icon,
                             contentDescription = label,
                             modifier = Modifier.size(28.dp)
                         )
                     },
-                    label    = { Text(label) },
-                    colors   = NavigationBarItemDefaults.colors(
-                        selectedIconColor   = Color.White,
-                        selectedTextColor   = Color.White,
-                        indicatorColor      = ValorantRed,
+                    label = { Text(label) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
+                        indicatorColor = ValorantRed,
                         unselectedIconColor = Color.LightGray,
                         unselectedTextColor = Color.LightGray
                     )

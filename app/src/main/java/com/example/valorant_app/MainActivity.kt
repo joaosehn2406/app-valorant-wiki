@@ -41,7 +41,7 @@ fun AppScaffold(
             TopAppBar(
                 title = { Text("Valorant Wiki", color = Color.White) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor    = Color(0xFF0E0E10),
+                    containerColor = Color(0xFF0E0E10),
                     titleContentColor = Color(0xFFE03240)
                 )
             )
@@ -60,11 +60,11 @@ fun AppScaffold(
 fun ValorantWikiApp() {
     ValorantappTheme {
         val navController = rememberNavController()
-        val backStack     by navController.currentBackStackEntryAsState()
-        val currentRoute  = backStack?.destination?.route ?: ""
+        val backStack by navController.currentBackStackEntryAsState()
+        val currentRoute = backStack?.destination?.route ?: ""
 
         NavHost(
-            navController    = navController,
+            navController = navController,
             startDestination = InitialPageRoute.route
         ) {
             composable(InitialPageRoute.route) {

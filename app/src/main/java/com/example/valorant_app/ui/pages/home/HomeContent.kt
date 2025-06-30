@@ -30,7 +30,7 @@ fun HomeContent(
                 Brush.verticalGradient(
                     colors = listOf(Color.Black, Color(0xFF1A001F), Color(0xFFFF4655)),
                     startY = 0f,
-                    endY   = Float.POSITIVE_INFINITY
+                    endY = Float.POSITIVE_INFINITY
                 )
             )
             .padding(16.dp)
@@ -57,22 +57,22 @@ fun HomeContent(
             }
 
             SectionCard(
-                title   = "Sobre este App",
+                title = "Sobre este App",
                 content = "Reúne o melhor da Valorant API de forma rápida e elegante.",
-                accent  = Color(0xFFFF4655)
+                accent = Color(0xFFFF4655)
             )
 
             SectionCard(
-                title  = "Funcionalidades",
+                title = "Funcionalidades",
                 accent = Color(0xFFFF4655)
             ) {
                 FeatureRow(Icons.Default.Person, "Explorar Agentes")
-                FeatureRow(Icons.Default.Build,  "Navegar por Armas")
+                FeatureRow(Icons.Default.Build, "Navegar por Armas")
                 FeatureRow(Icons.Default.Search, "Buscar skins")
             }
 
             SectionCard(
-                title  = "Fontes de Dados",
+                title = "Fontes de Dados",
                 accent = Color(0xFFFF4655)
             ) {
                 Text(

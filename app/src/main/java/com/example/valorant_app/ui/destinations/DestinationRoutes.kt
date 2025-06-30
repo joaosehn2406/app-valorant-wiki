@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 interface Route {
     val route: String
 }
+
 @Serializable
 object HomePageRoute : Route {
     override val route: String
