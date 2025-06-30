@@ -8,7 +8,9 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +28,9 @@ fun HomePageScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val backStack by navController.currentBackStackEntryAsState()
+    val currentRoute = backStack?.destination?.route ?: ""
+
     Scaffold(
         modifier       = modifier.fillMaxSize(),
         containerColor = Color.Transparent,
@@ -39,12 +45,15 @@ fun HomePageScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor    = Color(0xFF0E0E10),
-                    titleContentColor = Color(0xFFFF4655)
+                    titleContentColor = Color(0xFFE03240)
                 )
             )
         },
         bottomBar = {
-            BottomAppBarNav(navController)
+            BottomAppBarNav(
+                navController = navController,
+                currentRoute  = currentRoute
+            )
         }
     ) { inner ->
         Box(
@@ -54,7 +63,7 @@ fun HomePageScreen(
                     Brush.verticalGradient(
                         colors = listOf(Color.Black, Color(0xFF1A001F), Color(0xFFFF4655)),
                         startY = 0f,
-                        endY = Float.POSITIVE_INFINITY
+                        endY   = Float.POSITIVE_INFINITY
                     )
                 )
                 .padding(inner)
@@ -64,7 +73,6 @@ fun HomePageScreen(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // Hero Banner
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -85,7 +93,6 @@ fun HomePageScreen(
                     )
                 }
 
-                // Sessões estáticas
                 SectionCard(
                     title   = "Sobre este App",
                     content = "Reúne o melhor da Valorant API de forma rápida e elegante.",
@@ -96,9 +103,9 @@ fun HomePageScreen(
                     title  = "Funcionalidades",
                     accent = Color(0xFFFF4655)
                 ) {
-                    FeatureRow(Icons.Default.Person,    "Explorar Agentes")
-                    FeatureRow(Icons.Default.Build,     "Navegar por Armas")
-                    FeatureRow(Icons.Default.Search,    "Busca integrada")
+                    FeatureRow(Icons.Default.Person, "Explorar Agentes")
+                    FeatureRow(Icons.Default.Build,  "Navegar por Armas")
+                    FeatureRow(Icons.Default.Search, "Buscar skins")
                 }
 
                 SectionCard(
@@ -113,7 +120,6 @@ fun HomePageScreen(
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
-
             }
         }
     }
@@ -133,11 +139,11 @@ private fun SectionCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .width(4.dp)
                         .height(24.dp),
-                    color = accent
+                    thickness = DividerDefaults.Thickness, color = accent
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(title, style = MaterialTheme.typography.titleMedium, color = Color.White)

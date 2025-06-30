@@ -46,6 +46,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.material3)
+    implementation(libs.ui.graphics)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX
@@ -85,5 +86,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.9.0")
 }
