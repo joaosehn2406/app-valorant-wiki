@@ -2,7 +2,7 @@ package com.example.valorant_app.data.repository
 
 import com.example.valorant_app.data.entities.AgentCard
 import com.example.valorant_app.data.services.ApiResponse
-import com.example.valorant_app.data.services.ApiService
+import com.example.valorant_app.data.services.ValorantApiService
 import javax.inject.Inject
 
 interface AgentRepository {
@@ -10,12 +10,12 @@ interface AgentRepository {
 }
 
 class AgentRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val valorantApiService: ValorantApiService
 ) : AgentRepository {
 
     override suspend fun getAllAgentsCard(): ApiResponse<List<AgentCard>> {
         return try {
-            val response = apiService.getAllAgentsCard()
+            val response = valorantApiService.getAllAgentsCard()
             ApiResponse(
                 status = response.status,
                 data = response.data

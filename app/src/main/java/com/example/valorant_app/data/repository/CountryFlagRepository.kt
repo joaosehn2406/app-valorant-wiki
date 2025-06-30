@@ -1,7 +1,7 @@
 package com.example.valorant_app.data.repository
 
 import com.example.valorant_app.data.entities.CountryResponse
-import com.example.valorant_app.data.services.ApiService
+import com.example.valorant_app.data.services.RestCountriesService
 import javax.inject.Inject
 
 interface CountryFlagRepository {
@@ -9,7 +9,7 @@ interface CountryFlagRepository {
 }
 
 class CountryFlagRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: RestCountriesService
 ) : CountryFlagRepository {
 
     override suspend fun getCountryFlagsByName(countryName: String): List<CountryResponse> {
