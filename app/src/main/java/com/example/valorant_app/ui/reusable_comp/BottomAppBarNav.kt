@@ -1,18 +1,20 @@
 package com.example.valorant_app.ui.reusable_comp
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +33,6 @@ fun BottomAppBarNav(
     modifier: Modifier = Modifier
 ) {
     BottomAppBar(
-        containerColor = Color.Blue,
         modifier = Modifier
             .fillMaxWidth(),
     ) {
@@ -45,21 +46,24 @@ fun BottomAppBarNav(
                 destination = HomePageRoute,
                 iconPainter = painterResource(id = R.drawable.home_icon_silhouette),
                 contentDescription = "Home icon",
-                modifier = Modifier.size(30.dp)
+                modifier = Modifier.size(30.dp),
+                buttonText = "Home"
             )
             IconButtonReusable(
                 navController = navController,
                 destination = AgentRoute,
-                iconPainter = painterResource(id = R.drawable.ic_agents_icon),
+                iconPainter = painterResource(id = R.drawable.imagem_fe),
                 contentDescription = "Agent icon",
-                modifier = Modifier.size(55.dp)
+                modifier = Modifier.size(30.dp),
+                buttonText = "Agente"
             )
             IconButtonReusable(
                 navController = navController,
                 destination = WeaponRoute,
-                iconPainter = painterResource(id = R.drawable.weapon_icon_filled_black),
+                iconPainter = painterResource(id = R.drawable.arma_fe),
                 contentDescription = "Weapon icon",
-                modifier = Modifier.size(55.dp)
+                modifier = Modifier.size(36.dp),
+                buttonText = "Armas"
             )
         }
     }
@@ -71,15 +75,26 @@ fun IconButtonReusable(
     destination: Route,
     iconPainter: Painter,
     contentDescription: String,
+    buttonText: String,
     modifier: Modifier = Modifier
 ) {
-    IconButton(
-        onClick = { navController.navigate(destination.route) },
-        modifier = modifier
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
     ) {
-        Image(
-            painter = iconPainter,
-            contentDescription = contentDescription
+        IconButton(
+            onClick = { navController.navigate(destination.route) },
+            modifier = modifier
+        ) {
+            Image(
+                painter = iconPainter,
+                contentDescription = contentDescription
+            )
+        }
+        Text(
+            text = buttonText,
+            style = MaterialTheme.typography.labelSmall,
+            color = LocalContentColor.current
         )
     }
 }

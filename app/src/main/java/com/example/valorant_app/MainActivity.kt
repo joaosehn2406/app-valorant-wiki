@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.valorant_app.ui.destinations.HomePageRoute
 import com.example.valorant_app.ui.destinations.InitialPageRoute
-import com.example.valorant_app.ui.pages.HomePageScreen
 import com.example.valorant_app.ui.pages.InitialScreen
+import com.example.valorant_app.ui.pages.HomePageScreen
 import com.example.valorant_app.ui.theme.ValorantappTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,12 +36,11 @@ fun ValorantWikiApp(modifier: Modifier = Modifier) {
             composable(InitialPageRoute.route) {
                 InitialScreen(
                     navigateToHomePage = {
-                        navController.navigate(route = HomePageRoute.route)
+                        navController.navigate(HomePageRoute.route)
                     },
                     modifier = Modifier
                 )
             }
-
             composable(HomePageRoute.route) {
                 HomePageScreen(navController)
             }
