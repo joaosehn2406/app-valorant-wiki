@@ -15,5 +15,5 @@ interface ApiService {
     suspend fun getAllWeaponCard(): ApiResponse<List<WeaponCard>>
 
     @GET("v3.1/name/{country}")
-    suspend fun getByName(@Path("country") countryName: String): List<CountryResponse>
+    suspend fun getCountryFlagsByName(@Path("country") countryName: String): List<CountryResponse>
 }
