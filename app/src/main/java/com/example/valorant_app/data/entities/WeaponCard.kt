@@ -6,6 +6,17 @@ data class WeaponCard(
     @SerializedName("displayName")
     val displayName: String = "",
 
-    @SerializedName("defaultSkinUuid")
-    val defaultSkinUuid: String = ""
-)
+    @SerializedName("displayIcon")
+    val displayIcon: String = "",
+
+    @SerializedName("shopData")
+    val shopData: ShopData? = null,
+) {
+    data class ShopData(
+        @SerializedName("cost")
+        val cost: Int = 0,
+
+        @SerializedName("category")
+        val category: String = "",
+    )
+}

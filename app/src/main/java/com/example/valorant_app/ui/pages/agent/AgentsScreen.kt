@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.valorant_app.data.utils.getCountryInfo
@@ -28,7 +29,7 @@ fun AgentsScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val state by agentScreenViewModel.uiState.collectAsState()
+    val state by agentScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (state) {
         is AgentUiState.Loading -> {

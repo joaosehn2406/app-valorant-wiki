@@ -9,7 +9,7 @@ interface ValorantApiService {
     @GET("agents")
     suspend fun getAllAgentsCard(): ApiResponse<List<AgentCard>>
 
-    @GET("weapon")
+    @GET("weapons")
     suspend fun getAllWeaponCard(): ApiResponse<List<WeaponCard>>
 
 }
