@@ -9,6 +9,9 @@ data class AgentSingle(
     @SerializedName("fullPortrait")
     val fullPortrait: String? = "",
 
+    @SerializedName("displayName")
+    val displayName: String = "",
+
     @SerializedName("description")
     val description: String = "",
 
