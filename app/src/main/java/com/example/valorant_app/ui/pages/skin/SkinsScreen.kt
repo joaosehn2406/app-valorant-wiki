@@ -112,7 +112,7 @@ fun SkinsScreen(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(80.dp))
+                    Spacer(modifier = Modifier.height(100.dp))
                 }
             }
         }

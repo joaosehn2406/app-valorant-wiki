@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +60,7 @@ fun AgentsScreen(
                         .map { it.toComposeColor() }
 
                     if (agent.isPlayableCharacter) {
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -127,7 +126,8 @@ fun AgentsScreen(
 
                                     Spacer(Modifier.height(2.dp))
 
-                                    if (agent.characterTags.isNullOrEmpty() || agent.characterTags.all { it.isNullOrBlank() }) {
+                                    if (agent.characterTags.isNullOrEmpty() ||
+                                        agent.characterTags.all { it.isNullOrBlank() }) {
                                         Text(
                                             text = "Sem tags informadas.",
                                             color = Color.White,
@@ -151,7 +151,7 @@ fun AgentsScreen(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(80.dp))
+                    Spacer(modifier = Modifier.height(100.dp))
                 }
             }
         }
