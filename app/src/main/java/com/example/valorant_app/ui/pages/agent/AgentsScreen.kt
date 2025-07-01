@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
 import com.example.valorant_app.ui.AgentUiState
 import com.example.valorant_app.ui.theme.ValorantRed
@@ -78,41 +79,69 @@ fun AgentsScreen(
                         .backgroundGradientColors
                         .map { it.toComposeColor() }
 
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .size(128.dp)
-                            .background(
-                                brush = Brush.horizontalGradient(colors = gradientColors),
-                                shape = RoundedCornerShape(8.dp)
-                            ),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier
+                    if (agent.isPlayableCharacter) {
+                        Card(
+                            modifier = modifier
                                 .fillMaxWidth()
-                                .padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                                .wrapContentHeight()
+                                .size(128.dp)
+                                .background(
+                                    brush = Brush.horizontalGradient(colors = gradientColors),
+                                    shape = RoundedCornerShape(8.dp)
+                                ),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
-                            AsyncImage(
-                                model = agent.displayIconSmall,
-                                contentDescription = agent.displayName,
-                                modifier = Modifier.size(100.dp)
-                            )
-                            Spacer(Modifier.width(12.dp))
-                            Column(
-                                modifier = Modifier.fillMaxHeight()
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    text = agent.displayName,
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.titleLarge.copy(
-                                        textDecoration = TextDecoration.Underline
-                                    )
+                                AsyncImage(
+                                    model = agent.displayIconSmall,
+                                    contentDescription = agent.displayName,
+                                    modifier = Modifier.size(100.dp)
                                 )
+                                Spacer(Modifier.width(12.dp))
+
+                                val country = agent.getCountryInfo()
+
+                                Column(
+                                    modifier = Modifier.fillMaxHeight()
+                                ) {
+                                    Text(
+                                        text = agent.displayName,
+                                        color = Color.White,
+                                        style = MaterialTheme.typography.titleLarge.copy(
+                                            textDecoration = TextDecoration.Underline
+                                        )
+                                    )
+
+                                    Row {
+                                        if (country != null && country.countryIso2 != "un") {
+                                            Spacer(modifier = Modifier.width(16.dp))
+                                            AsyncImage(
+                                                model = "https://flagcdn.com/w40/${country.countryIso2}.png",
+                                                contentDescription = "Bandeira de ${country.countryName}",
+                                                modifier = Modifier.size(24.dp)
+                                            )
+                                            Text(
+                                                text = "  - ${country.countryName}",
+                                                color = Color.White,
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        } else {
+                                            Text(
+                                                text = "Desconhecido",
+                                                color = Color.White,
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }

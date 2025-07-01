@@ -1,6 +1,8 @@
 package com.example.valorant_app.data.utils
 
 import com.example.valorant_app.data.entities.AgentCard
+import java.util.Locale
+import java.util.Locale.getDefault
 
 data class AgentCountry(
     val countryName: String,
@@ -9,32 +11,34 @@ data class AgentCountry(
 
 
 private val agentCountryMap: Map<String, AgentCountry> = mapOf(
-    "Brimstone" to AgentCountry("United States", "us"),
-    "Viper"      to AgentCountry("United States", "us"),
-    "Gekko"      to AgentCountry("United States", "us"),
+    "Brimstone" to AgentCountry("Estados Unidos", "us"),
+    "Viper"      to AgentCountry("Estados Unidos", "us"),
+    "Gekko"      to AgentCountry("Estados Unidos", "us"),
     "Reyna"      to AgentCountry("Mexico",        "mx"),
-    "Raze"       to AgentCountry("Brazil",        "br"),
+    "Raze"       to AgentCountry("Brasil",        "br"),
     "Astra"      to AgentCountry("Ghana",         "gh"),
-    "Cypher"     to AgentCountry("Morocco",       "ma"),
-    "Chamber"    to AgentCountry("France",        "fr"),
-    "Phoenix"    to AgentCountry("United Kingdom","gb"),
-    "Deadlock"   to AgentCountry("Norway",        "no"),
-    "Breach"     to AgentCountry("Sweden",        "se"),
-    "Killjoy"    to AgentCountry("Germany",       "de"),
+    "Cypher"     to AgentCountry("Morrocos",       "ma"),
+    "Chamber"    to AgentCountry("Franca",        "fr"),
+    "Phoenix"    to AgentCountry("Reino Unido","gb"),
+    "Deadlock"   to AgentCountry("Noruega",        "no"),
+    "Breach"     to AgentCountry("Suecia",        "se"),
+    "Killjoy"    to AgentCountry("Alemanha",       "de"),
     "Sova"       to AgentCountry("Russia",        "ru"),
-    "Fade"       to AgentCountry("Turkey",        "tr"),
+    "Fade"       to AgentCountry("Turquia",        "tr"),
     "Harbor"     to AgentCountry("India",         "in"),
     "Sage"       to AgentCountry("China",         "cn"),
-    "Jett"       to AgentCountry("South Korea",   "kr"),
+    "Jett"       to AgentCountry("Coreia do Sul",   "kr"),
     "Skye"       to AgentCountry("Australia",     "au"),
-    "Yoru"       to AgentCountry("Japan",         "jp"),
-    "Neon"       to AgentCountry("Philippines",   "ph"),
-    "KAY/O"      to AgentCountry("Unknown",       "un"),
+    "Yoru"       to AgentCountry("Japao",         "jp"),
+    "Neon"       to AgentCountry("Filipinas",   "ph"),
+    "KAY/O"      to AgentCountry("Desconhecido",       "un"),
     "Omen"       to AgentCountry("Unknown",       "un")
 )
 
-fun String.toAgentCountry(): AgentCountry? =
-    agentCountryMap[this]
+fun String.toAgentCountry(): AgentCountry? {
+    this.trim()
+    return agentCountryMap[this.trim()]
+}
 
 fun AgentCard.getCountryInfo(): AgentCountry? =
     this.displayName.toAgentCountry()
