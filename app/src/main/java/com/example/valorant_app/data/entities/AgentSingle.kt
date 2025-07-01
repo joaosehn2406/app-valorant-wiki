@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AgentSingle(
     @SerializedName("uuid")
-    val uuid: String = "",
+    val uuid: String? = "",
 
     @SerializedName("fullPortrait")
     val fullPortrait: String? = "",

@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent
+package com.example.valorant_app.ui.pages.agent.card
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,16 +14,16 @@ class AgentScreenViewModel @Inject constructor(
     private val agentRepository: AgentRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<AgentUiState>(AgentUiState.Loading)
+    private val _uiState = MutableStateFlow<AgentCardUiState>(AgentCardUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val response = agentRepository.getAllAgentsCard()
             if (response.status == 200) {
-                _uiState.value = AgentUiState.Success(response.data)
+                _uiState.value = AgentCardUiState.Success(response.data)
             } else {
-                _uiState.value = AgentUiState.Error("Erro: ${response.status}")
+                _uiState.value = AgentCardUiState.Error("Erro: ${response.status}")
             }
         }
     }
