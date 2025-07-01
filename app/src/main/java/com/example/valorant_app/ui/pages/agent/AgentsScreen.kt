@@ -1,6 +1,7 @@
 package com.example.valorant_app.ui.pages.agent
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -68,7 +69,10 @@ fun AgentsScreen(
                                 .background(
                                     brush = Brush.horizontalGradient(colors = gradientColors),
                                     shape = RoundedCornerShape(8.dp)
-                                ),
+                                )
+                                .clickable {
+                                    navController.navigate("AgentSingleRoute")
+                                },
                             shape = RoundedCornerShape(8.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)

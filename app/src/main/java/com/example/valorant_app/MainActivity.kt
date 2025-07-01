@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
 import com.example.valorant_app.ui.navigation.*
+import com.example.valorant_app.ui.pages.agent.AgentSingleScreen
 import com.example.valorant_app.ui.pages.agent.AgentsScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
@@ -89,6 +90,11 @@ fun ValorantWikiApp() {
             composable(WeaponRoute.route) {
                 AppScaffold(navController, currentRoute) { padding ->
                     SkinsScreen(navController = navController, modifier = padding)
+                }
+            }
+            composable(AgentSingleRoute.route) {
+                AppScaffold(navController, currentRoute) { padding ->
+                    AgentSingleScreen(navController = navController)
                 }
             }
         }

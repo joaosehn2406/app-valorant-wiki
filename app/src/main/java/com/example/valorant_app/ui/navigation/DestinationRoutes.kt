@@ -25,6 +25,12 @@ object AgentRoute : Route {
         get() = "AgentRoute"
 }
 
+object AgentSingleRoute: Route {
+    override val route: String
+        get() = "AgentSingleRoute"
+
+}
+
 @Serializable
 object InitialPageRoute : Route {
     override val route: String
