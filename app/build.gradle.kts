@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.ui.graphics)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.ads.mobile.sdk)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX
