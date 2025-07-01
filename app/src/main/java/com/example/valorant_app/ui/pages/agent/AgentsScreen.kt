@@ -71,7 +71,7 @@ fun AgentsScreen(
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .clickable {
-                                    navController.navigate("AgentSingleRoute")
+                                    navController.navigate("AgentSingleRoute/${agent.uuid}")
                                 },
                             shape = RoundedCornerShape(8.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.Transparent),
