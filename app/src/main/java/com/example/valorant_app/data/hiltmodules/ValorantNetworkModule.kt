@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 
 
 @Module
@@ -14,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ValorantNetworkModule {
 
     @Provides
+    @Named("valorant")
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://valorant-api.com/v1/")
@@ -22,7 +24,7 @@ object ValorantNetworkModule {
     }
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): ValorantApiService {
+    fun provideApiService(@Named("valorant") retrofit: Retrofit): ValorantApiService {
         return retrofit.create(ValorantApiService::class.java)
     }
 }
