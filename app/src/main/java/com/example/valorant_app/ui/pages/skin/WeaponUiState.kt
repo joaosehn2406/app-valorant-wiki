@@ -1,6 +1,6 @@
 package com.example.valorant_app.ui.pages.skin
 
-import com.example.valorant_app.data.entities.WeaponCard
+import com.example.valorant_app.data.entities.card.WeaponCard
 
 sealed class WeaponUiState {
     object Loading : WeaponUiState()

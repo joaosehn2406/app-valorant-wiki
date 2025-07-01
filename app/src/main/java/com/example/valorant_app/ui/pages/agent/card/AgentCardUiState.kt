@@ -1,6 +1,6 @@
 package com.example.valorant_app.ui.pages.agent.card
 
-import com.example.valorant_app.data.entities.AgentCard
+import com.example.valorant_app.data.entities.card.AgentCard
 
 sealed class AgentCardUiState {
     object Loading : AgentCardUiState()

@@ -1,6 +1,6 @@
 package com.example.valorant_app.data.utils
 
-import com.example.valorant_app.data.entities.AgentCard
+import com.example.valorant_app.data.entities.card.AgentCard
 import java.util.Locale
 import java.util.Locale.getDefault
 

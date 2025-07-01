@@ -1,7 +1,7 @@
 package com.example.valorant_app.data.repository
 
-import com.example.valorant_app.data.entities.AgentCard
-import com.example.valorant_app.data.entities.AgentSingle
+import com.example.valorant_app.data.entities.card.AgentCard
+import com.example.valorant_app.data.entities.single.AgentSingle
 import com.example.valorant_app.data.services.ApiResponse
 import com.example.valorant_app.data.services.ValorantApiService
 import javax.inject.Inject

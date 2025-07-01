@@ -1,4 +1,4 @@
-package com.example.valorant_app.data.entities
+package com.example.valorant_app.data.entities.card
 
 import com.google.gson.annotations.SerializedName
 
