@@ -10,7 +10,7 @@ data class AgentCard (
     val displayIconSmall: String = "",
 
     @SerializedName("characterTags")
-    val characterTags: List<String> = listOf(),
+    val characterTags: List<String?> = listOf(),
 
     @SerializedName("backgroundGradientColors")
     val backgroundGradientColors: List<String> = listOf(),
