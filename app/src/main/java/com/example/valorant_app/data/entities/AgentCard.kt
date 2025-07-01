@@ -13,5 +13,8 @@ data class AgentCard (
     val characterTags: List<String> = listOf(),
 
     @SerializedName("backgroundGradientColors")
-    val backgroundGradientColors: List<String> = listOf()
+    val backgroundGradientColors: List<String> = listOf(),
+
+    @SerializedName("isPlayableCharacter")
+    val isPlayableCharacter: Boolean = true
 )

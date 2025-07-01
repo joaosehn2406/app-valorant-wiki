@@ -16,7 +16,10 @@ data class AgentSingle(
     val role: Role? = null,
 
     @SerializedName("abilities")
-    val abilities: List<Ability> = listOf()
+    val abilities: List<Ability> = listOf(),
+
+    @SerializedName("isPlayableCharacter")
+    val isPlayableCharacter: Boolean = true
 ) {
     data class Role(
         @SerializedName("displayName")
