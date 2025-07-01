@@ -20,7 +20,6 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
-import com.example.valorant_app.ui.AgentUiState
 import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable

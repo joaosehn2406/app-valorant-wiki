@@ -2,14 +2,12 @@ package com.example.valorant_app.ui.pages.agent
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.valorant_app.data.entities.AgentCard
 import com.example.valorant_app.data.repository.AgentRepository
-import com.example.valorant_app.ui.AgentUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AgentScreenViewModel @Inject constructor(
