@@ -33,12 +33,12 @@ import coil3.compose.AsyncImage
 import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
-fun SkinsScreen(
-    skinsScreenViewModel: WeaponCardViewModel = hiltViewModel(),
+fun WeaponSkinsScreen(
+    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel(),
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val state by skinsScreenViewModel.uiState.collectAsStateWithLifecycle()
+    val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (state) {
         is WeaponCardUiState.Loading -> {

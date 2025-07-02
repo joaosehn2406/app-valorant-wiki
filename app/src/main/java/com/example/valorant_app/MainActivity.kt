@@ -16,7 +16,7 @@ import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
-import com.example.valorant_app.ui.pages.weapon.card.SkinsScreen
+import com.example.valorant_app.ui.pages.weapon.card.WeaponSkinsScreen
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.theme.ValorantappTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,7 +114,7 @@ fun ValorantWikiApp() {
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Skins", color = Color.White) },
+                            title = { Text("Armas", color = Color.White) },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color(0xFF0E0E10),
                                 titleContentColor = Color(0xFFE03240)
@@ -122,7 +122,7 @@ fun ValorantWikiApp() {
                         )
                     }
                 ) { padding ->
-                    SkinsScreen(navController = navController, modifier = padding)
+                    WeaponSkinsScreen(navController = navController, modifier = padding)
                 }
             }
             composable("AgentSingleRoute/{uuid}") { backStackEntry ->
