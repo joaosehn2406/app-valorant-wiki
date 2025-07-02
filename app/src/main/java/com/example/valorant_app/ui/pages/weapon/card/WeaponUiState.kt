@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.skin
+package com.example.valorant_app.ui.pages.weapon.card
 
 import com.example.valorant_app.data.entities.card.WeaponCard
 

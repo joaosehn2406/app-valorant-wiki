@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.skin
+package com.example.valorant_app.ui.pages.weapon.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

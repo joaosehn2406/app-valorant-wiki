@@ -16,7 +16,7 @@ import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
-import com.example.valorant_app.ui.pages.skin.SkinsScreen
+import com.example.valorant_app.ui.pages.weapon.card.SkinsScreen
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.theme.ValorantappTheme
 import dagger.hilt.android.AndroidEntryPoint
