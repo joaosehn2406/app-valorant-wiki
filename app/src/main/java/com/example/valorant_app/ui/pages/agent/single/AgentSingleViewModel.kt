@@ -22,7 +22,7 @@ class AgentSingleViewModel @Inject constructor(
             _uiState.value = AgentSingleUiState.Loading
 
             try {
-                val response = agentRepository.getAgentSingle(agentId)
+                val response = agentRepository.getAgentById(agentId)
 
                 if (response.status == 200) {
                     _uiState.value =

@@ -9,7 +9,7 @@ import javax.inject.Inject
 interface AgentRepository {
     suspend fun getAllAgentsCard(): ApiResponse<List<AgentCard>>
 
-    suspend fun getAgentSingle(uuid: String): ApiResponse<AgentSingle>
+    suspend fun getAgentById(uuid: String): ApiResponse<AgentSingle>
 }
 
 class AgentRepositoryImpl @Inject constructor(
@@ -31,9 +31,9 @@ class AgentRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAgentSingle(uuid: String): ApiResponse<AgentSingle> {
+    override suspend fun getAgentById(uuid: String): ApiResponse<AgentSingle> {
         return try {
-            val response = valorantApiService.getAgentSingle(uuid)
+            val response = valorantApiService.getAgentById(uuid)
             ApiResponse(
                 status = response.status,
                 data = response.data
