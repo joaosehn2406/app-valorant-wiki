@@ -21,6 +21,10 @@ import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.theme.ValorantappTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.IconButton
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,18 +41,11 @@ class MainActivity : ComponentActivity() {
 fun AppScaffold(
     navController: NavController,
     currentRoute: String,
+    topBar: @Composable () -> Unit,
     content: @Composable (Modifier) -> Unit
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Valorant Wiki", color = Color.White) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF0E0E10),
-                    titleContentColor = Color(0xFFE03240)
-                )
-            )
-        },
+        topBar = topBar,
         bottomBar = {
             BottomAppBarNav(navController = navController, currentRoute = currentRoute)
         },
@@ -78,27 +75,84 @@ fun ValorantWikiApp() {
                 )
             }
             composable(HomePageRoute.route) {
-                AppScaffold(navController, currentRoute) { padding ->
+                AppScaffold(
+                    navController,
+                    currentRoute,
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Valorant Wiki", color = Color.White) },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFF0E0E10),
+                                titleContentColor = Color(0xFFE03240)
+                            )
+                        )
+                    }
+                ) { padding ->
                     HomeContent(modifier = padding)
                 }
             }
             composable(AgentRoute.route) {
-                AppScaffold(navController, currentRoute) { padding ->
+                AppScaffold(
+                    navController,
+                    currentRoute,
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Agentes", color = Color.White) },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFF0E0E10),
+                                titleContentColor = Color(0xFFE03240)
+                            )
+                        )
+                    }
+                ) { padding ->
                     AgentsScreen(navController = navController, modifier = padding)
                 }
             }
             composable(WeaponRoute.route) {
-                AppScaffold(navController, currentRoute) { padding ->
+                AppScaffold(
+                    navController,
+                    currentRoute,
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Skins", color = Color.White) },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFF0E0E10),
+                                titleContentColor = Color(0xFFE03240)
+                            )
+                        )
+                    }
+                ) { padding ->
                     SkinsScreen(navController = navController, modifier = padding)
                 }
             }
             composable("AgentSingleRoute/{uuid}") { backStackEntry ->
                 val agentId = backStackEntry.arguments?.getString("uuid")
-                AppScaffold(navController, currentRoute) { padding ->
-                    AgentSingleScreen(agentId = agentId ?: "", navController = navController)
+                AppScaffold(
+                    navController,
+                    currentRoute,
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Detalhes do Agente", color = Color.White) },
+                            navigationIcon = {
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "Voltar",
+                                        tint = Color.White
+                                    )
+                                }
+                            },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFF0E0E10),
+                                titleContentColor = Color(0xFFE03240),
+                                navigationIconContentColor = Color.White
+                            )
+                        )
+                    }
+                ) { padding ->
+                    AgentSingleScreen(agentId = agentId ?: "", navController = navController, modifier = padding)
                 }
             }
         }
     }
 }
-
