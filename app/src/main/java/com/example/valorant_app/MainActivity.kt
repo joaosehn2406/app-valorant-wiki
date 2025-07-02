@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.IconButton
+import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -151,6 +152,34 @@ fun ValorantWikiApp() {
                     }
                 ) { padding ->
                     AgentSingleScreen(agentId = agentId ?: "", navController = navController, modifier = padding)
+                }
+            }
+            composable("WeaponSingleRoute/{uuid}") { backStackEntry ->
+                val weaponId = backStackEntry.arguments?.getString("uuid")
+                AppScaffold(
+                    navController,
+                    currentRoute,
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Skins da Arma", color = Color.White) },
+                            navigationIcon = {
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "Voltar",
+                                        tint = Color.White
+                                    )
+                                }
+                            },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFF0E0E10),
+                                titleContentColor = Color(0xFFE03240),
+                                navigationIconContentColor = Color.White
+                            )
+                        )
+                    }
+                ) { padding ->
+                    WeaponSingleScreen(weaponId = weaponId ?: "", navController = navController, modifier = padding)
                 }
             }
         }

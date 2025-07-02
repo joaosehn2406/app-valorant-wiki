@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,11 +35,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.ui.theme.ValorantRed
-
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.sp
 
 
 class SimpleColorPainter(private val color: Color) : Painter() {
@@ -80,7 +77,7 @@ fun AgentSingleScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = (state as AgentSingleUiState.Error).message,
+                    text = state.message,
                     color = Color.Red,
                     modifier = Modifier.wrapContentSize()
                 )

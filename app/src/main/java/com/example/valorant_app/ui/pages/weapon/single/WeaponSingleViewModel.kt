@@ -15,7 +15,7 @@ class WeaponSingleViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<WeaponSingleUiState>(WeaponSingleUiState.Loading)
-    private val uiState = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     fun fetchWeaponSingle(weaponId: String) {
         _uiState.value = WeaponSingleUiState.Loading

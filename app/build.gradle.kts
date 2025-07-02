@@ -2,18 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.dagger.hilt.android)   // Hilt
-    id("org.jetbrains.kotlin.kapt")           // KAPT
+    alias(libs.plugins.dagger.hilt.android)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.example.valorant_app"
-    compileSdk = 36  // Atualizado para 36
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.valorant_app"
         minSdk = 24
-        targetSdk = 36  // Atualizado para 36
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -80,6 +80,10 @@ dependencies {
     // Google Play Services - Location
     implementation(libs.play.services.location)
 
+    // HorizontalPager
+    implementation(libs.androidx.foundation)
+    implementation(libs.accompanist.pager.indicators)
+
     // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -88,5 +92,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.androidx.navigation.compose)
 }

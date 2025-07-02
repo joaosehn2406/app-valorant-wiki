@@ -3,6 +3,9 @@ package com.example.valorant_app.data.entities.card
 import com.google.gson.annotations.SerializedName
 
 data class WeaponCard(
+    @SerializedName("uuid")
+    val uuid: String = "",
+
     @SerializedName("displayName")
     val displayName: String = "",
 
