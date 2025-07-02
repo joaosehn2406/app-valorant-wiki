@@ -10,20 +10,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SkinsScreenViewModel @Inject constructor(
+class WeaponCardViewModel @Inject constructor(
     private val weaponRepository: WeaponRepository
 ) : ViewModel(){
 
-    private val _uiState = MutableStateFlow<WeaponUiState>(WeaponUiState.Loading)
+    private val _uiState = MutableStateFlow<WeaponCardUiState>(WeaponCardUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val response = weaponRepository.getAllWeaponCard()
             if (response.status == 200) {
-                _uiState.value = WeaponUiState.Success(response.data)
+                _uiState.value = WeaponCardUiState.Success(response.data)
             } else {
-                _uiState.value = WeaponUiState.Error("Erro: ${response.status}")
+                _uiState.value = WeaponCardUiState.Error("Erro: ${response.status}")
             }
         }
     }

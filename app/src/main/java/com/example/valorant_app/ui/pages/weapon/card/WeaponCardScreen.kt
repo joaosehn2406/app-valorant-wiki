@@ -34,22 +34,22 @@ import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun SkinsScreen(
-    skinsScreenViewModel: SkinsScreenViewModel = hiltViewModel(),
+    skinsScreenViewModel: WeaponCardViewModel = hiltViewModel(),
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val state by skinsScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (state) {
-        is WeaponUiState.Loading -> {
+        is WeaponCardUiState.Loading -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = ValorantRed)
             }
         }
 
-        is WeaponUiState.Error -> {
+        is WeaponCardUiState.Error -> {
             Text(
-                (state as WeaponUiState.Error).message,
+                (state as WeaponCardUiState.Error).message,
                 color = Color.Red,
                 modifier = Modifier
                     .fillMaxSize()
@@ -57,8 +57,8 @@ fun SkinsScreen(
             )
         }
 
-        is WeaponUiState.Success -> {
-            val weapons = (state as WeaponUiState.Success).weapons
+        is WeaponCardUiState.Success -> {
+            val weapons = (state as WeaponCardUiState.Success).weapons
 
             LazyColumn(
                 modifier = Modifier
