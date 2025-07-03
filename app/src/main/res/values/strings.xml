@@ -1,3 +1,43 @@
 <resources>
+    <!-- existentes -->
     <string name="app_name">valorant-app</string>
+    <string name="lets_start">Let\'s begin?</string>
+    <string name="welcome_msg">Welcome to Valorant Wiki</string>
+    <string name="about_app">About the app</string>
+    <string name="about_app_desc">Brings together the best of the Valorant API quickly and elegantly</string>
+    <string name="features_header">Features</string>
+    <string name="explore_agents">Explore Agents</string>
+    <string name="search_for_guns">Search for weapons</string>
+    <string name="search_skins">Search skins</string>
+    <string name="data_source">Data source</string>
+    <string name="vava_api_text">Official Valorant API (valorant-api.com)</string>
+    <string name="agent">Agent</string>
+    <string name="agents">Agents</string>
+    <string name="weapon">Weapons</string>
+    <string name="unknown">Unknown</string>
+    <string name="statistics">Statistics</string>
+    <string name="no_tags_informed">No tags informed.</string>
+
+    <!-- adicionadas para WeaponSingleScreen (agora em inglês) -->
+    <string name="category">Category: %1$s</string>
+    <string name="skin_unavailable">Skin unavailable</string>
+    <string name="variants">VARIANTS</string>
+    <string name="ads_statistics">ADS Statistics</string>
+
+    <!-- estatísticas individuais -->
+    <string name="stat_fire_rate">Fire rate</string>
+    <string name="stat_tiros_por_segundo">%1$.2f shots/s</string>
+    <string name="stat_price">Price</string>
+    <string name="stat_price_value">$ %1$d</string>
+    <string name="stat_magazine_size">Magazine size</string>
+    <string name="stat_balas">%1$d rounds</string>
+    <string name="stat_equip_time">Equip time</string>
+    <string name="stat_reload_time">Reload time</string>
+    <string name="stat_seconds">%1$.1fs</string>
+    <string name="stat_run_speed">Run speed</string>
+    <string name="stat_multiplier">%1$.2fx</string>
+    <string name="stat_first_bullet_accuracy">First bullet accuracy</string>
+    <string name="stat_percentage">%1$d%%</string>
+    <string name="stat_wall_penetration">Wall penetration</string>
+    <string name="stat_zoom_multiplier">Zoom multiplier</string>
 </resources>

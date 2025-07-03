@@ -26,7 +26,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,8 +50,6 @@ import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.theme.ValorantRed
-
-val ValorantBlue = Color(0xFF00B5FF)
 
 class SimpleColorPainter(private val color: Color) : Painter() {
     override val intrinsicSize: Size = Size.Unspecified
@@ -163,9 +164,8 @@ fun WeaponDetailsContent(
                     .background(Color(0x33FFFFFF))
                     .padding(8.dp)
             ) { page ->
-                val currentSkin = remember {weapon.skins[page] }
-                val currentSkinChromas = currentSkin.chromas
-                //val currentSKinState by remember { mutableStateOf(weapon.skin[page])}
+                var currentSkin by remember { mutableStateOf(weapon.skins[page]) }
+                var selectedChroma by remember(currentSkin) { mutableStateOf(currentSkin.chromas.first()) }
 
                 Column(
                     modifier = Modifier
@@ -176,7 +176,7 @@ fun WeaponDetailsContent(
                 ) {
                     if (!currentSkin.displayIcon.isNullOrEmpty()) {
                         AsyncImage(
-                            model = currentSkin.displayIcon,
+                            model = selectedChroma.fullRender,
                             contentDescription = "Skin: ${currentSkin.displayName}",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
@@ -208,7 +208,7 @@ fun WeaponDetailsContent(
                         }
                     }
 
-                    if (currentSkinChromas.isNotEmpty()) {
+                    if (currentSkin.chromas.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = "VARIANTES",
@@ -222,7 +222,7 @@ fun WeaponDetailsContent(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            items(currentSkinChromas) { chroma ->
+                            items(currentSkin.chromas) { chroma ->
                                 if (!chroma.swatch.isNullOrEmpty()) {
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,

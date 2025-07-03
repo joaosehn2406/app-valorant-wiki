@@ -1,8 +1,6 @@
 package com.example.valorant_app.data.utils
 
 import com.example.valorant_app.data.entities.card.AgentCard
-import java.util.Locale
-import java.util.Locale.getDefault
 
 data class AgentCountry(
     val countryName: String,
@@ -11,28 +9,28 @@ data class AgentCountry(
 
 
 private val agentCountryMap: Map<String, AgentCountry> = mapOf(
-    "Brimstone" to AgentCountry("Estados Unidos", "us"),
-    "Viper"      to AgentCountry("Estados Unidos", "us"),
-    "Gekko"      to AgentCountry("Estados Unidos", "us"),
-    "Reyna"      to AgentCountry("Mexico",        "mx"),
-    "Raze"       to AgentCountry("Brasil",        "br"),
-    "Astra"      to AgentCountry("Ghana",         "gh"),
-    "Cypher"     to AgentCountry("Morrocos",       "ma"),
-    "Chamber"    to AgentCountry("Franca",        "fr"),
-    "Phoenix"    to AgentCountry("Reino Unido","gb"),
-    "Deadlock"   to AgentCountry("Noruega",        "no"),
-    "Breach"     to AgentCountry("Suecia",        "se"),
-    "Killjoy"    to AgentCountry("Alemanha",       "de"),
-    "Sova"       to AgentCountry("Russia",        "ru"),
-    "Fade"       to AgentCountry("Turquia",        "tr"),
-    "Harbor"     to AgentCountry("India",         "in"),
-    "Sage"       to AgentCountry("China",         "cn"),
-    "Jett"       to AgentCountry("Coreia do Sul",   "kr"),
-    "Skye"       to AgentCountry("Australia",     "au"),
-    "Yoru"       to AgentCountry("Japao",         "jp"),
-    "Neon"       to AgentCountry("Filipinas",   "ph"),
-    "KAY/O"      to AgentCountry("Desconhecido",       "un"),
-    "Omen"       to AgentCountry("Unknown",       "un")
+    "Brimstone" to AgentCountry("USA", "us"),
+    "Viper"      to AgentCountry("USA", "us"),
+    "Gekko"      to AgentCountry("USA", "us"),
+    "Reyna"      to AgentCountry("MEX",        "mx"),
+    "Raze"       to AgentCountry("BRA",        "br"),
+    "Astra"      to AgentCountry("GHA",         "gh"),
+    "Cypher"     to AgentCountry("MAR",       "ma"),
+    "Chamber"    to AgentCountry("FRA",        "fr"),
+    "Phoenix"    to AgentCountry("GBR","gb"),
+    "Deadlock"   to AgentCountry("NOR",        "no"),
+    "Breach"     to AgentCountry("SWE",        "se"),
+    "Killjoy"    to AgentCountry("GER",       "de"),
+    "Sova"       to AgentCountry("RUS",        "ru"),
+    "Fade"       to AgentCountry("TUR",        "tr"),
+    "Harbor"     to AgentCountry("IND",         "in"),
+    "Sage"       to AgentCountry("CHN",         "cn"),
+    "Jett"       to AgentCountry("KOR",   "kr"),
+    "Skye"       to AgentCountry("AUS",     "au"),
+    "Yoru"       to AgentCountry("JPN",         "jp"),
+    "Neon"       to AgentCountry("PHI",   "ph"),
+    "KAY/O"      to AgentCountry("N/A",       "un"),
+    "Omen"       to AgentCountry("N/A",       "un")
 )
 
 fun String.toAgentCountry(): AgentCountry? {

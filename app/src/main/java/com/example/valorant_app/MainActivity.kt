@@ -5,26 +5,37 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import androidx.navigation.compose.*
-import com.example.valorant_app.ui.navigation.*
-import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.valorant_app.ui.navigation.AgentRoute
+import com.example.valorant_app.ui.navigation.HomePageRoute
+import com.example.valorant_app.ui.navigation.InitialPageRoute
+import com.example.valorant_app.ui.navigation.WeaponRoute
 import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
+import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
 import com.example.valorant_app.ui.pages.weapon.card.WeaponSkinsScreen
+import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.theme.ValorantappTheme
 import dagger.hilt.android.AndroidEntryPoint
-
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.IconButton
-import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
