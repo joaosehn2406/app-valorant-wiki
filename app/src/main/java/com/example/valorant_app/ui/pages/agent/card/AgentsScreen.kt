@@ -44,8 +44,8 @@ import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun AgentsScreen(
-    agentScreenViewModel: AgentScreenViewModel = hiltViewModel(),
     navController: NavController,
+    agentScreenViewModel: AgentScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val state by agentScreenViewModel.uiState.collectAsStateWithLifecycle()

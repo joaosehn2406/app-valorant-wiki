@@ -19,6 +19,9 @@
     <string name="no_tags_informed">No se informaron etiquetas.</string>
     <string name="agent_details">Detalles del agente</string>
     <string name="weapon_skins">Skins</string>
+    <string name="dropdown_portuguese">Portugués</string>
+    <string name="dropdown_english">Inglés</string>
+    <string name="dropdown_spanish">Español</string>
 
     <!-- WeaponSingleScreen -->
     <string name="category">Categoría: %1$s</string>

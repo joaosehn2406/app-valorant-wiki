@@ -35,8 +35,8 @@ import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun WeaponSkinsScreen(
-    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel(),
     navController: NavController,
+    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
