@@ -30,12 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
 import com.example.valorant_app.ui.theme.ValorantRed
@@ -138,7 +140,7 @@ fun AgentsScreen(
                                         } else {
                                             Spacer(modifier = Modifier.width(10.dp))
                                             Text(
-                                                text = " - Desconhecido",
+                                                text = stringResource(R.string.unknown),
                                                 color = Color.White,
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
@@ -150,7 +152,7 @@ fun AgentsScreen(
                                     if (agent.characterTags.isNullOrEmpty() ||
                                         agent.characterTags.all { it.isNullOrBlank() }) {
                                         Text(
-                                            text = "Sem tags informadas.",
+                                            text = stringResource(R.string.no_tags_informed),
                                             color = Color.White,
                                             style = MaterialTheme.typography.bodySmall
                                         )

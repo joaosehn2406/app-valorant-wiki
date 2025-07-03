@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -149,7 +150,7 @@ fun WeaponDetailsContent(
             )
 
             Text(
-                text = "Categoria: ${weapon.category}",
+                text = stringResource(R.string.category, weapon.category),
                 style = MaterialTheme.typography.titleMedium,
                 color = ValorantRed,
                 modifier = Modifier.padding(bottom = 24.dp)
@@ -201,7 +202,7 @@ fun WeaponDetailsContent(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Skin indisponível",
+                                text = stringResource(R.string.skin_unavailable),
                                 color = Color.Gray,
                                 style = MaterialTheme.typography.bodyLarge
                             )
@@ -211,7 +212,7 @@ fun WeaponDetailsContent(
                     if (currentSkin.chromas.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "VARIANTES",
+                            text = stringResource(R.string.variants).uppercase(),
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.SemiBold
                             ),
@@ -282,7 +283,7 @@ fun WeaponDetailsContent(
                         .padding(bottom = 16.dp)
                 ) {
                     Text(
-                        text = "ESTATÍSTICAS",
+                        text = stringResource(R.string.statistics).uppercase(),
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 0.5.sp
@@ -293,14 +294,14 @@ fun WeaponDetailsContent(
 
                     WeaponStatItem(
                         iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                        statName = "Taxa de Tiro",
-                        statValue = "${stats.fireRate} tiros/s"
+                        statName = stringResource(R.string.stat_fire_rate),
+                        statValue = stringResource(R.string.stat_tiros_por_segundo, stats.fireRate)
                     )
 
                     weapon.shopData?.cost?.let { cost ->
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = "Preço",
+                            statName = stringResource(R.string.stat_price),
                             statValue = "$ ${cost}"
                         )
                     }
@@ -313,37 +314,37 @@ fun WeaponDetailsContent(
 
                     WeaponStatItem(
                         iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                        statName = "Tempo de Equipamento",
-                        statValue = "${stats.equipTimeSeconds}s"
+                        statName = stringResource(R.string.stat_equip_time),
+                        statValue = stringResource(R.string.stat_seconds, stats.equipTimeSeconds)
                     )
 
                     WeaponStatItem(
                         iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                        statName = "Tempo de Recarga",
-                        statValue = "${stats.reloadTimeSeconds}s"
+                        statName = stringResource(R.string.stat_reload_time),
+                        statValue = stringResource(R.string.stat_seconds, stats.reloadTimeSeconds)
                     )
 
                     if (stats.runSpeedMultiplier != 0f) {
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = "Velocidade de Corrida",
-                            statValue = "${stats.runSpeedMultiplier}x"
+                            statName = stringResource(R.string.stat_run_speed),
+                            statValue = stringResource(R.string.stat_multiplier, stats.runSpeedMultiplier)
                         )
                     }
 
                     if (stats.firstBulletAccuracy != 0f) {
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = "Precisão da Primeira Bala",
-                            statValue = "${(stats.firstBulletAccuracy * 100).toInt()}%"
+                            statName = stringResource(R.string.stat_first_bullet_accuracy),
+                            statValue = stringResource(R.string.stat_percentage, (stats.firstBulletAccuracy * 100).toInt())
                         )
                     }
 
-                    if (!stats.wallPenetration.isNullOrEmpty()) {
+                    stats.wallPenetration?.let { pen ->
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = "Penetração na Parede",
-                            statValue = stats.wallPenetration
+                            statName = stringResource(R.string.stat_wall_penetration),
+                            statValue = pen
                         )
                     }
 
@@ -359,8 +360,8 @@ fun WeaponDetailsContent(
                         )
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = "Multiplicador de Zoom",
-                            statValue = "${ads.zoomMultiplier}x"
+                            statName = stringResource(R.string.stat_zoom_multiplier),
+                            statValue = stringResource(R.string.stat_multiplier, ads.zoomMultiplier)
                         )
                     }
                 }

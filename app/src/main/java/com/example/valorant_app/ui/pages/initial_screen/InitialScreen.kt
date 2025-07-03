@@ -4,13 +4,15 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.valorant_app.R
 import com.example.valorant_app.ui.theme.ValorantRed
 
@@ -39,7 +41,7 @@ fun InitialScreen(
                 modifier = Modifier.padding(top = 148.dp)
             ) {
                 Text(
-                    "Vamos lá?",
+                    text = stringResource(R.string.lets_start),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.Black,

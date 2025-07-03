@@ -13,10 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.valorant_app.ui.reusable_comp.SectionCard
+import com.example.valorant_app.R
 import com.example.valorant_app.ui.reusable_comp.FeatureRow
+import com.example.valorant_app.ui.reusable_comp.SectionCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +51,7 @@ fun HomeContent(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Bem-vindo ao Valorant Wiki",
+                    text = stringResource(R.string.welcome_msg),
                     fontSize = 24.sp,
                     color = Color.White,
                     style = MaterialTheme.typography.headlineSmall
@@ -57,26 +59,26 @@ fun HomeContent(
             }
 
             SectionCard(
-                title = "Sobre este App",
-                content = "Reúne o melhor da Valorant API de forma rápida e elegante.",
+                title = stringResource(R.string.about_app),
+                content = stringResource(R.string.about_app_desc),
                 accent = Color(0xFFFF4655)
             )
 
             SectionCard(
-                title = "Funcionalidades",
+                title = stringResource(R.string.features_header),
                 accent = Color(0xFFFF4655)
             ) {
-                FeatureRow(Icons.Default.Person, "Explorar Agentes")
-                FeatureRow(Icons.Default.Build, "Navegar por Armas")
-                FeatureRow(Icons.Default.Search, "Buscar skins")
+                FeatureRow(Icons.Default.Person, stringResource(R.string.explore_agents))
+                FeatureRow(Icons.Default.Build, stringResource(R.string.search_for_guns))
+                FeatureRow(Icons.Default.Search, stringResource(R.string.search_skins))
             }
 
             SectionCard(
-                title = "Fontes de Dados",
+                title = stringResource(R.string.data_source),
                 accent = Color(0xFFFF4655)
             ) {
                 Text(
-                    "• Valorant API oficial (valorant-api.com)",
+                    text = "• ${stringResource(R.string.vava_api_text)}",
                     color = Color.Cyan,
                     style = MaterialTheme.typography.bodySmall
                 )

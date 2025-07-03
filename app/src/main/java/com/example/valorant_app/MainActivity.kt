@@ -7,26 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.valorant_app.ui.navigation.AgentRoute
-import com.example.valorant_app.ui.navigation.HomePageRoute
-import com.example.valorant_app.ui.navigation.InitialPageRoute
-import com.example.valorant_app.ui.navigation.WeaponRoute
+import com.example.valorant_app.ui.navigation.*
 import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
@@ -81,9 +73,7 @@ fun ValorantWikiApp() {
         ) {
             composable(InitialPageRoute.route) {
                 InitialScreen(
-                    navigateToHomePage = {
-                        navController.navigate(HomePageRoute.route)
-                    }
+                    navigateToHomePage = { navController.navigate(HomePageRoute.route) }
                 )
             }
             composable(HomePageRoute.route) {
@@ -92,16 +82,14 @@ fun ValorantWikiApp() {
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Valorant Wiki", color = Color.White) },
+                            title = { Text(stringResource(R.string.app_name), color = Color.White) },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color(0xFF0E0E10),
                                 titleContentColor = Color(0xFFE03240)
                             )
                         )
                     }
-                ) { padding ->
-                    HomeContent(modifier = padding)
-                }
+                ) { padding -> HomeContent(modifier = padding) }
             }
             composable(AgentRoute.route) {
                 AppScaffold(
@@ -109,16 +97,14 @@ fun ValorantWikiApp() {
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Agentes", color = Color.White) },
+                            title = { Text(stringResource(R.string.agents), color = Color.White) },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color(0xFF0E0E10),
                                 titleContentColor = Color(0xFFE03240)
                             )
                         )
                     }
-                ) { padding ->
-                    AgentsScreen(navController = navController, modifier = padding)
-                }
+                ) { padding -> AgentsScreen(navController = navController, modifier = padding) }
             }
             composable(WeaponRoute.route) {
                 AppScaffold(
@@ -126,30 +112,28 @@ fun ValorantWikiApp() {
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Armas", color = Color.White) },
+                            title = { Text(stringResource(R.string.weapon), color = Color.White) },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color(0xFF0E0E10),
                                 titleContentColor = Color(0xFFE03240)
                             )
                         )
                     }
-                ) { padding ->
-                    WeaponSkinsScreen(navController = navController, modifier = padding)
-                }
+                ) { padding -> WeaponSkinsScreen(navController = navController, modifier = padding) }
             }
             composable("AgentSingleRoute/{uuid}") { backStackEntry ->
-                val agentId = backStackEntry.arguments?.getString("uuid")
+                val agentId = backStackEntry.arguments?.getString("uuid") ?: ""
                 AppScaffold(
                     navController,
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Detalhes do Agente", color = Color.White) },
+                            title = { Text(stringResource(R.string.agent_details), color = Color.White) },
                             navigationIcon = {
                                 IconButton(onClick = { navController.popBackStack() }) {
                                     Icon(
                                         Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = "Voltar",
+                                        null,
                                         tint = Color.White
                                     )
                                 }
@@ -161,23 +145,21 @@ fun ValorantWikiApp() {
                             )
                         )
                     }
-                ) { padding ->
-                    AgentSingleScreen(agentId = agentId ?: "", navController = navController, modifier = padding)
-                }
+                ) { padding -> AgentSingleScreen(agentId = agentId, navController = navController, modifier = padding) }
             }
             composable("WeaponSingleRoute/{uuid}") { backStackEntry ->
-                val weaponId = backStackEntry.arguments?.getString("uuid")
+                val weaponId = backStackEntry.arguments?.getString("uuid") ?: ""
                 AppScaffold(
                     navController,
                     currentRoute,
                     topBar = {
                         TopAppBar(
-                            title = { Text("Skins da Arma", color = Color.White) },
+                            title = { Text(stringResource(R.string.weapon_skins), color = Color.White) },
                             navigationIcon = {
                                 IconButton(onClick = { navController.popBackStack() }) {
                                     Icon(
                                         Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = "Voltar",
+                                        null,
                                         tint = Color.White
                                     )
                                 }
@@ -189,9 +171,7 @@ fun ValorantWikiApp() {
                             )
                         )
                     }
-                ) { padding ->
-                    WeaponSingleScreen(weaponId = weaponId ?: "", navController = navController, modifier = padding)
-                }
+                ) { padding -> WeaponSingleScreen(weaponId = weaponId, navController = navController, modifier = padding) }
             }
         }
     }

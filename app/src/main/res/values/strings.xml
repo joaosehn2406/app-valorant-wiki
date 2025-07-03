@@ -17,6 +17,8 @@
     <string name="unknown">Unknown</string>
     <string name="statistics">Statistics</string>
     <string name="no_tags_informed">No tags informed.</string>
+    <string name="agent_details">Agent Details</string>
+    <string name="weapon_skins">Skins</string>
 
     <!-- adicionadas para WeaponSingleScreen (agora em inglês) -->
     <string name="category">Category: %1$s</string>
