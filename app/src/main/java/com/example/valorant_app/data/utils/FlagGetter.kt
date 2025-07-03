@@ -1,11 +1,24 @@
 package com.example.valorant_app.data.utils
 
 import com.example.valorant_app.data.entities.card.AgentCard
+import java.util.Locale
 
 data class AgentCountry(
     val countryName: String,
     val countryIso2: String
 )
+
+object FlagHexConverter {
+
+    fun countryCodeToFlagEmoji(countryCode: String): String {
+        val code = countryCode.uppercase(Locale.US)
+        return code.map { letter ->
+            val base = 0x1F1E6
+            val offset = letter - 'A'
+            String(Character.toChars(base + offset))
+        }.joinToString("")
+    }
+}
 
 
 private val agentCountryMap: Map<String, AgentCountry> = mapOf(
@@ -31,6 +44,10 @@ private val agentCountryMap: Map<String, AgentCountry> = mapOf(
     "Neon"       to AgentCountry("PHI",   "ph"),
     "KAY/O"      to AgentCountry("N/A",       "un"),
     "Omen"       to AgentCountry("N/A",       "un")
+)
+
+private val systemLanguage: Map<String, String> = mapOf(
+
 )
 
 fun String.toAgentCountry(): AgentCountry? {
