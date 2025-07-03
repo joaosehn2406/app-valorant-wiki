@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valorant_app.R
@@ -31,7 +32,6 @@ fun BottomAppBarNav(
     val black = Color(0xFF000000)
     val dGray = Color(0xFF111111)
     val midGray = Color(0xFF1F1B24)
-    val neonRed = Color(0xFFFF2231)
 
     Box(
         modifier = modifier
@@ -57,8 +57,8 @@ fun BottomAppBarNav(
                     HomePageRoute.route,
                     painterResource(R.drawable.home_icon_silhouette)
                 ),
-                Triple("Agente", AgentRoute.route, painterResource(R.drawable.imagem_fe)),
-                Triple("Armas", WeaponRoute.route, painterResource(R.drawable.arma_fe))
+                Triple(stringResource(R.string.agent), AgentRoute.route, painterResource(R.drawable.imagem_fe)),
+                Triple(stringResource(R.string.weapon), WeaponRoute.route, painterResource(R.drawable.arma_fe))
             )
 
             items.forEach { (label, route, icon) ->

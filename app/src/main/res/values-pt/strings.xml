@@ -1,6 +1,6 @@
 <resources>
     <!-- existentes traduzidos para pt-BR -->
-    <string name="app_name">valorant-app</string>
+    <string name="app_name">Valorant Wiki</string>
     <string name="lets_start">Vamos começar?</string>
     <string name="welcome_msg">Bem-vindo ao Valorant Wiki</string>
     <string name="about_app">Sobre o app</string>
@@ -13,7 +13,7 @@
     <string name="vava_api_text">API oficial do Valorant (valorant-api.com)</string>
     <string name="agent">Agente</string>
     <string name="agents">Agentes</string>
-    <string name="weapon">Armas</string>
+    <string name="weapon">Arma</string>
     <string name="unknown">Desconhecido</string>
     <string name="statistics">Estatísticas</string>
     <string name="no_tags_informed">Nenhuma tag informada.</string>
