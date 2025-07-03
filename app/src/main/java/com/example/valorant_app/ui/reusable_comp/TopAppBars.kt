@@ -5,15 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.FlagHexConverter
@@ -58,7 +61,7 @@ fun FlagsDropdown(
         )
     ) {
         IconButton(
-            onClick = {expanded = !expanded}
+            onClick = { expanded = !expanded }
         ) {
             Icon(
                 Icons.Default.Settings,
@@ -70,20 +73,132 @@ fun FlagsDropdown(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = Color(0xFF191A1C)
         ) {
             DropdownMenuItem(
-                text = { Text("${FlagHexConverter.countryCodeToFlagEmoji("BR")} - ${stringResource(R.string.dropdown_portuguese)}") },
+                text = {
+                    Text(
+                        "${FlagHexConverter.countryCodeToFlagEmoji("BR")} - ${
+                            stringResource(
+                                R.string.dropdown_portuguese
+                            )
+                        }",
+                        color = Color.White,
+                        letterSpacing = 0.5.sp
+                    )
+                },
                 onClick = { }
             )
             DropdownMenuItem(
-                text = { Text("${FlagHexConverter.countryCodeToFlagEmoji("US")} - ${stringResource(R.string.dropdown_english)}") },
+                text = {
+                    Text(
+                        "${FlagHexConverter.countryCodeToFlagEmoji("US")} - ${
+                            stringResource(
+                                R.string.dropdown_english
+                            )
+                        }",
+                        color = Color.White,
+                        letterSpacing = 0.5.sp
+                    )
+                },
                 onClick = { }
             )
             DropdownMenuItem(
-                text = { Text("${FlagHexConverter.countryCodeToFlagEmoji("ES")} - ${stringResource(R.string.dropdown_spanish)}") },
+                text = {
+                    Text(
+                        "${FlagHexConverter.countryCodeToFlagEmoji("ES")} - ${
+                            stringResource(
+                                R.string.dropdown_spanish
+                            )
+                        }",
+                        color = Color.White,
+                        letterSpacing = 0.5.sp
+                    )
+                },
                 onClick = { }
             )
         }
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.app_name), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        ),
+        actions = { FlagsDropdown() }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgentTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.agents), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeaponTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.weapon), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgentSingleTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.agent_details), color = Color.White) },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240),
+            navigationIconContentColor = Color.White
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeaponSingleTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.weapon_skins), color = Color.White) },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240),
+            navigationIconContentColor = Color.White
+        )
+    )
 }
