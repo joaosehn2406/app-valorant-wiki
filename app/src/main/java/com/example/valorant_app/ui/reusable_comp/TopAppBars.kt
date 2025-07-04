@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.FlagHexConverter
+import com.example.valorant_app.ui.pages.agent.card.AgentScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +53,7 @@ fun AppScaffold(
 
 @Composable
 fun FlagsDropdown(
+    onLanguageSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -87,7 +89,10 @@ fun FlagsDropdown(
                         letterSpacing = 0.5.sp
                     )
                 },
-                onClick = { }
+                onClick = {
+                    onLanguageSelected("pt-BR")
+                    expanded = false
+                }
             )
             DropdownMenuItem(
                 text = {
@@ -101,7 +106,10 @@ fun FlagsDropdown(
                         letterSpacing = 0.5.sp
                     )
                 },
-                onClick = { }
+                onClick = {
+                    onLanguageSelected("en-US")
+                    expanded = false
+                }
             )
             DropdownMenuItem(
                 text = {
@@ -115,7 +123,10 @@ fun FlagsDropdown(
                         letterSpacing = 0.5.sp
                     )
                 },
-                onClick = { }
+                onClick = {
+                    onLanguageSelected("es-ES")
+                    expanded = false
+                }
             )
         }
     }
@@ -124,14 +135,19 @@ fun FlagsDropdown(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar(navController: NavController) {
+fun HomeTopBar(
+    navController: NavController,
+    viewModel: AgentScreenViewModel
+) {
     TopAppBar(
         title = { Text(stringResource(R.string.app_name), color = Color.White) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color(0xFF0E0E10),
             titleContentColor = Color(0xFFE03240)
         ),
-        actions = { FlagsDropdown() }
+        actions = { FlagsDropdown(onLanguageSelected = { language ->
+            viewModel.languageSelected(language)
+        }) }
     )
 }
 

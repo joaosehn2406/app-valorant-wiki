@@ -77,6 +77,8 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
 
     // Google Play Services - Location
     implementation(libs.play.services.location)

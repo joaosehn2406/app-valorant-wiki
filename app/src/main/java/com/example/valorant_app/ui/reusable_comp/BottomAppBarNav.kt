@@ -57,14 +57,26 @@ fun BottomAppBarNav(
                     HomePageRoute.route,
                     painterResource(R.drawable.home_icon_silhouette)
                 ),
-                Triple(stringResource(R.string.agent), AgentRoute.route, painterResource(R.drawable.imagem_fe)),
-                Triple(stringResource(R.string.weapon), WeaponRoute.route, painterResource(R.drawable.arma_fe))
+                Triple(
+                    stringResource(R.string.agent),
+                    AgentRoute.route,
+                    painterResource(R.drawable.imagem_fe)
+                ),
+                Triple(
+                    stringResource(R.string.weapon),
+                    WeaponRoute.route,
+                    painterResource(R.drawable.arma_fe)
+                )
             )
 
             items.forEach { (label, route, icon) ->
                 NavigationBarItem(
                     selected = currentRoute == route,
-                    onClick = { if (currentRoute != route) navController.navigate(route) },
+                    onClick = {
+                        if (currentRoute != route) navController.navigate(route) {
+                        }
+                    },
+
                     icon = {
                         Icon(
                             painter = icon,

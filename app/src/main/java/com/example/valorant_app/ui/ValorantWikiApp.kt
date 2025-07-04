@@ -1,6 +1,7 @@
 package com.example.valorant_app.ui
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -8,6 +9,7 @@ import com.example.valorant_app.ui.navigation.AgentRoute
 import com.example.valorant_app.ui.navigation.HomePageRoute
 import com.example.valorant_app.ui.navigation.InitialPageRoute
 import com.example.valorant_app.ui.navigation.WeaponRoute
+import com.example.valorant_app.ui.pages.agent.card.AgentScreenViewModel
 import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
@@ -24,6 +26,7 @@ import com.example.valorant_app.ui.reusable_comp.WeaponTopBar
 @Composable
 fun ValorantWikiApp() {
     val navController = rememberNavController()
+    val agentScreenViewModel: AgentScreenViewModel = hiltViewModel()
     NavHost(navController, startDestination = InitialPageRoute.route) {
 
         composable(InitialPageRoute.route) {
@@ -36,7 +39,7 @@ fun ValorantWikiApp() {
             AppScaffold(
                 navController,
                 HomePageRoute.route,
-                topBar = { HomeTopBar(navController) }
+                topBar = { HomeTopBar(navController, agentScreenViewModel) }
             ) { padding ->
                 HomeContent(modifier = padding)
             }
@@ -48,9 +51,10 @@ fun ValorantWikiApp() {
                 AgentRoute.route,
                 topBar = { AgentTopBar(navController) }
             ) { padding ->
-                AgentsScreen(navController, modifier = padding)
+                AgentsScreen(navController, modifier = padding, agentScreenViewModel = agentScreenViewModel)
             }
         }
+
 
         composable(WeaponRoute.route) {
             AppScaffold(
