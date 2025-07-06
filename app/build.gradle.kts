@@ -79,6 +79,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
+    //Constraint Layout
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
 
     // Google Play Services - Location
     implementation(libs.play.services.location)
