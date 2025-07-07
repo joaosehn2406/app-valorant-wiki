@@ -1,6 +1,7 @@
 package com.example.valorant_app.ui.pages.weapon.single
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +28,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,32 +39,42 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
+import com.example.valorant_app.data.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.data.entities.single.WeaponSingle
+import com.example.valorant_app.ui.WeaponSingleViewModelFactory
 import com.example.valorant_app.ui.theme.ValorantRed
+import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 fun WeaponSingleScreen(
     weaponId: String,
-    navController: NavController,
-    weaponSingleViewModel: WeaponSingleViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    navController: NavController
 ) {
 
-    val uiState = weaponSingleViewModel.uiState.collectAsStateWithLifecycle().value
+    val context = LocalContext.current
 
-    LaunchedEffect(weaponId) {
-        weaponSingleViewModel.fetchWeaponSingle(weaponId)
-    }
+    val factory = EntryPointAccessors.fromActivity(
+        context as Activity,
+        WeaponSingleViewModelEntryPoint::class.java
+    ).weaponSingleViewModelFactory()
+
+    val viewModel: WeaponSingleViewModel = viewModel(
+        factory = WeaponSingleViewModelFactory(factory, weaponId)
+    )
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
 
     when (uiState) {
         is WeaponSingleUiState.Loading -> {
@@ -86,7 +96,7 @@ fun WeaponSingleScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = uiState.message,
+                    text = (uiState as WeaponSingleUiState.Error).message,
                     color = Color.Red,
                     modifier = Modifier.wrapContentSize()
                 )
@@ -94,7 +104,7 @@ fun WeaponSingleScreen(
         }
 
         is WeaponSingleUiState.Success -> {
-            WeaponDetailsContent(uiState.weapon)
+            WeaponDetailsContent((uiState as WeaponSingleUiState.Success).weapon)
         }
     }
 }
@@ -164,7 +174,7 @@ fun WeaponDetailsContent(
                     .background(Color(0x33FFFFFF))
                     .padding(8.dp)
             ) { page ->
-                var currentSkin = weapon.skins[page]
+                val currentSkin = weapon.skins[page]
                 var selectedChroma by remember(page) { mutableStateOf(currentSkin.chromas.first()) }
 
                 Column(
@@ -304,7 +314,7 @@ fun WeaponDetailsContent(
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_price),
-                            statValue = "$ ${cost}"
+                            statValue = "$ $cost"
                         )
                     }
 
@@ -348,13 +358,11 @@ fun WeaponDetailsContent(
                         )
                     }
 
-                    stats.wallPenetration?.let { pen ->
-                        WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = stringResource(R.string.stat_wall_penetration),
-                            statValue = pen
-                        )
-                    }
+                    WeaponStatItem(
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
+                        statName = stringResource(R.string.stat_wall_penetration),
+                        statValue = stats.wallPenetration
+                    )
 
                     stats.adsStats?.let { ads ->
                         Text(
