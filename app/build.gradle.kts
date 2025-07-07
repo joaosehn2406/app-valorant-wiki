@@ -39,6 +39,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -74,13 +75,22 @@ dependencies {
     implementation(libs.coil.ok.http)
     implementation(libs.coil.compose)
 
+    //Fragments, etc..
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v251)
+    implementation(libs.coil)
+
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
     //Constraint Layout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.androidx.cardview)
 
 
     // Google Play Services - Location
