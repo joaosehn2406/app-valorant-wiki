@@ -1,5 +1,6 @@
 package com.example.valorant_app.ui.pages.agent.single
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +23,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,12 +31,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
+import com.example.valorant_app.data.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.theme.ValorantRed
+import dagger.hilt.android.EntryPointAccessors
 
 
 class SimpleColorPainter(private val color: Color) : Painter() {
@@ -50,16 +53,23 @@ class SimpleColorPainter(private val color: Color) : Painter() {
 @Composable
 fun AgentSingleScreen(
     agentId: String,
-    navController: NavController,
-    agentSingleViewModel: AgentSingleViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
 
-    val state = agentSingleViewModel.uiState.collectAsStateWithLifecycle().value
+    val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        agentSingleViewModel.fetchAgentSingle(agentId)
-    }
+    val factory = EntryPointAccessors.fromActivity(
+        context as Activity,
+        WeaponSingleViewModelEntryPoint::class.java
+    ).agentSingleViewModelFactory()
+
+    val viewModel: AgentSingleViewModel = viewModel(
+        factory = AgentSingleViewModelFactory(factory, agentId)
+    )
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+
 
     when (state) {
         is AgentSingleUiState.Loading -> {
@@ -81,7 +91,7 @@ fun AgentSingleScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = state.message,
+                    text = (state as AgentSingleUiState.Error).message,
                     color = Color.Red,
                     modifier = Modifier.wrapContentSize()
                 )
@@ -89,7 +99,7 @@ fun AgentSingleScreen(
         }
 
         is AgentSingleUiState.Success -> {
-            val agent = state.agent
+            val agent = (state as AgentSingleUiState.Success).agent
             val scrollState = rememberScrollState()
 
             Box(
@@ -163,44 +173,42 @@ fun AgentSingleScreen(
                         )
 
                         agent.abilities.forEach { ability ->
-                            if (ability.displayIcon != null && ability.displayName != null && ability.description != null) {
-                                Row(
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp),
+                                horizontalArrangement = Arrangement.Start,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Image(
+                                    painter = rememberAsyncImagePainter(
+                                        model = ability.displayIcon,
+                                        placeholder = SimpleColorPainter(Color.DarkGray),
+                                        error = SimpleColorPainter(Color.Black)
+                                    ),
+                                    contentDescription = ability.displayName,
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(bottom = 8.dp),
-                                    horizontalArrangement = Arrangement.Start,
-                                    verticalAlignment = Alignment.CenterVertically
+                                        .size(40.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(Color.DarkGray)
+                                )
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Column(
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.Start
                                 ) {
-                                    Image(
-                                        painter = rememberAsyncImagePainter(
-                                            model = ability.displayIcon,
-                                            placeholder = SimpleColorPainter(Color.DarkGray),
-                                            error = SimpleColorPainter(Color.Black)
-                                        ),
-                                        contentDescription = ability.displayName,
-                                        modifier = Modifier
-                                            .size(40.dp)
-                                            .clip(RoundedCornerShape(8.dp))
-                                            .background(Color.DarkGray)
+                                    Text(
+                                        text = ability.displayName,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = Color.White
                                     )
-
-                                    Spacer(modifier = Modifier.width(16.dp))
-
-                                    Column(
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.Start
-                                    ) {
-                                        Text(
-                                            text = ability.displayName,
-                                            style = MaterialTheme.typography.titleMedium,
-                                            color = Color.White
-                                        )
-                                        Text(
-                                            text = ability.description,
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = Color.LightGray
-                                        )
-                                    }
+                                    Text(
+                                        text = ability.description,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color.LightGray
+                                    )
                                 }
                             }
                         }

@@ -46,20 +46,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
 import com.example.valorant_app.data.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.data.entities.single.WeaponSingle
-import com.example.valorant_app.ui.WeaponSingleViewModelFactory
 import com.example.valorant_app.ui.theme.ValorantRed
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 fun WeaponSingleScreen(
-    weaponId: String,
-    navController: NavController
+    weaponId: String
 ) {
 
     val context = LocalContext.current

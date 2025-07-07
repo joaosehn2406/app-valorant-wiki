@@ -1,8 +1,7 @@
-package com.example.valorant_app.ui
+package com.example.valorant_app.ui.pages.weapon.single
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

@@ -82,7 +82,7 @@ fun ValorantWikiApp() {
                 navController,
                 AgentRoute.route,
                 topBar = { AgentSingleTopBar(navController) }) { padding ->
-                AgentSingleScreen(agentId = id, navController = navController, modifier = padding)
+                AgentSingleScreen(agentId = id, modifier = padding)
             }
         }
 
@@ -92,7 +92,7 @@ fun ValorantWikiApp() {
                 navController,
                 WeaponRoute.route,
                 topBar = { WeaponSingleTopBar(navController) }) { padding ->
-                WeaponSingleScreen(weaponId = id, navController = navController)
+                WeaponSingleScreen(weaponId = id)
             }
         }
 

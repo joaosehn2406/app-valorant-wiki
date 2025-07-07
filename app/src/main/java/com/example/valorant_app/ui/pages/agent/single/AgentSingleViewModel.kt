@@ -3,21 +3,26 @@ package com.example.valorant_app.ui.pages.agent.single
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.valorant_app.data.repository.AgentRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class AgentSingleViewModel @Inject constructor(
-    private val agentRepository: AgentRepository
+class AgentSingleViewModel @AssistedInject constructor(
+    private val agentRepository: AgentRepository,
+    @Assisted private val agentId: String
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AgentSingleUiState>(AgentSingleUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    fun fetchAgentSingle(agentId: String) {
+    init {
+        fetchAgentSingle()
+    }
+
+    fun fetchAgentSingle() {
         viewModelScope.launch {
             _uiState.value = AgentSingleUiState.Loading
 
@@ -35,5 +40,10 @@ class AgentSingleViewModel @Inject constructor(
                     AgentSingleUiState.Error("Erro de conexão: ${e.message}")
             }
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(agentId: String) : AgentSingleViewModel
     }
 }
