@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card
+package com.example.valorant_app.ui.pages.agent.card.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -141,7 +141,7 @@ fun AgentsScreen(
                                             }
                                     }
                                     Spacer(Modifier.height(4.dp))
-                                    val tags = agent.characterTags.orEmpty()
+                                    val tags = agent.characterTags
                                         .filterNot { it.isNullOrBlank() }
                                     Text(
                                         text = if (tags.isEmpty()) {

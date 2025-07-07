@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card
+package com.example.valorant_app.ui.pages.agent.card.compose
 
 import com.example.valorant_app.data.entities.card.AgentCard
 

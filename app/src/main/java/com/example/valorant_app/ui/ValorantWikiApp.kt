@@ -18,9 +18,9 @@ import com.example.valorant_app.ui.navigation.AgentRoute
 import com.example.valorant_app.ui.navigation.HomePageRoute
 import com.example.valorant_app.ui.navigation.InitialPageRoute
 import com.example.valorant_app.ui.navigation.WeaponRoute
-import com.example.valorant_app.ui.pages.agent.AgentsXmlFragment
-import com.example.valorant_app.ui.pages.agent.card.AgentScreenViewModel
-import com.example.valorant_app.ui.pages.agent.card.AgentsScreen
+import com.example.valorant_app.ui.pages.agent.card.xml.AgentsXmlFragment
+import com.example.valorant_app.ui.pages.agent.card.compose.AgentScreenViewModel
+import com.example.valorant_app.ui.pages.agent.card.compose.AgentsScreen
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen

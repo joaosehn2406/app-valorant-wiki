@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.FlagHexConverter
-import com.example.valorant_app.ui.pages.agent.card.AgentScreenViewModel
+import com.example.valorant_app.ui.pages.agent.card.compose.AgentScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

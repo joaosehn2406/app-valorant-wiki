@@ -1,5 +1,6 @@
-package com.example.valorant_app.ui.pages.agent
+package com.example.valorant_app.ui.pages.agent.card.xml
 
+import android.R
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -33,11 +34,11 @@ class AgentsXmlAdapter(
             b.tvName.text = agent.displayName
 
             b.ivAgent.load(agent.displayIconSmall) {
-                placeholder(android.R.drawable.progress_indeterminate_horizontal)
-                error(android.R.drawable.stat_notify_error)
+                placeholder(R.drawable.progress_indeterminate_horizontal)
+                error(R.drawable.stat_notify_error)
             }
 
-            val tags = agent.characterTags.orEmpty()
+            val tags = agent.characterTags
                 .filterNot { it.isNullOrBlank() }
                 .joinToString(" • ")
             b.tvDescription.text = tags.ifBlank { b.root.context.getString(com.example.valorant_app.R.string.no_tags_informed) }

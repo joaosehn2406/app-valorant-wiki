@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card
+package com.example.valorant_app.ui.pages.agent.card.compose
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

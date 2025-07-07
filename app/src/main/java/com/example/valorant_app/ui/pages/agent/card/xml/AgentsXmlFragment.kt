@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent
+package com.example.valorant_app.ui.pages.agent.card.xml
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.databinding.FragmentAgentsXmlBinding
-import com.example.valorant_app.ui.pages.agent.card.AgentCardUiState
-import com.example.valorant_app.ui.pages.agent.card.AgentScreenViewModel
+import com.example.valorant_app.ui.pages.agent.card.compose.AgentCardUiState
+import com.example.valorant_app.ui.pages.agent.card.compose.AgentScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
