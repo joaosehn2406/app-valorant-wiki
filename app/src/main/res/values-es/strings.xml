@@ -10,10 +10,10 @@
     <string name="search_for_guns">Buscar armas</string>
     <string name="search_skins">Buscar skins</string>
     <string name="data_source">Fuente de datos</string>
-    <string name="vava_api_text">API oficial de Valorant (valorant-api.com)</string>
+    <string name="vava_api_text">API oficial del Valorant (valorant-api.com)</string>
     <string name="agent">Agente</string>
     <string name="agents">Agentes</string>
-    <string name="weapon">Arma</string>
+    <string name="weapon">Armas</string>
     <string name="unknown">Desconocido</string>
     <string name="statistics">Estadísticas</string>
     <string name="no_tags_informed">No se informaron etiquetas.</string>

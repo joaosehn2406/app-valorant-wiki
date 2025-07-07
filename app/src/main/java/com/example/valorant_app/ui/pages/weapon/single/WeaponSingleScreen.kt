@@ -1,5 +1,6 @@
 package com.example.valorant_app.ui.pages.weapon.single
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,10 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -52,13 +52,6 @@ import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.theme.ValorantRed
 
-class SimpleColorPainter(private val color: Color) : Painter() {
-    override val intrinsicSize: Size = Size.Unspecified
-    override fun DrawScope.onDraw() {
-        drawRect(color = color)
-    }
-}
-
 @Composable
 fun WeaponSingleScreen(
     weaponId: String,
@@ -66,9 +59,12 @@ fun WeaponSingleScreen(
     weaponSingleViewModel: WeaponSingleViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    weaponSingleViewModel.fetchWeaponSingle(weaponId)
 
     val uiState = weaponSingleViewModel.uiState.collectAsStateWithLifecycle().value
+
+    LaunchedEffect(weaponId) {
+        weaponSingleViewModel.fetchWeaponSingle(weaponId)
+    }
 
     when (uiState) {
         is WeaponSingleUiState.Loading -> {
@@ -81,6 +77,7 @@ fun WeaponSingleScreen(
                 CircularProgressIndicator(color = ValorantRed)
             }
         }
+
         is WeaponSingleUiState.Error -> {
             Box(
                 modifier = Modifier
@@ -95,12 +92,14 @@ fun WeaponSingleScreen(
                 )
             }
         }
+
         is WeaponSingleUiState.Success -> {
-            WeaponDetailsContent(weapon = uiState.weapon)
+            WeaponDetailsContent(uiState.weapon)
         }
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun WeaponDetailsContent(
     weapon: WeaponSingle,
@@ -165,8 +164,8 @@ fun WeaponDetailsContent(
                     .background(Color(0x33FFFFFF))
                     .padding(8.dp)
             ) { page ->
-                var currentSkin by remember { mutableStateOf(weapon.skins[page]) }
-                var selectedChroma by remember(currentSkin) { mutableStateOf(currentSkin.chromas.first()) }
+                var currentSkin = weapon.skins[page]
+                var selectedChroma by remember(page) { mutableStateOf(currentSkin.chromas.first()) }
 
                 Column(
                     modifier = Modifier
@@ -235,10 +234,13 @@ fun WeaponDetailsContent(
                                             modifier = Modifier
                                                 .size(50.dp)
                                                 .clip(RoundedCornerShape(8.dp))
-                                                .background(Color.DarkGray.copy(alpha = 0.6f))
+                                                .background(
+                                                    if (chroma == selectedChroma) Color.LightGray.copy()
+                                                    else Color.DarkGray.copy(alpha = 0.6f)
+                                                )
                                                 .padding(4.dp)
                                                 .clickable {
-
+                                                    selectedChroma = chroma
                                                 },
                                             contentScale = ContentScale.Fit
                                         )
@@ -328,7 +330,10 @@ fun WeaponDetailsContent(
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_run_speed),
-                            statValue = stringResource(R.string.stat_multiplier, stats.runSpeedMultiplier)
+                            statValue = stringResource(
+                                R.string.stat_multiplier,
+                                stats.runSpeedMultiplier
+                            )
                         )
                     }
 
@@ -336,7 +341,10 @@ fun WeaponDetailsContent(
                         WeaponStatItem(
                             iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_first_bullet_accuracy),
-                            statValue = stringResource(R.string.stat_percentage, (stats.firstBulletAccuracy * 100).toInt())
+                            statValue = stringResource(
+                                R.string.stat_percentage,
+                                (stats.firstBulletAccuracy * 100).toInt()
+                            )
                         )
                     }
 

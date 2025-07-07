@@ -67,7 +67,6 @@ fun ValorantWikiApp() {
             }
         }
 
-
         composable(WeaponRoute.route) {
             AppScaffold(
                 navController,
