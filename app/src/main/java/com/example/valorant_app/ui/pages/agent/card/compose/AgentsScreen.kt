@@ -61,6 +61,7 @@ fun AgentsScreen(
                     CircularProgressIndicator(color = ValorantRed)
                 }
             }
+
             is AgentCardUiState.Error -> {
                 Box(
                     Modifier.fillMaxSize(),
@@ -72,6 +73,7 @@ fun AgentsScreen(
                     )
                 }
             }
+
             is AgentCardUiState.Success -> {
                 val agents = (state as AgentCardUiState.Success).agents
 
@@ -93,7 +95,6 @@ fun AgentsScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(90.dp)
-                                .padding(bottom = 8.dp)
                                 .background(
                                     brush = Brush.horizontalGradient(gradient),
                                     shape = RoundedCornerShape(8.dp)
@@ -141,7 +142,7 @@ fun AgentsScreen(
                                             }
                                     }
                                     Spacer(Modifier.height(4.dp))
-                                    val tags = agent.characterTags
+                                    val tags = agent.characterTags.orEmpty()
                                         .filterNot { it.isNullOrBlank() }
                                     Text(
                                         text = if (tags.isEmpty()) {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -45,31 +46,25 @@ fun AppScaffold(
             BottomAppBarNav(navController = navController, currentRoute = currentRoute)
         },
         containerColor = Color.Transparent
-    ) { inner ->
-        content(Modifier.padding(inner))
+    ) { innerPadding ->
+        content(Modifier.padding(innerPadding))
     }
 }
 
-
 @Composable
 fun FlagsDropdown(
+    selectedLanguage: String,
     onLanguageSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier.background(
-            Color.Transparent
-        )
-    ) {
-        IconButton(
-            onClick = { expanded = !expanded }
-        ) {
+
+    Box(modifier = modifier.background(Color.Transparent)) {
+        IconButton(onClick = { expanded = !expanded }) {
             Icon(
                 Icons.Default.Settings,
                 contentDescription = null,
-                modifier = Modifier
-                    .size(32.dp)
+                modifier = Modifier.size(32.dp)
             )
         }
         DropdownMenu(
@@ -77,61 +72,42 @@ fun FlagsDropdown(
             onDismissRequest = { expanded = false },
             containerColor = Color(0xFF191A1C)
         ) {
-            DropdownMenuItem(
-                text = {
-                    Text(
-                        "${FlagHexConverter.countryCodeToFlagEmoji("BR")} - ${
-                            stringResource(
-                                R.string.dropdown_portuguese
+            listOf(
+                "pt-BR" to R.string.dropdown_portuguese,
+                "en-US" to R.string.dropdown_english,
+                "es-ES" to R.string.dropdown_spanish
+            ).forEach { (code, labelRes) ->
+                val isSelected = code == selectedLanguage
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            "${FlagHexConverter.countryCodeToFlagEmoji(code)}  ${
+                                stringResource(
+                                    labelRes
+                                )
+                            }",
+                            color = if (isSelected) Color.Yellow else Color.White,
+                            letterSpacing = 0.5.sp
+                        )
+                    },
+                    trailingIcon = {
+                        if (isSelected) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = "Selecionado",
+                                tint = Color.Yellow
                             )
-                        }",
-                        color = Color.White,
-                        letterSpacing = 0.5.sp
-                    )
-                },
-                onClick = {
-                    onLanguageSelected("pt-BR")
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = {
-                    Text(
-                        "${FlagHexConverter.countryCodeToFlagEmoji("US")} - ${
-                            stringResource(
-                                R.string.dropdown_english
-                            )
-                        }",
-                        color = Color.White,
-                        letterSpacing = 0.5.sp
-                    )
-                },
-                onClick = {
-                    onLanguageSelected("en-US")
-                    expanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = {
-                    Text(
-                        "${FlagHexConverter.countryCodeToFlagEmoji("ES")} - ${
-                            stringResource(
-                                R.string.dropdown_spanish
-                            )
-                        }",
-                        color = Color.White,
-                        letterSpacing = 0.5.sp
-                    )
-                },
-                onClick = {
-                    onLanguageSelected("es-ES")
-                    expanded = false
-                }
-            )
+                        }
+                    },
+                    onClick = {
+                        onLanguageSelected(code)
+                        expanded = false
+                    }
+                )
+            }
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,9 +121,12 @@ fun HomeTopBar(
             containerColor = Color(0xFF0E0E10),
             titleContentColor = Color(0xFFE03240)
         ),
-        actions = { FlagsDropdown(onLanguageSelected = { language ->
-            viewModel.languageSelected(language)
-        }) }
+        actions = {
+            FlagsDropdown(
+                selectedLanguage = viewModel.languageSelected,
+                onLanguageSelected = viewModel::languageSelected
+            )
+        }
     )
 }
 

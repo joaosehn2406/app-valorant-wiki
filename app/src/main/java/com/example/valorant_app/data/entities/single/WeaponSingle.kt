@@ -184,7 +184,7 @@ data class WeaponSingle(
         val contentTierUuid: String = "",
 
         @SerializedName("displayIcon")
-        val displayIcon: String? = null, // ATENÇÃO: AGORA PODE SER NULO!
+        val displayIcon: String? = null,
 
         @SerializedName("wallpaper")
         val wallpaper: String? = null,

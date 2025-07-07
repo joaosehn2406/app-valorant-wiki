@@ -45,33 +45,54 @@ fun ValorantWikiApp() {
         }
 
         composable(HomePageRoute.route) {
-            AppScaffold(navController, HomePageRoute.route, topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
+            AppScaffold(
+                navController,
+                HomePageRoute.route,
+                topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
                 HomeContent(modifier = padding)
             }
         }
 
         composable(AgentRoute.route) {
-            AppScaffold(navController, AgentRoute.route, topBar = { AgentTopBar(navController) }) { padding ->
-                AgentsScreen(navController, modifier = padding)
+            AppScaffold(
+                navController,
+                AgentRoute.route,
+                topBar = { AgentTopBar(navController) }
+            ) { padding ->
+                AgentsScreen(
+                    navController = navController,
+                    viewModel = agentScreenViewModel,
+                    modifier = padding
+                )
             }
         }
 
+
         composable(WeaponRoute.route) {
-            AppScaffold(navController, WeaponRoute.route, topBar = { WeaponTopBar(navController) }) { padding ->
+            AppScaffold(
+                navController,
+                WeaponRoute.route,
+                topBar = { WeaponTopBar(navController) }) { padding ->
                 WeaponSkinsScreen(navController, modifier = padding)
             }
         }
 
         composable("AgentSingleRoute/{uuid}") { backStack ->
             val id = backStack.arguments?.getString("uuid") ?: return@composable
-            AppScaffold(navController, AgentRoute.route, topBar = { AgentSingleTopBar(navController) }) { padding ->
+            AppScaffold(
+                navController,
+                AgentRoute.route,
+                topBar = { AgentSingleTopBar(navController) }) { padding ->
                 AgentSingleScreen(agentId = id, navController = navController, modifier = padding)
             }
         }
 
         composable("WeaponSingleRoute/{uuid}") { backStack ->
             val id = backStack.arguments?.getString("uuid") ?: return@composable
-            AppScaffold(navController, WeaponRoute.route, topBar = { WeaponSingleTopBar(navController) }) { padding ->
+            AppScaffold(
+                navController,
+                WeaponRoute.route,
+                topBar = { WeaponSingleTopBar(navController) }) { padding ->
                 WeaponSingleScreen(weaponId = id, navController = navController, modifier = padding)
             }
         }

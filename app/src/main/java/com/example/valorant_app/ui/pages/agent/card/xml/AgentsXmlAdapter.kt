@@ -39,9 +39,13 @@ class AgentsXmlAdapter(
             }
 
             val tags = agent.characterTags
-                .filterNot { it.isNullOrBlank() }
-                .joinToString(" • ")
-            b.tvDescription.text = tags.ifBlank { b.root.context.getString(com.example.valorant_app.R.string.no_tags_informed) }
+                ?.filterNot { it.isNullOrBlank() }
+                ?.joinToString(" • ")
+                .orEmpty()
+            b.tvDescription.text = if (tags.isBlank())
+                b.root.context.getString(com.example.valorant_app.R.string.no_tags_informed)
+            else
+                tags
 
             b.root.setOnClickListener { onClick(agent) }
         }
