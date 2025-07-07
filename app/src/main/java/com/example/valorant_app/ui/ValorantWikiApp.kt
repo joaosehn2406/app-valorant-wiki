@@ -100,6 +100,7 @@ fun ValorantWikiApp() {
             val context = LocalContext.current
             val fm = remember { (context as FragmentActivity).supportFragmentManager }
             val containerId = remember { View.generateViewId() }
+
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
                 factory = { ctx ->
@@ -107,7 +108,12 @@ fun ValorantWikiApp() {
                 },
                 update = { view ->
                     if (fm.findFragmentById(containerId) == null) {
-                        fm.commitNow { replace(containerId, AgentsXmlFragment()) }
+                        val fragment = AgentsXmlFragment().apply {
+                            onAgentSelected = { uuid ->
+                                navController.navigate("AgentSingleRoute/$uuid")
+                            }
+                        }
+                        fm.commitNow { replace(containerId, fragment) }
                     }
                 }
             )

@@ -94,6 +94,7 @@ fun AgentsScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(8.dp)
                                 .height(90.dp)
                                 .background(
                                     brush = Brush.horizontalGradient(gradient),

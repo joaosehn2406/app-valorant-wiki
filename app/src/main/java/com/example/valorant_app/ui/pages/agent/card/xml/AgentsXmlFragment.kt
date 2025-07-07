@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.databinding.FragmentAgentsXmlBinding
 import com.example.valorant_app.ui.pages.agent.card.compose.AgentCardUiState
@@ -18,6 +17,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AgentsXmlFragment : Fragment() {
+    var onAgentSelected: ((String) -> Unit)? = null
 
     private var _binding: FragmentAgentsXmlBinding? = null
     private val binding get() = _binding!!
@@ -39,9 +39,10 @@ class AgentsXmlFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         adapter = AgentsXmlAdapter { agent: AgentCard ->
-            findNavController().navigate("AgentSingleRoute/${agent.uuid}")
+            onAgentSelected?.invoke(agent.uuid)
         }
         binding.rvAgents.adapter = adapter
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 if (state is AgentCardUiState.Success) {
