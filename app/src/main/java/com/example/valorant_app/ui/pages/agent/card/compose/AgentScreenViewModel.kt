@@ -36,7 +36,9 @@ class AgentScreenViewModel @Inject constructor(
             _uiState.value = AgentCardUiState.Loading
             val response = agentRepository.getAllAgentsCard(languageSelected)
             if (response.status == 200) {
-                _uiState.value = AgentCardUiState.Success(response.data)
+                _uiState.value = AgentCardUiState.Success(response.data.filter { agents ->
+                    agents.isPlayableCharacter
+                })
             } else {
                 _uiState.value = AgentCardUiState.Error("Erro: ${response.status}")
             }
