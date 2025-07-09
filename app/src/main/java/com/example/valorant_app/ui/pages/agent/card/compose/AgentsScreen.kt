@@ -20,12 +20,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +49,7 @@ import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
 import com.example.valorant_app.ui.theme.ValorantRed
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun AgentsScreen(
     navController: NavController,
@@ -110,8 +112,34 @@ fun AgentsScreen(
                                             selectedTags.add(tag)
                                         }
                                     },
-                                    label = { Text(tag) }
+                                    label = {
+                                        Text(
+                                            text = tag,
+                                            style = MaterialTheme.typography.labelLarge,
+                                            color = if (selectedTags.contains(tag)) Color.White else Color.LightGray,
+                                        )
+                                    },
+                                    shape = RoundedCornerShape(50),
+                                    border = FilterChipDefaults.filterChipBorder(
+                                        borderColor = if (selectedTags.contains(tag)) ValorantRed else Color.DarkGray,
+                                        borderWidth = 1.dp,
+                                        enabled = true,
+                                        selected = selectedTags.contains(tag)
+                                    ),
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        containerColor = Color(0xFF1C1C1E),
+                                        selectedContainerColor = ValorantRed,
+                                        labelColor = Color.LightGray,
+                                        selectedLabelColor = Color.White
+                                    ),
+                                    elevation = FilterChipDefaults.filterChipElevation(
+                                        elevation = if (selectedTags.contains(tag)) 6.dp else 2.dp
+                                    ),
+                                    modifier = Modifier
+                                        .height(36.dp)
+                                        .padding(horizontal = 4.dp)
                                 )
+
                             }
                         }
                     }
@@ -214,6 +242,7 @@ fun AgentsScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
+            backgroundColor = ValorantRed,
             text = { Text("XML") },
             onClick = { navController.navigate("agentsXml") }
         )
