@@ -43,10 +43,39 @@ class AgentsXmlFragment : Fragment() {
         }
         binding.rvAgents.adapter = adapter
 
+        val chipGroup = binding.chipGroup
+        val selectedTags = mutableSetOf<String>()
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 if (state is AgentCardUiState.Success) {
+                    val agents = state.agents
                     adapter.submitList(state.agents)
+
+                    val allTags = agents
+                        .flatMap { it.characterTags.orEmpty().filterNot { it.isNullOrBlank() } }
+                        .distinct()
+
+                    chipGroup.removeAllViews()
+                    allTags.forEach { tags ->
+                        val chip = com.google.android.material.chip.Chip(requireContext()).apply {
+                            text = tags
+                            isCheckable = true
+                            setOnCheckedChangeListener { _, isChecked ->
+                                if (isChecked) selectedTags.add(
+                                    tags ?: ""
+                                ) else selectedTags.remove(tags)
+                                val filtered = if (selectedTags.isEmpty()) agents
+                                else agents.filter {
+                                    it.characterTags.orEmpty().any { tag ->
+                                        selectedTags.contains(tag)
+                                    }
+                                }
+                                adapter.submitList(filtered)
+                            }
+                        }
+                        chipGroup.addView(chip)
+                    }
                 }
             }
         }
