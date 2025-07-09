@@ -21,7 +21,8 @@ abstract class RepositoryModule {
     abstract fun bindWeaponRepository(weaponRepositoryImpl: WeaponRepositoryImpl): WeaponRepository
 
     @Binds
-    abstract fun bindCountryFlagRepository(countryFlagRepositoryImpl: CountryFlagRepositoryImpl
+    abstract fun bindCountryFlagRepository(
+        countryFlagRepositoryImpl: CountryFlagRepositoryImpl
     ): CountryFlagRepository
 
 }

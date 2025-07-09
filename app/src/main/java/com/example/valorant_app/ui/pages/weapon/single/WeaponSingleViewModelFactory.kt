@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
-class WeaponSingleViewModelFactory @AssistedInject constructor (
+class WeaponSingleViewModelFactory @AssistedInject constructor(
     private val assistedFactory: WeaponSingleViewModel.Factory,
     @Assisted private val weaponId: String
 ) : ViewModelProvider.Factory {

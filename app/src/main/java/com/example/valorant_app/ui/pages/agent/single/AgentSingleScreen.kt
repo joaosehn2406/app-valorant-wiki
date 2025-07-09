@@ -42,7 +42,8 @@ import dagger.hilt.android.EntryPointAccessors
 
 
 class SimpleColorPainter(private val color: Color) : Painter() {
-    override val intrinsicSize: androidx.compose.ui.geometry.Size = androidx.compose.ui.geometry.Size.Unspecified
+    override val intrinsicSize: androidx.compose.ui.geometry.Size =
+        androidx.compose.ui.geometry.Size.Unspecified
 
     override fun DrawScope.onDraw() {
         drawRect(color = color)

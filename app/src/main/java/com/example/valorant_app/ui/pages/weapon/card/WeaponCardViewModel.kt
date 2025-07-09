@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WeaponCardViewModel @Inject constructor(
     private val weaponRepository: WeaponRepository
-) : ViewModel(){
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<WeaponCardUiState>(WeaponCardUiState.Loading)
     val uiState = _uiState.asStateFlow()
@@ -27,5 +27,4 @@ class WeaponCardViewModel @Inject constructor(
             }
         }
     }
-
 }

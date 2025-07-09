@@ -2,7 +2,7 @@ package com.example.valorant_app.data.entities.card
 
 import com.google.gson.annotations.SerializedName
 
-data class AgentCard (
+data class AgentCard(
     @SerializedName("uuid")
     val uuid: String = "",
 

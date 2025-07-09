@@ -44,6 +44,6 @@ class AgentSingleViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(agentId: String) : AgentSingleViewModel
+        fun create(agentId: String): AgentSingleViewModel
     }
 }

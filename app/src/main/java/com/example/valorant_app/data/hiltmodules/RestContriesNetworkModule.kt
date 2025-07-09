@@ -21,7 +21,8 @@ object RestCountriesNetworkModule {
             .build()
 
     @Provides
-    fun provideRestCountriesService(@Named("restCountries")
+    fun provideRestCountriesService(
+        @Named("restCountries")
         retrofit: Retrofit
     ): RestCountriesService =
         retrofit.create(RestCountriesService::class.java)
