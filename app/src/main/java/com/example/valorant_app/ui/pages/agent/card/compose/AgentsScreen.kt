@@ -1,5 +1,6 @@
 package com.example.valorant_app.ui.pages.agent.card.compose
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +52,7 @@ import com.example.valorant_app.ui.theme.ValorantRed
 fun AgentsScreen(
     navController: NavController,
     viewModel: AgentScreenViewModel = hiltViewModel(),
+    showFilter: Boolean,
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -92,22 +94,25 @@ fun AgentsScreen(
                     FlowRow(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
+                            .padding(10.dp)
+                            .animateContentSize(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        allTags.forEach { tag ->
-                            FilterChip(
-                                selected = selectedTags.contains(tag),
-                                onClick = {
-                                    if (selectedTags.contains(tag)) {
-                                        selectedTags.remove(tag)
-                                    } else {
-                                        selectedTags.add(tag)
-                                    }
-                                },
-                                label = { Text(tag) }
-                            )
+                        if (showFilter) {
+                            allTags.forEach { tag ->
+                                FilterChip(
+                                    selected = selectedTags.contains(tag),
+                                    onClick = {
+                                        if (selectedTags.contains(tag)) {
+                                            selectedTags.remove(tag)
+                                        } else {
+                                            selectedTags.add(tag)
+                                        }
+                                    },
+                                    label = { Text(tag) }
+                                )
+                            }
                         }
                     }
 

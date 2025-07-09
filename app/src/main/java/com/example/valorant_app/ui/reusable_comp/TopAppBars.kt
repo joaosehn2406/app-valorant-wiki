@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,6 +50,113 @@ fun AppScaffold(
     ) { innerPadding ->
         content(Modifier.padding(innerPadding))
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeTopBar(
+    navController: NavController,
+    viewModel: AgentScreenViewModel
+) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.app_name), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        ),
+        actions = {
+            FlagsDropdown(
+                selectedLanguage = viewModel.languageSelected,
+                onLanguageSelected = viewModel::languageSelected
+            )
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgentTopBar(
+    onFilterClick: () -> Unit,
+    navController: NavController
+) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.agents), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        ),
+        actions = {
+            Box(
+                modifier = Modifier.background(Color.Transparent)
+            ) {
+                IconButton(
+                    onClick = onFilterClick
+                ) {
+                    Icon(
+                        painterResource(R.drawable.filter),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeaponTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.weapon), color = Color.White) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240)
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgentSingleTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.agent_details), color = Color.White) },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240),
+            navigationIconContentColor = Color.White
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeaponSingleTopBar(navController: NavController) {
+    TopAppBar(
+        title = { Text(stringResource(R.string.weapon_skins), color = Color.White) },
+        navigationIcon = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF0E0E10),
+            titleContentColor = Color(0xFFE03240),
+            navigationIconContentColor = Color.White
+        )
+    )
 }
 
 @Composable
@@ -109,91 +217,3 @@ fun FlagsDropdown(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeTopBar(
-    navController: NavController,
-    viewModel: AgentScreenViewModel
-) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.app_name), color = Color.White) },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
-        ),
-        actions = {
-            FlagsDropdown(
-                selectedLanguage = viewModel.languageSelected,
-                onLanguageSelected = viewModel::languageSelected
-            )
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AgentTopBar(navController: NavController) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.agents), color = Color.White) },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
-        )
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun WeaponTopBar(navController: NavController) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.weapon), color = Color.White) },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
-        )
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AgentSingleTopBar(navController: NavController) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.agent_details), color = Color.White) },
-        navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240),
-            navigationIconContentColor = Color.White
-        )
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun WeaponSingleTopBar(navController: NavController) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.weapon_skins), color = Color.White) },
-        navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240),
-            navigationIconContentColor = Color.White
-        )
-    )
-}

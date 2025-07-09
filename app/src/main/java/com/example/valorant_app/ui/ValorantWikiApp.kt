@@ -3,7 +3,10 @@ package com.example.valorant_app.ui
 import android.view.View
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -54,14 +57,20 @@ fun ValorantWikiApp() {
         }
 
         composable(AgentRoute.route) {
+            var showFilter by remember { mutableStateOf(false)}
+
             AppScaffold(
                 navController,
                 AgentRoute.route,
-                topBar = { AgentTopBar(navController) }
+                topBar = { AgentTopBar(
+                    onFilterClick = { showFilter = !showFilter },
+                    navController = navController
+                ) }
             ) { padding ->
                 AgentsScreen(
                     navController = navController,
                     viewModel = agentScreenViewModel,
+                    showFilter = showFilter,
                     modifier = padding
                 )
             }
