@@ -13,11 +13,11 @@ data class AgentCard(
     val displayIconSmall: String = "",
 
     @SerializedName("characterTags")
-    val characterTags: List<String?> = listOf(),
+    val characterTags: List<String?>,
 
     @SerializedName("backgroundGradientColors")
-    val backgroundGradientColors: List<String> = listOf(),
+    val backgroundGradientColors: List<String>,
 
     @SerializedName("isPlayableCharacter")
-    val isPlayableCharacter: Boolean = true
+    val isPlayableCharacter: Boolean
 )

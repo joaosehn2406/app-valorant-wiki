@@ -2,7 +2,7 @@ package com.example.valorant_app.ui.reusable_comp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -39,7 +39,7 @@ fun AppScaffold(
     navController: NavController,
     currentRoute: String,
     topBar: @Composable () -> Unit,
-    content: @Composable (Modifier) -> Unit
+    content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         topBar = topBar,
@@ -48,7 +48,7 @@ fun AppScaffold(
         },
         containerColor = Color.Transparent
     ) { innerPadding ->
-        content(Modifier.padding(innerPadding))
+        content(innerPadding)
     }
 }
 

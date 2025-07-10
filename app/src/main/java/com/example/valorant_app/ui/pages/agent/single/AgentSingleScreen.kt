@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
-import com.example.valorant_app.data.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.theme.ValorantRed
 import dagger.hilt.android.EntryPointAccessors
 

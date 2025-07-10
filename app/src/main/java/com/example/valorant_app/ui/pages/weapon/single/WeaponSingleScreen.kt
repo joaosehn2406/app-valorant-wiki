@@ -49,7 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
-import com.example.valorant_app.data.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.theme.ValorantRed
 import dagger.hilt.android.EntryPointAccessors
