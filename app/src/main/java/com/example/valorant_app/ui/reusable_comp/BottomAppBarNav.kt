@@ -9,6 +9,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -21,7 +22,6 @@ import com.example.valorant_app.R
 import com.example.valorant_app.ui.navigation.HomePageRoute
 import com.example.valorant_app.ui.navigation.AgentRoute
 import com.example.valorant_app.ui.navigation.WeaponRoute
-import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun BottomAppBarNav(
@@ -88,7 +88,7 @@ fun BottomAppBarNav(
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color.White,
                         selectedTextColor = Color.White,
-                        indicatorColor = ValorantRed,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer,
                         unselectedIconColor = Color.LightGray,
                         unselectedTextColor = Color.LightGray
                     )

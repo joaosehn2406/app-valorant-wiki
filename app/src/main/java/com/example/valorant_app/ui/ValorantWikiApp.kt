@@ -37,99 +37,101 @@ import com.example.valorant_app.ui.reusable_comp.AppScaffold
 import com.example.valorant_app.ui.reusable_comp.HomeTopBar
 import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.WeaponTopBar
+import com.example.valorant_app.ui.theme.AppTheme
 
 @Composable
 fun ValorantWikiApp() {
-    val navController = rememberNavController()
-    val agentScreenViewModel: AgentScreenViewModel = hiltViewModel()
+    AppTheme {
+        val navController = rememberNavController()
+        val agentScreenViewModel: AgentScreenViewModel = hiltViewModel()
 
-    NavHost(navController, startDestination = InitialPageRoute.route) {
-
-        composable(InitialPageRoute.route) {
-            InitialScreen(navigateToHomePage = { navController.navigate(HomePageRoute.route) })
-        }
-
-        composable(HomePageRoute.route) {
-            AppScaffold(
-                navController = navController,
-                currentRoute = HomePageRoute.route,
-                topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
-                HomeContent(Modifier.padding(padding))
+        NavHost(navController, startDestination = InitialPageRoute.route) {
+            composable(InitialPageRoute.route) {
+                InitialScreen(navigateToHomePage = { navController.navigate(HomePageRoute.route) })
             }
-        }
 
-        composable(AgentRoute.route) {
-            var showFilter by rememberSaveable { mutableStateOf(false) }
+            composable(HomePageRoute.route) {
+                AppScaffold(
+                    navController = navController,
+                    currentRoute = HomePageRoute.route,
+                    topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
+                    HomeContent(Modifier.padding(padding))
+                }
+            }
 
-            AppScaffold(
-                navController = navController,
-                currentRoute = AgentRoute.route,
-                topBar = {
-                    AgentTopBar(
-                        onFilterClick = { showFilter = !showFilter },
-                        navController = navController
+            composable(AgentRoute.route) {
+                var showFilter by rememberSaveable { mutableStateOf(false) }
+
+                AppScaffold(
+                    navController = navController,
+                    currentRoute = AgentRoute.route,
+                    topBar = {
+                        AgentTopBar(
+                            onFilterClick = { showFilter = !showFilter },
+                            navController = navController
+                        )
+                    }
+                ) { padding ->
+                    AgentsScreen(
+                        navController = navController,
+                        viewModel = agentScreenViewModel,
+                        showFilter = showFilter,
+                        modifier = Modifier.padding(padding)
                     )
                 }
-            ) { padding ->
-                AgentsScreen(
+            }
+
+            composable(WeaponRoute.route) {
+                AppScaffold(
                     navController = navController,
-                    viewModel = agentScreenViewModel,
-                    showFilter = showFilter,
-                    modifier = Modifier.padding(padding)
+                    currentRoute = WeaponRoute.route,
+                    topBar = { WeaponTopBar(navController) }) { padding ->
+                    WeaponSkinsScreen(navController)
+                }
+            }
+
+            composable("AgentSingleRoute/{uuid}") { backStack ->
+                val id = backStack.arguments?.getString("uuid") ?: return@composable
+                AppScaffold(
+                    navController = navController,
+                    currentRoute = AgentRoute.route,
+                    topBar = { AgentSingleTopBar(navController) }) { padding ->
+                    AgentSingleScreen(agentId = id, modifier = Modifier.padding(padding))
+                }
+            }
+
+            composable("WeaponSingleRoute/{uuid}") { backStack ->
+                val id = backStack.arguments?.getString("uuid") ?: return@composable
+                AppScaffold(
+                    navController = navController,
+                    currentRoute = WeaponRoute.route,
+                    topBar = { WeaponSingleTopBar(navController) }) { padding ->
+                    WeaponSingleScreen(weaponId = id)
+                }
+            }
+
+            composable("agentsXml") {
+                val context = LocalContext.current
+                val fragmentXml = remember { (context as FragmentActivity).supportFragmentManager }
+                val containerId = remember { View.generateViewId() }
+
+                AndroidView(
+                    modifier = Modifier.fillMaxSize(),
+                    factory = { ctx ->
+                        FragmentContainerView(ctx).apply { id = containerId }
+                    },
+                    update = { view ->
+                        if (fragmentXml.findFragmentById(containerId) == null) {
+                            val fragment = AgentsXmlFragment().apply {
+                                onAgentSelected = { uuid ->
+                                    navController.navigate("AgentSingleRoute/$uuid")
+                                }
+                            }
+                            fragmentXml.commitNow { replace(containerId, fragment) }
+                        }
+                    }
                 )
             }
-        }
-
-        composable(WeaponRoute.route) {
-            AppScaffold(
-                navController = navController,
-                currentRoute = WeaponRoute.route,
-                topBar = { WeaponTopBar(navController) }) { padding ->
-                WeaponSkinsScreen(navController, modifier = Modifier.padding(padding))
-            }
-        }
-
-        composable("AgentSingleRoute/{uuid}") { backStack ->
-            val id = backStack.arguments?.getString("uuid") ?: return@composable
-            AppScaffold(
-                navController = navController,
-                currentRoute = AgentRoute.route,
-                topBar = { AgentSingleTopBar(navController) }) { padding ->
-                AgentSingleScreen(agentId = id, modifier = Modifier.padding(padding))
-            }
-        }
-
-        composable("WeaponSingleRoute/{uuid}") { backStack ->
-            val id = backStack.arguments?.getString("uuid") ?: return@composable
-            AppScaffold(
-                navController = navController,
-                currentRoute = WeaponRoute.route,
-                topBar = { WeaponSingleTopBar(navController) }) { padding ->
-                WeaponSingleScreen(weaponId = id)
-            }
-        }
-
-        composable("agentsXml") {
-            val context = LocalContext.current
-            val fragmentXml = remember { (context as FragmentActivity).supportFragmentManager }
-            val containerId = remember { View.generateViewId() }
-
-            AndroidView(
-                modifier = Modifier.fillMaxSize(),
-                factory = { ctx ->
-                    FragmentContainerView(ctx).apply { id = containerId }
-                },
-                update = { view ->
-                    if (fragmentXml.findFragmentById(containerId) == null) {
-                        val fragment = AgentsXmlFragment().apply {
-                            onAgentSelected = { uuid ->
-                                navController.navigate("AgentSingleRoute/$uuid")
-                            }
-                        }
-                        fragmentXml.commitNow { replace(containerId, fragment) }
-                    }
-                }
-            )
         }
     }
 }

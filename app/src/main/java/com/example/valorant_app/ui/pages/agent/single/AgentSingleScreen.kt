@@ -37,7 +37,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
-import com.example.valorant_app.ui.theme.ValorantRed
 import dagger.hilt.android.EntryPointAccessors
 
 
@@ -80,7 +79,7 @@ fun AgentSingleScreen(
                     .background(Color(0xFF0E0E10)),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = ValorantRed)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
         }
 
@@ -155,7 +154,7 @@ fun AgentSingleScreen(
                         Text(
                             text = agent.displayName,
                             style = MaterialTheme.typography.headlineMedium,
-                            color = ValorantRed,
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
 
@@ -169,7 +168,7 @@ fun AgentSingleScreen(
                         Text(
                             text = "Role: ${agent.role?.displayName ?: "Unknown"}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = ValorantRed,
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 

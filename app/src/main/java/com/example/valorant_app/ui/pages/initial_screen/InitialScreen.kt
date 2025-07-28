@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.valorant_app.R
-import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun InitialScreen(
@@ -40,7 +40,7 @@ fun InitialScreen(
             Button(
                 onClick = navigateToHomePage,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = ValorantRed,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = Color.White
                 ),
                 border = BorderStroke(1.dp, Color.Black),

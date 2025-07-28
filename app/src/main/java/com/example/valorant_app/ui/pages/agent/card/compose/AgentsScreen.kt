@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -47,7 +48,6 @@ import coil3.compose.AsyncImage
 import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
-import com.example.valorant_app.ui.theme.ValorantRed
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -66,7 +66,7 @@ fun AgentsScreen(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = ValorantRed)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
                 }
             }
 
@@ -121,14 +121,14 @@ fun AgentsScreen(
                                     },
                                     shape = RoundedCornerShape(50),
                                     border = FilterChipDefaults.filterChipBorder(
-                                        borderColor = if (selectedTags.contains(tag)) ValorantRed else Color.DarkGray,
+                                        borderColor = if (selectedTags.contains(tag)) MaterialTheme.colorScheme.primaryContainer else Color.DarkGray,
                                         borderWidth = 1.dp,
                                         enabled = true,
                                         selected = selectedTags.contains(tag)
                                     ),
                                     colors = FilterChipDefaults.filterChipColors(
                                         containerColor = Color(0xFF1C1C1E),
-                                        selectedContainerColor = ValorantRed,
+                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                                         labelColor = Color.LightGray,
                                         selectedLabelColor = Color.White
                                     ),
@@ -242,7 +242,7 @@ fun AgentsScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
-            backgroundColor = ValorantRed,
+            backgroundColor = MaterialTheme.colorScheme.primaryContainer,
             text = { Text("XML") },
             onClick = { navController.navigate("agentsXml") }
         )

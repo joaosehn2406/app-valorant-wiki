@@ -51,7 +51,6 @@ import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.data.entities.single.WeaponSingle
-import com.example.valorant_app.ui.theme.ValorantRed
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
@@ -81,7 +80,7 @@ fun WeaponSingleScreen(
                     .background(Color(0xFF0E0E10)),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = ValorantRed)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
         }
 
@@ -158,7 +157,7 @@ fun WeaponDetailsContent(
             Text(
                 text = stringResource(R.string.category, weapon.category),
                 style = MaterialTheme.typography.titleMedium,
-                color = ValorantRed,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -222,7 +221,7 @@ fun WeaponDetailsContent(
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.SemiBold
                             ),
-                            color = ValorantRed,
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         LazyRow(
@@ -297,7 +296,7 @@ fun WeaponDetailsContent(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 0.5.sp
                         ),
-                        color = ValorantRed,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
 
@@ -368,7 +367,7 @@ fun WeaponDetailsContent(
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 0.5.sp
                             ),
-                            color = ValorantRed.copy(alpha = 0.8f),
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),
                             modifier = Modifier.padding(top = 12.dp, bottom = 8.dp)
                         )
                         WeaponStatItem(

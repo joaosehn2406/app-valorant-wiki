@@ -31,20 +31,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.example.valorant_app.ui.theme.ValorantRed
 
 @Composable
 fun WeaponSkinsScreen(
     navController: NavController,
-    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel()
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (state) {
         is WeaponCardUiState.Loading -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = ValorantRed)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
         }
 
