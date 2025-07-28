@@ -59,7 +59,10 @@ fun AgentsScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Box(modifier.fillMaxSize()) {
+    Box(modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.surface)
+    ) {
         when (state) {
             is AgentCardUiState.Loading -> {
                 Box(

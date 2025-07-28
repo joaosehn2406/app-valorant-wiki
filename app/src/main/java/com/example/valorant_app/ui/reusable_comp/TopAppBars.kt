@@ -13,6 +13,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -61,8 +62,8 @@ fun HomeTopBar(
     TopAppBar(
         title = { Text(stringResource(R.string.app_name), color = Color.White) },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         actions = {
             FlagsDropdown(
@@ -82,8 +83,8 @@ fun AgentTopBar(
     TopAppBar(
         title = { Text(stringResource(R.string.agents), color = Color.White) },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         actions = {
             Box(
@@ -109,8 +110,8 @@ fun WeaponTopBar(navController: NavController) {
     TopAppBar(
         title = { Text(stringResource(R.string.weapon), color = Color.White) },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240)
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
 }
@@ -130,8 +131,8 @@ fun AgentSingleTopBar(navController: NavController) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240),
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
             navigationIconContentColor = Color.White
         )
     )
@@ -152,8 +153,8 @@ fun WeaponSingleTopBar(navController: NavController) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF0E0E10),
-            titleContentColor = Color(0xFFE03240),
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
             navigationIconContentColor = Color.White
         )
     )
