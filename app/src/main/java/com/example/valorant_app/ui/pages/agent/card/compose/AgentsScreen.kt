@@ -130,7 +130,7 @@ fun AgentsScreen(
                                         selected = selectedTags.contains(tag)
                                     ),
                                     colors = FilterChipDefaults.filterChipColors(
-                                        containerColor = Color(0xFF1C1C1E),
+                                        containerColor = MaterialTheme.colorScheme.primary,
                                         selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                                         labelColor = Color.LightGray,
                                         selectedLabelColor = Color.White
