@@ -1,6 +1,5 @@
 package com.example.valorant_app.data.repository
 
-import android.util.Log
 import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.data.entities.single.AgentSingle
 import com.example.valorant_app.data.services.ApiResponse
@@ -18,28 +17,32 @@ class AgentRepositoryImpl @Inject constructor(
 ) : AgentRepository {
 
     override suspend fun getAllAgentsCard(language: String): ApiResponse<List<AgentCard>> {
-        val response = valorantApiService.getAllAgentsCard(language)
-        return if (response.isSuccessful) {
-            val body = response.body()!!
-            ApiResponse(status = body.status, data = body.data)
-        } else {
-            val code = response.code()
-            val errorText = response.errorBody()?.string().orEmpty()
-            Log.e("AgentRepo", "Erro HTTP $code: $errorText")
-            ApiResponse(status = code, data = emptyList())
+        return try {
+            val response = valorantApiService.getAllAgentsCard(language)
+            ApiResponse(
+                status = response.status,
+                data = response.data
+            )
+        } catch (e: Exception) {
+            ApiResponse(
+                status = 500,
+                data = emptyList()
+            )
         }
     }
 
     override suspend fun getAgentById(uuid: String): ApiResponse<AgentSingle> {
-        val response = valorantApiService.getAgentById(uuid)
-        return if (response.isSuccessful) {
-            val body = response.body()!!
-            ApiResponse(status = body.status , data = body.data)
-        } else {
-            val code = response.code()
-            val errorText = response.errorBody()?.string().orEmpty()
-            Log.e("AgentRepo", "Erro HTTP $code: $errorText")
-            ApiResponse(status = code, data = AgentSingle())
+        return try {
+            val response = valorantApiService.getAgentById(uuid)
+            ApiResponse(
+                status = response.status,
+                data = response.data
+            )
+        } catch (e: Exception) {
+            ApiResponse(
+                status = 500,
+                data = AgentSingle()
+            )
         }
     }
 }
