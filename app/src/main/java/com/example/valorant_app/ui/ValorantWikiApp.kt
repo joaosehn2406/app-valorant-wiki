@@ -54,7 +54,7 @@ fun ValorantWikiApp() {
                 AppScaffold(
                     navController = navController,
                     currentRoute = HomePageRoute.route,
-                    topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
+                    topBar = { HomeTopBar(agentScreenViewModel) }) { padding ->
                     HomeContent(Modifier.padding(padding))
                 }
             }
@@ -67,8 +67,7 @@ fun ValorantWikiApp() {
                     currentRoute = AgentRoute.route,
                     topBar = {
                         AgentTopBar(
-                            onFilterClick = { showFilter = !showFilter },
-                            navController = navController
+                            onFilterClick = { showFilter = !showFilter }
                         )
                     }
                 ) { padding ->
@@ -85,7 +84,7 @@ fun ValorantWikiApp() {
                 AppScaffold(
                     navController = navController,
                     currentRoute = WeaponRoute.route,
-                    topBar = { WeaponTopBar(navController) }) { padding ->
+                    topBar = { WeaponTopBar() }) { padding ->
                     WeaponSkinsScreen(navController)
                 }
             }

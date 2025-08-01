@@ -39,7 +39,6 @@ import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 
-
 class SimpleColorPainter(private val color: Color) : Painter() {
     override val intrinsicSize: androidx.compose.ui.geometry.Size =
         androidx.compose.ui.geometry.Size.Unspecified
@@ -49,13 +48,11 @@ class SimpleColorPainter(private val color: Color) : Painter() {
     }
 }
 
-
 @Composable
 fun AgentSingleScreen(
     agentId: String,
     modifier: Modifier = Modifier
 ) {
-
     val context = LocalContext.current
 
     val factory = EntryPointAccessors.fromActivity(
@@ -69,14 +66,12 @@ fun AgentSingleScreen(
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-
-
     when (state) {
         is AgentSingleUiState.Loading -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0E0E10)),
+                    .background(MaterialTheme.colorScheme.surface),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
@@ -87,7 +82,7 @@ fun AgentSingleScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0E0E10)),
+                    .background(MaterialTheme.colorScheme.surface),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -105,24 +100,23 @@ fun AgentSingleScreen(
             Box(
                 modifier = modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0E0E10))
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(scrollState)
                 ) {
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(500.dp)
-                            .background(Color.Gray)
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Image(
                             painter = rememberAsyncImagePainter(
                                 model = agent.background,
-                                placeholder = SimpleColorPainter(Color.DarkGray.copy(alpha = 0.5f)),
+                                placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
                                 error = SimpleColorPainter(Color.Black)
                             ),
                             contentDescription = "Foto do background",
@@ -148,27 +142,27 @@ fun AgentSingleScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.Black.copy(alpha = 0.8f))
+                            .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp)
                     ) {
                         Text(
                             text = agent.displayName,
                             style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.primaryContainer,
+                            color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
 
                         Text(
                             text = agent.description,
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 
                         Text(
                             text = "Role: ${agent.role?.displayName ?: "Unknown"}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primaryContainer,
+                            color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 
@@ -183,14 +177,14 @@ fun AgentSingleScreen(
                                 Image(
                                     painter = rememberAsyncImagePainter(
                                         model = ability.displayIcon,
-                                        placeholder = SimpleColorPainter(Color.DarkGray),
+                                        placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
                                         error = SimpleColorPainter(Color.Black)
                                     ),
                                     contentDescription = ability.displayName,
                                     modifier = Modifier
                                         .size(40.dp)
                                         .clip(RoundedCornerShape(8.dp))
-                                        .background(Color.DarkGray)
+                                        .background(MaterialTheme.colorScheme.surfaceVariant)
                                 )
 
                                 Spacer(modifier = Modifier.width(16.dp))
@@ -202,12 +196,12 @@ fun AgentSingleScreen(
                                     Text(
                                         text = ability.displayName,
                                         style = MaterialTheme.typography.titleMedium,
-                                        color = Color.White
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
                                         text = ability.description,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = Color.LightGray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
                             }
