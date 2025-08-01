@@ -5,7 +5,18 @@ import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -16,7 +27,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,33 +49,38 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
-import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.data.entities.single.WeaponSingle
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 fun WeaponSingleScreen(
     weaponId: String
 ) {
+
     val context = LocalContext.current
+
     val factory = EntryPointAccessors.fromActivity(
         context as Activity,
         WeaponSingleViewModelEntryPoint::class.java
     ).weaponSingleViewModelFactory()
+
     val viewModel: WeaponSingleViewModel = viewModel(
         factory = WeaponSingleViewModelFactory(factory, weaponId)
     )
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
 
     when (uiState) {
         is WeaponSingleUiState.Loading -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(Color(0xFF0E0E10)),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
         }
 
@@ -68,12 +88,12 @@ fun WeaponSingleScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(Color(0xFF0E0E10)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = (uiState as WeaponSingleUiState.Error).message,
-                    color = MaterialTheme.colorScheme.error,
+                    color = Color.Red,
                     modifier = Modifier.wrapContentSize()
                 )
             }
@@ -94,9 +114,11 @@ fun WeaponDetailsContent(
     val pagerState = rememberPagerState(pageCount = { weapon.skins.size }, initialPage = 0)
     val mainScrollState = rememberScrollState()
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
         AsyncImage(
-            model = R.drawable.fundo_single_arma_white,
+            model = R.drawable.imagem_fundo_boa,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -107,10 +129,9 @@ fun WeaponDetailsContent(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
-                        )
+                        colors = listOf(Color.Transparent, Color(0xCC000000)),
+                        startY = 0f,
+                        endY = Float.POSITIVE_INFINITY
                     )
                 )
         )
@@ -129,14 +150,14 @@ fun WeaponDetailsContent(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 ),
-                color = MaterialTheme.colorScheme.onSurface,
+                color = Color.White,
                 modifier = Modifier.padding(top = 40.dp, bottom = 4.dp)
             )
 
             Text(
                 text = stringResource(R.string.category, weapon.category),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -146,7 +167,7 @@ fun WeaponDetailsContent(
                     .fillMaxWidth()
                     .height(420.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f))
+                    .background(Color(0x33FFFFFF))
                     .padding(8.dp)
             ) { page ->
                 val currentSkin = weapon.skins[page]
@@ -162,17 +183,20 @@ fun WeaponDetailsContent(
                     if (!currentSkin.displayIcon.isNullOrEmpty()) {
                         AsyncImage(
                             model = selectedChroma.fullRender,
-                            contentDescription = null,
+                            contentDescription = "Skin: ${currentSkin.displayName}",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(200.dp)
                                 .padding(bottom = 12.dp)
                         )
+
                         Text(
                             text = currentSkin.displayName,
-                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.SemiBold
+                            ),
+                            color = Color.White,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     } else {
@@ -184,7 +208,7 @@ fun WeaponDetailsContent(
                         ) {
                             Text(
                                 text = stringResource(R.string.skin_unavailable),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = Color.Gray,
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -194,8 +218,10 @@ fun WeaponDetailsContent(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.variants).uppercase(),
-                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
-                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.SemiBold
+                            ),
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         LazyRow(
@@ -203,34 +229,52 @@ fun WeaponDetailsContent(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             items(currentSkin.chromas) { chroma ->
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.padding(horizontal = 4.dp)
-                                ) {
-                                    AsyncImage(
-                                        model = chroma.swatch,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .size(50.dp)
-                                            .clip(RoundedCornerShape(8.dp))
-                                            .background(
-                                                if (chroma == selectedChroma) MaterialTheme.colorScheme.primary.copy(
-                                                    alpha = 0.3f
+                                if (!chroma.swatch.isNullOrEmpty()) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.padding(horizontal = 4.dp)
+                                    ) {
+                                        AsyncImage(
+                                            model = chroma.swatch,
+                                            contentDescription = "Chroma: ${chroma.displayName}",
+                                            modifier = Modifier
+                                                .size(50.dp)
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(
+                                                    if (chroma == selectedChroma) Color.LightGray.copy()
+                                                    else Color.DarkGray.copy(alpha = 0.6f)
                                                 )
-                                                else MaterialTheme.colorScheme.surfaceVariant.copy(
-                                                    alpha = 0.6f
-                                                )
-                                            )
-                                            .padding(4.dp)
-                                            .clickable { selectedChroma = chroma },
-                                        contentScale = ContentScale.Fit
-                                    )
-                                    Spacer(Modifier.height(4.dp))
-                                    Text(
-                                        text = chroma.displayName.ifBlank { "Padrão" },
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
+                                                .padding(4.dp)
+                                                .clickable {
+                                                    selectedChroma = chroma
+                                                },
+                                            contentScale = ContentScale.Fit
+                                        )
+                                        Spacer(Modifier.height(4.dp))
+                                        Text(
+                                            text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = Color.LightGray
+                                        )
+                                    }
+                                } else {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.padding(horizontal = 4.dp)
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(50.dp)
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(Color.Gray.copy(alpha = 0.6f))
+                                        )
+                                        Spacer(Modifier.height(4.dp))
+                                        Text(
+                                            text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = Color.LightGray
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -252,39 +296,45 @@ fun WeaponDetailsContent(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 0.5.sp
                         ),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
+
                     WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                         statName = stringResource(R.string.stat_fire_rate),
                         statValue = stringResource(R.string.stat_tiros_por_segundo, stats.fireRate)
                     )
+
                     weapon.shopData?.cost?.let { cost ->
                         WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_price),
                             statValue = "$ $cost"
                         )
                     }
+
                     WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                         statName = "Tamanho do Pente",
                         statValue = "${stats.magazineSize} balas"
                     )
+
                     WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                         statName = stringResource(R.string.stat_equip_time),
                         statValue = stringResource(R.string.stat_seconds, stats.equipTimeSeconds)
                     )
+
                     WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                         statName = stringResource(R.string.stat_reload_time),
                         statValue = stringResource(R.string.stat_seconds, stats.reloadTimeSeconds)
                     )
+
                     if (stats.runSpeedMultiplier != 0f) {
                         WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_run_speed),
                             statValue = stringResource(
                                 R.string.stat_multiplier,
@@ -292,9 +342,10 @@ fun WeaponDetailsContent(
                             )
                         )
                     }
+
                     if (stats.firstBulletAccuracy != 0f) {
                         WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_first_bullet_accuracy),
                             statValue = stringResource(
                                 R.string.stat_percentage,
@@ -302,11 +353,13 @@ fun WeaponDetailsContent(
                             )
                         )
                     }
+
                     WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                         statName = stringResource(R.string.stat_wall_penetration),
                         statValue = stats.wallPenetration
                     )
+
                     stats.adsStats?.let { ads ->
                         Text(
                             text = "ESTATÍSTICAS ADS",
@@ -314,11 +367,11 @@ fun WeaponDetailsContent(
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 0.5.sp
                             ),
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),
                             modifier = Modifier.padding(top = 12.dp, bottom = 8.dp)
                         )
                         WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(R.drawable.arma_fe),
+                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
                             statName = stringResource(R.string.stat_zoom_multiplier),
                             statValue = stringResource(R.string.stat_multiplier, ads.zoomMultiplier)
                         )
@@ -349,20 +402,22 @@ fun WeaponStatItem(
             modifier = Modifier
                 .size(32.dp)
                 .clip(RoundedCornerShape(6.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(Color.DarkGray.copy(alpha = 0.4f))
                 .padding(4.dp)
         )
+
         Spacer(modifier = Modifier.width(12.dp))
+
         Column {
             Text(
                 text = statName,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = Color.White
             )
             Text(
                 text = statValue,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = Color.LightGray
             )
         }
     }

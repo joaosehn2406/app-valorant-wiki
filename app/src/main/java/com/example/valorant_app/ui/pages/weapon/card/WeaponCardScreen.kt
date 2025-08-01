@@ -1,6 +1,5 @@
 package com.example.valorant_app.ui.pages.weapon.card
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,90 +39,85 @@ fun WeaponSkinsScreen(
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
-        when (state) {
-            is WeaponCardUiState.Loading -> {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
-                }
+    when (state) {
+        is WeaponCardUiState.Loading -> {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
+        }
 
-            is WeaponCardUiState.Error -> {
-                Text(
-                    (state as WeaponCardUiState.Error).message,
-                    color = Color.Red,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize()
-                )
-            }
+        is WeaponCardUiState.Error -> {
+            Text(
+                (state as WeaponCardUiState.Error).message,
+                color = Color.Red,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize()
+            )
+        }
 
-            is WeaponCardUiState.Success -> {
-                val weapons = (state as WeaponCardUiState.Success).weapons
+        is WeaponCardUiState.Success -> {
+            val weapons = (state as WeaponCardUiState.Success).weapons
 
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 80.dp),
-                    contentPadding = PaddingValues(vertical = 12.dp)
-                ) {
-                    items(items = weapons) { weapon ->
-                        Spacer(modifier = Modifier.height(20.dp))
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 80.dp),
+                contentPadding = PaddingValues(vertical = 12.dp)
+            ) {
+                items(items = weapons) { weapon ->
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                        Box(
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
+                                .height(280.dp)
+                                .clickable {
+                                    navController.navigate("WeaponSingleRoute/${weapon.uuid}")
+                                },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF2C2C2C)),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                         ) {
-                            Card(
+                            Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(280.dp)
-                                    .clickable {
-                                        navController.navigate("WeaponSingleRoute/${weapon.uuid}")
-                                    },
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.inverseSurface),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
                             ) {
-                                Column(
+
+                                AsyncImage(
+                                    model = weapon.displayIcon,
+                                    contentDescription = weapon.displayName,
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(16.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center
-                                ) {
+                                        .fillMaxWidth()
+                                        .height(150.dp)
+                                        .padding(bottom = 12.dp),
+                                    contentScale = ContentScale.Fit
+                                )
 
-                                    AsyncImage(
-                                        model = weapon.displayIcon,
-                                        contentDescription = weapon.displayName,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(150.dp)
-                                            .padding(bottom = 12.dp),
-                                        contentScale = ContentScale.Fit
-                                    )
-
-                                    Text(
-                                        text = weapon.displayName,
-                                        fontSize = 18.sp,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        modifier = Modifier.padding(top = 8.dp)
-                                    )
-                                }
+                                Text(
+                                    text = weapon.displayName,
+                                    fontSize = 18.sp,
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(top = 8.dp)
+                                )
                             }
                         }
                     }
-                    item {
-                        Spacer(modifier = Modifier.height(100.dp))
-                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(100.dp))
                 }
             }
         }
     }
 }
+
