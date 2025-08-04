@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.weapon.card
+package com.example.valorant_app.ui.pages.weapon.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,20 +35,20 @@ import coil3.compose.AsyncImage
 @Composable
 fun WeaponSkinsScreen(
     navController: NavController,
-    weaponScreenViewModel: WeaponCardViewModel = hiltViewModel()
+    weaponScreenViewModel: WeaponListViewModel = hiltViewModel()
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (state) {
-        is WeaponCardUiState.Loading -> {
+        is WeaponListUiState.Loading -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
             }
         }
 
-        is WeaponCardUiState.Error -> {
+        is WeaponListUiState.Error -> {
             Text(
-                (state as WeaponCardUiState.Error).message,
+                (state as WeaponListUiState.Error).message,
                 color = Color.Red,
                 modifier = Modifier
                     .fillMaxSize()
@@ -56,8 +56,8 @@ fun WeaponSkinsScreen(
             )
         }
 
-        is WeaponCardUiState.Success -> {
-            val weapons = (state as WeaponCardUiState.Success).weapons
+        is WeaponListUiState.Success -> {
+            val weapons = (state as WeaponListUiState.Success).weapons
 
             LazyColumn(
                 modifier = Modifier

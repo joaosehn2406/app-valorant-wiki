@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card.compose
+package com.example.valorant_app.ui.pages.agent.list.compose
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AgentScreenViewModel @Inject constructor(
+class AgentListViewModel @Inject constructor(
     private val agentRepository: AgentRepository
 ) : ViewModel() {
 
     var languageSelected by mutableStateOf("en-US")
 
-    private val _uiState = MutableStateFlow<AgentCardUiState>(AgentCardUiState.Loading)
+    private val _uiState = MutableStateFlow<AgentListUiState>(AgentListUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     fun languageSelected(language: String) {
@@ -33,14 +33,14 @@ class AgentScreenViewModel @Inject constructor(
 
     private fun fetchAllAgents() {
         viewModelScope.launch {
-            _uiState.value = AgentCardUiState.Loading
+            _uiState.value = AgentListUiState.Loading
             val response = agentRepository.getAllAgentsCard(languageSelected)
             if (response.status == 200) {
-                _uiState.value = AgentCardUiState.Success(response.data.filter { agents ->
+                _uiState.value = AgentListUiState.Success(response.data.filter { agents ->
                     agents.isPlayableCharacter
                 })
             } else {
-                _uiState.value = AgentCardUiState.Error("Erro: ${response.status}")
+                _uiState.value = AgentListUiState.Error("Erro: ${response.status}")
             }
         }
     }

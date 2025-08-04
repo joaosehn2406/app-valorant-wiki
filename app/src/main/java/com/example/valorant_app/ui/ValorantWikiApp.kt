@@ -23,13 +23,13 @@ import com.example.valorant_app.ui.navigation.AgentRoute
 import com.example.valorant_app.ui.navigation.HomePageRoute
 import com.example.valorant_app.ui.navigation.InitialPageRoute
 import com.example.valorant_app.ui.navigation.WeaponRoute
-import com.example.valorant_app.ui.pages.agent.card.compose.AgentScreenViewModel
-import com.example.valorant_app.ui.pages.agent.card.compose.AgentsScreen
-import com.example.valorant_app.ui.pages.agent.card.xml.AgentsXmlFragment
+import com.example.valorant_app.ui.pages.agent.list.compose.AgentListViewModel
+import com.example.valorant_app.ui.pages.agent.list.compose.AgentsScreen
+import com.example.valorant_app.ui.pages.agent.list.xml.AgentsXmlFragment
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
-import com.example.valorant_app.ui.pages.weapon.card.WeaponSkinsScreen
+import com.example.valorant_app.ui.pages.weapon.list.WeaponSkinsScreen
 import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.AgentTopBar
@@ -43,7 +43,7 @@ import com.example.valorant_app.ui.theme.AppTheme
 fun ValorantWikiApp() {
     AppTheme {
         val navController = rememberNavController()
-        val agentScreenViewModel: AgentScreenViewModel = hiltViewModel()
+        val agentScreenViewModel: AgentListViewModel = hiltViewModel()
 
         NavHost(navController, startDestination = InitialPageRoute.route) {
             composable(InitialPageRoute.route) {

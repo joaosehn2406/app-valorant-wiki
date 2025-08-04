@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card.compose
+package com.example.valorant_app.ui.pages.agent.list.compose
 
 import androidx.lifecycle.ViewModel
 import com.example.valorant_app.data.repository.CountryFlagRepository
@@ -11,9 +11,6 @@ import javax.inject.Inject
 class FlagViewModel @Inject constructor(
     private val countryRepo: CountryFlagRepository
 ) : ViewModel() {
-
-    private val _flagUrl = MutableStateFlow<String?>(null)
-    val flagUrl: StateFlow<String?> = _flagUrl
 
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading

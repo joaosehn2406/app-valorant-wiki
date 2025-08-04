@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card.compose
+package com.example.valorant_app.ui.pages.agent.list.compose
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -52,7 +52,7 @@ import com.example.valorant_app.data.utils.toComposeColor
 fun AgentsScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: AgentScreenViewModel = hiltViewModel(),
+    viewModel: AgentListViewModel = hiltViewModel(),
     showFilter: Boolean
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -62,7 +62,7 @@ fun AgentsScreen(
         .background(MaterialTheme.colorScheme.surface)
     ) {
         when (state) {
-            is AgentCardUiState.Loading -> {
+            is AgentListUiState.Loading -> {
                 Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -71,20 +71,20 @@ fun AgentsScreen(
                 }
             }
 
-            is AgentCardUiState.Error -> {
+            is AgentListUiState.Error -> {
                 Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        (state as AgentCardUiState.Error).message,
+                        (state as AgentListUiState.Error).message,
                         color = MaterialTheme.colorScheme.error
                     )
                 }
             }
 
-            is AgentCardUiState.Success -> {
-                val agents = (state as AgentCardUiState.Success).agents
+            is AgentListUiState.Success -> {
+                val agents = (state as AgentListUiState.Success).agents
                 val selectedTags = remember { mutableStateListOf<String>() }
 
                 val allTags = agents

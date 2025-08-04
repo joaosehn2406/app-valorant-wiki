@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.agent.card.xml
+package com.example.valorant_app.ui.pages.agent.list.xml
 
 import android.R
 import android.view.LayoutInflater

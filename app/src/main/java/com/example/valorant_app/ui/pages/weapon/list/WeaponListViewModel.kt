@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui.pages.weapon.card
+package com.example.valorant_app.ui.pages.weapon.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,20 +10,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WeaponCardViewModel @Inject constructor(
+class WeaponListViewModel @Inject constructor(
     private val weaponRepository: WeaponRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<WeaponCardUiState>(WeaponCardUiState.Loading)
+    private val _uiState = MutableStateFlow<WeaponListUiState>(WeaponListUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val response = weaponRepository.getAllWeaponCard()
             if (response.status == 200) {
-                _uiState.value = WeaponCardUiState.Success(response.data)
+                _uiState.value = WeaponListUiState.Success(response.data)
             } else {
-                _uiState.value = WeaponCardUiState.Error("Erro: ${response.status}")
+                _uiState.value = WeaponListUiState.Error("Erro: ${response.status}")
             }
         }
     }
