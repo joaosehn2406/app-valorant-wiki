@@ -23,7 +23,6 @@
     <string name="dropdown_english">English</string>
     <string name="dropdown_spanish">Spanish</string>
 
-    <!-- adicionadas para WeaponSingleScreen (agora em inglês) -->
     <string name="category">Category: %1$s</string>
     <string name="skin_unavailable">Skin unavailable</string>
     <string name="variants">VARIANTS</string>
@@ -45,4 +44,5 @@
     <string name="stat_percentage">%1$d%%</string>
     <string name="stat_wall_penetration">Wall penetration</string>
     <string name="stat_zoom_multiplier">Zoom multiplier</string>
+    <string name="explore_valorant">Learn about all agents and weapons</string>
 </resources>

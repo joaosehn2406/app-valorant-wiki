@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -49,13 +47,13 @@ import com.example.valorant_app.R
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentsScreen(
+    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: AgentScreenViewModel = hiltViewModel(),
-    showFilter: Boolean,
-    modifier: Modifier = Modifier
+    showFilter: Boolean
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -80,7 +78,7 @@ fun AgentsScreen(
                 ) {
                     Text(
                         (state as AgentCardUiState.Error).message,
-                        color = Color.Red
+                        color = MaterialTheme.colorScheme.error
                     )
                 }
             }
@@ -119,7 +117,6 @@ fun AgentsScreen(
                                         Text(
                                             text = tag,
                                             style = MaterialTheme.typography.labelLarge,
-                                            color = if (selectedTags.contains(tag)) Color.White else Color.LightGray,
                                         )
                                     },
                                     shape = RoundedCornerShape(50),
@@ -130,10 +127,10 @@ fun AgentsScreen(
                                         selected = selectedTags.contains(tag)
                                     ),
                                     colors = FilterChipDefaults.filterChipColors(
-                                        containerColor = Color(0xFF1C1C1E),
-                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                        labelColor = Color.LightGray,
-                                        selectedLabelColor = Color.White
+                                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                        labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary
                                     ),
                                     elevation = FilterChipDefaults.filterChipElevation(
                                         elevation = if (selectedTags.contains(tag)) 6.dp else 2.dp
@@ -142,7 +139,6 @@ fun AgentsScreen(
                                         .height(36.dp)
                                         .padding(horizontal = 4.dp)
                                 )
-
                             }
                         }
                     }
@@ -246,6 +242,7 @@ fun AgentsScreen(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
             backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             text = { Text("XML") },
             onClick = { navController.navigate("agentsXml") }
         )

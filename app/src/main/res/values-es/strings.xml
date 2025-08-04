@@ -45,4 +45,5 @@
     <string name="stat_percentage">%1$d%%</string>
     <string name="stat_wall_penetration">Penetración en pared</string>
     <string name="stat_zoom_multiplier">Multiplicador de zoom</string>
+    <string name="explore_valorant">Descubre todos los agentes y armas</string>
 </resources>

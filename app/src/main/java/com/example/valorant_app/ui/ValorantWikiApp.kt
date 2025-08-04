@@ -73,10 +73,10 @@ fun ValorantWikiApp() {
                     }
                 ) { padding ->
                     AgentsScreen(
+                        modifier = Modifier.padding(padding),
                         navController = navController,
                         viewModel = agentScreenViewModel,
-                        showFilter = showFilter,
-                        modifier = Modifier.padding(padding)
+                        showFilter = showFilter
                     )
                 }
             }

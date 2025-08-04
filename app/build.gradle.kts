@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material3.v110beta01)
+    implementation(libs.androidx.ui.text.google.fonts.v160)
 
     // Compose Activity
     implementation(libs.androidx.activity.compose)

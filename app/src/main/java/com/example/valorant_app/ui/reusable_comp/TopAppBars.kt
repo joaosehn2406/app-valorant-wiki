@@ -60,7 +60,12 @@ fun HomeTopBar(
     viewModel: AgentScreenViewModel
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.app_name), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        title = {
+            Text(
+                stringResource(R.string.app_name),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -81,7 +86,12 @@ fun AgentTopBar(
     navController: NavController
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.agents), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        title = {
+            Text(
+                stringResource(R.string.agents),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -108,7 +118,12 @@ fun AgentTopBar(
 @Composable
 fun WeaponTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.weapon), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        title = {
+            Text(
+                stringResource(R.string.weapon),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -120,7 +135,12 @@ fun WeaponTopBar(navController: NavController) {
 @Composable
 fun AgentSingleTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.agent_details), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        title = {
+            Text(
+                stringResource(R.string.agent_details),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
@@ -133,7 +153,7 @@ fun AgentSingleTopBar(navController: NavController) {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            navigationIconContentColor = Color.White
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
 }
@@ -142,7 +162,12 @@ fun AgentSingleTopBar(navController: NavController) {
 @Composable
 fun WeaponSingleTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.weapon_skins), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+        title = {
+            Text(
+                stringResource(R.string.weapon_skins),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
@@ -155,7 +180,7 @@ fun WeaponSingleTopBar(navController: NavController) {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            navigationIconContentColor = Color.White
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
     )
 }
@@ -179,7 +204,7 @@ fun FlagsDropdown(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            containerColor = Color(0xFF191A1C)
+            containerColor = MaterialTheme.colorScheme.onPrimaryContainer
         ) {
             listOf(
                 "pt-BR" to R.string.dropdown_portuguese,
@@ -187,15 +212,17 @@ fun FlagsDropdown(
                 "es-ES" to R.string.dropdown_spanish
             ).forEach { (code, labelRes) ->
                 val isSelected = code == selectedLanguage
+                val countryCode = code.split("-").getOrNull(1)?.uppercase() ?: code
+
                 DropdownMenuItem(
                     text = {
                         Text(
-                            "${FlagHexConverter.countryCodeToFlagEmoji(code)}  ${
+                            "${FlagHexConverter.countryCodeToFlagEmoji(countryCode)}  ${
                                 stringResource(
                                     labelRes
                                 )
                             }",
-                            color = if (isSelected) Color.Yellow else Color.White,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             letterSpacing = 0.5.sp
                         )
                     },
@@ -204,7 +231,7 @@ fun FlagsDropdown(
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = "Selecionado",
-                                tint = Color.Yellow
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     },
@@ -217,4 +244,3 @@ fun FlagsDropdown(
         }
     }
 }
-
