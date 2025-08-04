@@ -60,7 +60,7 @@ fun HomeTopBar(
     viewModel: AgentScreenViewModel
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.app_name), color = Color.White) },
+        title = { Text(stringResource(R.string.app_name), color = MaterialTheme.colorScheme.onSurfaceVariant) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -81,7 +81,7 @@ fun AgentTopBar(
     navController: NavController
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.agents), color = Color.White) },
+        title = { Text(stringResource(R.string.agents), color = MaterialTheme.colorScheme.onSurfaceVariant) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -108,7 +108,7 @@ fun AgentTopBar(
 @Composable
 fun WeaponTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.weapon), color = Color.White) },
+        title = { Text(stringResource(R.string.weapon), color = MaterialTheme.colorScheme.onSurfaceVariant) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -120,13 +120,13 @@ fun WeaponTopBar(navController: NavController) {
 @Composable
 fun AgentSingleTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.agent_details), color = Color.White) },
+        title = { Text(stringResource(R.string.agent_details), color = MaterialTheme.colorScheme.onSurfaceVariant) },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -142,13 +142,13 @@ fun AgentSingleTopBar(navController: NavController) {
 @Composable
 fun WeaponSingleTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text(stringResource(R.string.weapon_skins), color = Color.White) },
+        title = { Text(stringResource(R.string.weapon_skins), color = MaterialTheme.colorScheme.onSurfaceVariant) },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },

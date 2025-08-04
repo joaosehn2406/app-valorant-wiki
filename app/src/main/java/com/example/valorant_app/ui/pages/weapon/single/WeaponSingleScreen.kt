@@ -35,8 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -49,15 +47,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
-import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.data.entities.single.WeaponSingle
+import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.theme.backgroundLight
+import com.example.valorant_app.ui.theme.onBackgroundLight
+import com.example.valorant_app.ui.theme.onSurfaceVariantLight
+import com.example.valorant_app.ui.theme.primaryLight
+import com.example.valorant_app.ui.theme.surfaceContainerLowLight
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 fun WeaponSingleScreen(
     weaponId: String
 ) {
-
     val context = LocalContext.current
 
     val factory = EntryPointAccessors.fromActivity(
@@ -77,10 +79,10 @@ fun WeaponSingleScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0E0E10)),
+                    .background(backgroundLight),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+                CircularProgressIndicator(color = primaryLight)
             }
         }
 
@@ -88,12 +90,12 @@ fun WeaponSingleScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0E0E10)),
+                    .background(backgroundLight),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = (uiState as WeaponSingleUiState.Error).message,
-                    color = Color.Red,
+                    color = onBackgroundLight,
                     modifier = Modifier.wrapContentSize()
                 )
             }
@@ -115,26 +117,10 @@ fun WeaponDetailsContent(
     val mainScrollState = rememberScrollState()
 
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
-        AsyncImage(
-            model = R.drawable.imagem_fundo_boa,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color(0xCC000000)),
-                        startY = 0f,
-                        endY = Float.POSITIVE_INFINITY
-                    )
-                )
-        )
 
         Column(
             modifier = Modifier
@@ -150,14 +136,14 @@ fun WeaponDetailsContent(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 ),
-                color = Color.White,
+                color = onBackgroundLight,
                 modifier = Modifier.padding(top = 40.dp, bottom = 4.dp)
             )
 
             Text(
                 text = stringResource(R.string.category, weapon.category),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = primaryLight,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -167,7 +153,7 @@ fun WeaponDetailsContent(
                     .fillMaxWidth()
                     .height(420.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0x33FFFFFF))
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
                     .padding(8.dp)
             ) { page ->
                 val currentSkin = weapon.skins[page]
@@ -196,7 +182,7 @@ fun WeaponDetailsContent(
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.SemiBold
                             ),
-                            color = Color.White,
+                            color = onBackgroundLight,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     } else {
@@ -208,7 +194,7 @@ fun WeaponDetailsContent(
                         ) {
                             Text(
                                 text = stringResource(R.string.skin_unavailable),
-                                color = Color.Gray,
+                                color = onSurfaceVariantLight,
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -221,7 +207,7 @@ fun WeaponDetailsContent(
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.SemiBold
                             ),
-                            color = MaterialTheme.colorScheme.primaryContainer,
+                            color = primaryLight,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         LazyRow(
@@ -241,8 +227,8 @@ fun WeaponDetailsContent(
                                                 .size(50.dp)
                                                 .clip(RoundedCornerShape(8.dp))
                                                 .background(
-                                                    if (chroma == selectedChroma) Color.LightGray.copy()
-                                                    else Color.DarkGray.copy(alpha = 0.6f)
+                                                    if (chroma == selectedChroma) primaryLight
+                                                    else surfaceContainerLowLight
                                                 )
                                                 .padding(4.dp)
                                                 .clickable {
@@ -254,7 +240,7 @@ fun WeaponDetailsContent(
                                         Text(
                                             text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = Color.LightGray
+                                            color = onSurfaceVariantLight
                                         )
                                     }
                                 } else {
@@ -266,13 +252,13 @@ fun WeaponDetailsContent(
                                             modifier = Modifier
                                                 .size(50.dp)
                                                 .clip(RoundedCornerShape(8.dp))
-                                                .background(Color.Gray.copy(alpha = 0.6f))
+                                                .background(MaterialTheme.colorScheme.surfaceContainer)
                                         )
                                         Spacer(Modifier.height(4.dp))
                                         Text(
                                             text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = Color.LightGray
+                                            color = onSurfaceVariantLight
                                         )
                                     }
                                 }
@@ -296,7 +282,7 @@ fun WeaponDetailsContent(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 0.5.sp
                         ),
-                        color = MaterialTheme.colorScheme.primaryContainer,
+                        color = primaryLight,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
 
@@ -354,28 +340,7 @@ fun WeaponDetailsContent(
                         )
                     }
 
-                    WeaponStatItem(
-                        iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                        statName = stringResource(R.string.stat_wall_penetration),
-                        statValue = stats.wallPenetration
-                    )
-
-                    stats.adsStats?.let { ads ->
-                        Text(
-                            text = "ESTATÍSTICAS ADS",
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = 0.5.sp
-                            ),
-                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),
-                            modifier = Modifier.padding(top = 12.dp, bottom = 8.dp)
-                        )
-                        WeaponStatItem(
-                            iconPainter = rememberAsyncImagePainter(model = R.drawable.arma_fe),
-                            statName = stringResource(R.string.stat_zoom_multiplier),
-                            statValue = stringResource(R.string.stat_multiplier, ads.zoomMultiplier)
-                        )
-                    }
+                    Spacer(modifier = Modifier.height(36.dp))
                 }
             }
         }
@@ -402,7 +367,7 @@ fun WeaponStatItem(
             modifier = Modifier
                 .size(32.dp)
                 .clip(RoundedCornerShape(6.dp))
-                .background(Color.DarkGray.copy(alpha = 0.4f))
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(4.dp)
         )
 
@@ -412,12 +377,12 @@ fun WeaponStatItem(
             Text(
                 text = statName,
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.White
+                color = onBackgroundLight
             )
             Text(
                 text = statValue,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.LightGray
+                color = onSurfaceVariantLight
             )
         }
     }
