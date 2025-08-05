@@ -268,13 +268,13 @@ fun WeaponDetailsContent(
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
             weapon.weaponStats?.let { stats ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(bottom = 24.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.statistics).uppercase(),

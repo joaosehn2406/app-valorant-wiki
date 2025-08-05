@@ -1,6 +1,12 @@
 package com.example.valorant_app.ui.pages.agent.list.compose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -57,7 +63,9 @@ fun AgentsListScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         when (state) {
             is AgentListUiState.Loading -> {
@@ -91,16 +99,25 @@ fun AgentsListScreen(
                     }
                     .distinct()
 
-                if (showFilter) {
+                AnimatedVisibility(
+                    visible = showFilter,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
                     FlowRow(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp, vertical = 8.dp)
                             .animateContentSize(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         allTags.forEach { tag ->
+
+                            val elevation by animateDpAsState(
+                                if (showFilter) 6.dp else 2.dp
+                            )
+
                             FilterChip(
                                 selected = selectedTags.contains(tag),
                                 onClick = {
@@ -113,7 +130,7 @@ fun AgentsListScreen(
                                 label = {
                                     Text(
                                         text = tag,
-                                        style = MaterialTheme.typography.labelLarge,
+                                        style = MaterialTheme.typography.labelLarge
                                     )
                                 },
                                 shape = RoundedCornerShape(50),
@@ -130,10 +147,9 @@ fun AgentsListScreen(
                                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary
                                 ),
                                 elevation = FilterChipDefaults.filterChipElevation(
-                                    elevation = if (selectedTags.contains(tag)) 6.dp else 2.dp
+                                    elevation = elevation
                                 ),
                                 modifier = Modifier
-                                    .height(36.dp)
                                     .padding(horizontal = 4.dp)
                             )
                         }
@@ -154,7 +170,7 @@ fun AgentsListScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(
                         top = 0.dp,
-                        bottom = 6.dp,
+                        bottom = 20.dp,
                         start = 6.dp,
                         end = 6.dp
                     ),
