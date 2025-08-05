@@ -24,12 +24,12 @@ import com.example.valorant_app.ui.navigation.HomePageRoute
 import com.example.valorant_app.ui.navigation.InitialPageRoute
 import com.example.valorant_app.ui.navigation.WeaponRoute
 import com.example.valorant_app.ui.pages.agent.list.compose.AgentListViewModel
-import com.example.valorant_app.ui.pages.agent.list.compose.AgentsScreen
+import com.example.valorant_app.ui.pages.agent.list.compose.AgentsListScreen
 import com.example.valorant_app.ui.pages.agent.list.xml.AgentsXmlFragment
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleScreen
 import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
-import com.example.valorant_app.ui.pages.weapon.list.WeaponSkinsScreen
+import com.example.valorant_app.ui.pages.weapon.list.WeaponListScreen
 import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.AgentTopBar
@@ -72,11 +72,11 @@ fun ValorantWikiApp() {
                         )
                     }
                 ) { padding ->
-                    AgentsScreen(
-                        modifier = Modifier.padding(padding),
+                    AgentsListScreen(
                         navController = navController,
                         viewModel = agentScreenViewModel,
-                        showFilter = showFilter
+                        showFilter = showFilter,
+                        modifier = Modifier.padding(padding)
                     )
                 }
             }
@@ -86,7 +86,7 @@ fun ValorantWikiApp() {
                     navController = navController,
                     currentRoute = WeaponRoute.route,
                     topBar = { WeaponTopBar(navController) }) { padding ->
-                    WeaponSkinsScreen(navController)
+                    WeaponListScreen(navController)
                 }
             }
 

@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 
 @Composable
-fun WeaponSkinsScreen(
+fun WeaponListScreen(
     navController: NavController,
     weaponScreenViewModel: WeaponListViewModel = hiltViewModel()
 ) {
@@ -120,4 +120,3 @@ fun WeaponSkinsScreen(
         }
     }
 }
-
