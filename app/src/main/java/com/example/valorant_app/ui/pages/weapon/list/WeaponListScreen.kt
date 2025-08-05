@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.valorant_app.data.entities.card.WeaponCard
 
 @Composable
 fun WeaponListScreen(
@@ -59,64 +60,75 @@ fun WeaponListScreen(
         is WeaponListUiState.Success -> {
             val weapons = (state as WeaponListUiState.Success).weapons
 
-            LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 80.dp),
-                contentPadding = PaddingValues(vertical = 12.dp)
-            ) {
-                items(items = weapons) { weapon ->
-                    Spacer(modifier = Modifier.height(20.dp))
+            WeaponListContent(
+                navController = navController,
+                weapons = weapons
+            )
+        }
+    }
+}
 
-                    Box(
+@Composable
+fun WeaponListContent(
+    navController: NavController,
+    weapons: List<WeaponCard>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 80.dp),
+        contentPadding = PaddingValues(vertical = 12.dp)
+    ) {
+        items(items = weapons) { weapon ->
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(280.dp)
+                        .clickable {
+                            navController.navigate("WeaponSingleRoute/${weapon.uuid}")
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF2C2C2C)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                ) {
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
-                        Card(
+
+                        AsyncImage(
+                            model = weapon.displayIcon,
+                            contentDescription = weapon.displayName,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(280.dp)
-                                .clickable {
-                                    navController.navigate("WeaponSingleRoute/${weapon.uuid}")
-                                },
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF2C2C2C)),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
+                                .height(150.dp)
+                                .padding(bottom = 12.dp),
+                            contentScale = ContentScale.Fit
+                        )
 
-                                AsyncImage(
-                                    model = weapon.displayIcon,
-                                    contentDescription = weapon.displayName,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(150.dp)
-                                        .padding(bottom = 12.dp),
-                                    contentScale = ContentScale.Fit
-                                )
-
-                                Text(
-                                    text = weapon.displayName,
-                                    fontSize = 18.sp,
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    modifier = Modifier.padding(top = 8.dp)
-                                )
-                            }
-                        }
+                        Text(
+                            text = weapon.displayName,
+                            fontSize = 18.sp,
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
                     }
                 }
-                item {
-                    Spacer(modifier = Modifier.height(100.dp))
-                }
             }
+        }
+        item {
+            Spacer(modifier = Modifier.height(100.dp))
         }
     }
 }

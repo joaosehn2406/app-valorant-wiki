@@ -49,8 +49,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.valorant_app.R
+import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
+import kotlin.collections.filterNot
+import kotlin.collections.joinToString
+import kotlin.collections.orEmpty
+import kotlin.text.isNullOrBlank
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -166,85 +171,96 @@ fun AgentsListScreen(
                     }
                 }
 
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(
-                        top = 0.dp,
-                        bottom = 20.dp,
-                        start = 6.dp,
-                        end = 6.dp
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                AgentsListContent(
+                    agents = filteredAgents,
+                    navController = navController
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AgentsListContent(
+    agents: List<AgentCard>,
+    navController: NavController
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(
+            top = 0.dp,
+            bottom = 20.dp,
+            start = 6.dp,
+            end = 6.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(agents) { agent ->
+            val gradient =
+                agent.backgroundGradientColors.map { it.toComposeColor() }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .height(90.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(gradient),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable {
+                        navController.navigate("AgentSingleRoute/${agent.uuid}")
+                    },
+                shape = RoundedCornerShape(8.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            ) {
+                Row(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    items(filteredAgents) { agent ->
-                        val gradient =
-                            agent.backgroundGradientColors.map { it.toComposeColor() }
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .height(90.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(gradient),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                                .clickable {
-                                    navController.navigate("AgentSingleRoute/${agent.uuid}")
-                                },
-                            shape = RoundedCornerShape(8.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                        ) {
-                            Row(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                AsyncImage(
-                                    model = agent.displayIconSmall,
-                                    contentDescription = agent.displayName,
-                                    modifier = Modifier.size(56.dp)
-                                )
-                                Spacer(Modifier.width(10.dp))
-                                Column(Modifier.fillMaxHeight()) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Text(
-                                            text = agent.displayName,
-                                            color = Color.White,
-                                            style = MaterialTheme.typography.titleLarge
-                                        )
-                                        agent.getCountryInfo()
-                                            ?.takeIf { it.countryIso2 != "un" }
-                                            ?.let { country ->
-                                                Spacer(Modifier.width(8.dp))
-                                                AsyncImage(
-                                                    model = "https://flagcdn.com/w40/${country.countryIso2}.png",
-                                                    contentDescription = country.countryName,
-                                                    modifier = Modifier.size(22.dp)
-                                                )
-                                                Text(
-                                                    text = " ${country.countryName}",
-                                                    color = Color.White,
-                                                    style = MaterialTheme.typography.bodyMedium
-                                                )
-                                            }
-                                    }
-                                    Spacer(Modifier.height(4.dp))
-                                    val tags = agent.characterTags.orEmpty()
-                                        .filterNot { it.isNullOrBlank() }
+                    AsyncImage(
+                        model = agent.displayIconSmall,
+                        contentDescription = agent.displayName,
+                        modifier = Modifier.size(56.dp)
+                    )
+                    Spacer(Modifier.width(10.dp))
+                    Column(Modifier.fillMaxHeight()) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = agent.displayName,
+                                color = Color.White,
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            agent.getCountryInfo()
+                                ?.takeIf { it.countryIso2 != "un" }
+                                ?.let { country ->
+                                    Spacer(Modifier.width(8.dp))
+                                    AsyncImage(
+                                        model = "https://flagcdn.com/w40/${country.countryIso2}.png",
+                                        contentDescription = country.countryName,
+                                        modifier = Modifier.size(22.dp)
+                                    )
                                     Text(
-                                        text = if (tags.isEmpty()) {
-                                            stringResource(R.string.no_tags_informed)
-                                        } else {
-                                            tags.joinToString(" • ")
-                                        },
+                                        text = " ${country.countryName}",
                                         color = Color.White,
-                                        style = MaterialTheme.typography.bodySmall
+                                        style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
-                            }
                         }
+                        Spacer(Modifier.height(4.dp))
+                        val tags = agent.characterTags.orEmpty()
+                            .filterNot { it.isNullOrBlank() }
+                        Text(
+                            text = if (tags.isEmpty()) {
+                                stringResource(R.string.no_tags_informed)
+                            } else {
+                                tags.joinToString(" • ")
+                            },
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
             }
