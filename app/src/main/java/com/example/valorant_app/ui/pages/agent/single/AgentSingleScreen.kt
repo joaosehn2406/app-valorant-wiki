@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,8 +36,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
+import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import dagger.hilt.android.EntryPointAccessors
 
 class SimpleColorPainter(private val color: Color) : Painter() {
@@ -51,7 +55,8 @@ class SimpleColorPainter(private val color: Color) : Painter() {
 @Composable
 fun AgentSingleScreen(
     agentId: String,
-    modifier: Modifier = Modifier
+    currentRoute: String,
+    navController: NavController
 ) {
     val context = LocalContext.current
 
@@ -66,147 +71,156 @@ fun AgentSingleScreen(
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    when (state) {
-        is AgentSingleUiState.Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
-            }
+    Scaffold(
+        topBar = {
+            AgentSingleTopBar(navController)
+        },
+        bottomBar = {
+            BottomAppBarNav(navController = navController, currentRoute = currentRoute)
         }
-
-        is AgentSingleUiState.Error -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = (state as AgentSingleUiState.Error).message,
-                    color = Color.Red,
-                    modifier = Modifier.wrapContentSize()
-                )
-            }
-        }
-
-        is AgentSingleUiState.Success -> {
-            val agent = (state as AgentSingleUiState.Success).agent
-            val scrollState = rememberScrollState()
-
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                Column(
+    ) { paddingValues ->
+        when (state) {
+            is AgentSingleUiState.Loading -> {
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(scrollState)
+                        .background(MaterialTheme.colorScheme.surface),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(500.dp)
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(
-                                model = agent.background,
-                                placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
-                                error = SimpleColorPainter(Color.Black)
-                            ),
-                            contentDescription = "Foto do background",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+                }
+            }
 
-                        Image(
-                            painter = rememberAsyncImagePainter(
-                                model = agent.fullPortrait,
-                                placeholder = SimpleColorPainter(Color.Transparent),
-                                error = SimpleColorPainter(Color.Black)
-                            ),
-                            contentDescription = "Foto do agente",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .fillMaxWidth()
-                                .align(Alignment.Center)
-                        )
-                    }
+            is AgentSingleUiState.Error -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.surface),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = (state as AgentSingleUiState.Error).message,
+                        color = Color.Red,
+                        modifier = Modifier.wrapContentSize()
+                    )
+                }
+            }
 
+            is AgentSingleUiState.Success -> {
+                val agent = (state as AgentSingleUiState.Success).agent
+                val scrollState = rememberScrollState()
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                            .padding(16.dp)
+                            .fillMaxSize()
+                            .verticalScroll(scrollState)
                     ) {
-                        Text(
-                            text = agent.displayName,
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(500.dp)
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                        ) {
+                            Image(
+                                painter = rememberAsyncImagePainter(
+                                    model = agent.background,
+                                    placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                                    error = SimpleColorPainter(Color.Black)
+                                ),
+                                contentDescription = "Foto do background",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
 
-                        Text(
-                            text = agent.description,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-
-                        Text(
-                            text = "Role: ${agent.role?.displayName ?: "Unknown"}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
-
-                        agent.abilities.forEach { ability ->
-                            Row(
+                            Image(
+                                painter = rememberAsyncImagePainter(
+                                    model = agent.fullPortrait,
+                                    placeholder = SimpleColorPainter(Color.Transparent),
+                                    error = SimpleColorPainter(Color.Black)
+                                ),
+                                contentDescription = "Foto do agente",
+                                contentScale = ContentScale.Fit,
                                 modifier = Modifier
+                                    .fillMaxHeight()
                                     .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                                horizontalArrangement = Arrangement.Start,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Image(
-                                    painter = rememberAsyncImagePainter(
-                                        model = ability.displayIcon,
-                                        placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
-                                        error = SimpleColorPainter(Color.Black)
-                                    ),
-                                    contentDescription = ability.displayName,
+                                    .align(Alignment.Center)
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.surface)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = agent.displayName,
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+
+                            Text(
+                                text = agent.description,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+
+                            Text(
+                                text = "Role: ${agent.role?.displayName ?: "Unknown"}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+
+                            agent.abilities.forEach { ability ->
+                                Row(
                                     modifier = Modifier
-                                        .size(40.dp)
-                                        .clip(RoundedCornerShape(8.dp))
-                                        .background(MaterialTheme.colorScheme.onTertiaryContainer)
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Column(
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp),
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Text(
-                                        text = ability.displayName,
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    Image(
+                                        painter = rememberAsyncImagePainter(
+                                            model = ability.displayIcon,
+                                            placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                                            error = SimpleColorPainter(Color.Black)
+                                        ),
+                                        contentDescription = ability.displayName,
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .clip(RoundedCornerShape(8.dp))
+                                            .background(MaterialTheme.colorScheme.onTertiaryContainer)
                                     )
-                                    Text(
-                                        text = ability.description,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
+
+                                    Spacer(modifier = Modifier.width(16.dp))
+
+                                    Column(
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
+                                        Text(
+                                            text = ability.displayName,
+                                            style = MaterialTheme.typography.titleMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                        Text(
+                                            text = ability.description,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
             }

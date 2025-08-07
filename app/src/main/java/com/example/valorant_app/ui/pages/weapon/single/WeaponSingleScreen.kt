@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,11 +46,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
+import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
 import com.example.valorant_app.ui.theme.backgroundLight
 import com.example.valorant_app.ui.theme.onBackgroundLight
 import com.example.valorant_app.ui.theme.onSurfaceVariantLight
@@ -58,7 +63,9 @@ import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 fun WeaponSingleScreen(
-    weaponId: String
+    weaponId: String,
+    currentRoute: String,
+    navController: NavController
 ) {
     val context = LocalContext.current
 
@@ -73,36 +80,47 @@ fun WeaponSingleScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
-    when (uiState) {
-        is WeaponSingleUiState.Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(backgroundLight),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = primaryLight)
-            }
+    Scaffold(
+        topBar = {
+            WeaponSingleTopBar(navController)
+        },
+        bottomBar = {
+            BottomAppBarNav(navController = navController, currentRoute = currentRoute)
         }
+    ) { paddingValues ->
+        when (uiState) {
+            is WeaponSingleUiState.Loading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(backgroundLight),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = primaryLight)
+                }
+            }
 
-        is WeaponSingleUiState.Error -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(backgroundLight),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = (uiState as WeaponSingleUiState.Error).message,
-                    color = onBackgroundLight,
-                    modifier = Modifier.wrapContentSize()
+            is WeaponSingleUiState.Error -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(backgroundLight),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = (uiState as WeaponSingleUiState.Error).message,
+                        color = onBackgroundLight,
+                        modifier = Modifier.wrapContentSize()
+                    )
+                }
+            }
+
+            is WeaponSingleUiState.Success -> {
+                WeaponDetailsContent(
+                    weapon = (uiState as WeaponSingleUiState.Success).weapon,
+                    paddingValues = paddingValues
                 )
             }
-        }
-
-        is WeaponSingleUiState.Success -> {
-            WeaponDetailsContent((uiState as WeaponSingleUiState.Success).weapon)
         }
     }
 }
@@ -111,42 +129,25 @@ fun WeaponSingleScreen(
 @Composable
 fun WeaponDetailsContent(
     weapon: WeaponSingle,
-    modifier: Modifier = Modifier
+    paddingValues: PaddingValues
 ) {
     val pagerState = rememberPagerState(pageCount = { weapon.skins.size }, initialPage = 0)
     val mainScrollState = rememberScrollState()
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp, vertical = 16.dp)
+                .padding(paddingValues)
                 .verticalScroll(mainScrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Text(
-                text = weapon.displayName.uppercase(),
-                style = MaterialTheme.typography.displaySmall.copy(
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp
-                ),
-                color = onBackgroundLight,
-                modifier = Modifier.padding(top = 40.dp, bottom = 4.dp)
-            )
-
-            Text(
-                text = stringResource(R.string.category, weapon.category),
-                style = MaterialTheme.typography.titleMedium,
-                color = primaryLight,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
-
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
@@ -339,8 +340,6 @@ fun WeaponDetailsContent(
                             )
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(36.dp))
                 }
             }
         }

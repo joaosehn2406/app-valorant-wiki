@@ -138,7 +138,7 @@ fun AgentsListScreen(
                         ) {
                             allTags.forEach { tag ->
                                 val elevation by animateDpAsState(
-                                    if (selectedTags.contains(tag)) 6.dp else 2.dp
+                                    if (selectedTags.contains(tag)) 6.dp else 3.dp
                                 )
                                 FilterChip(
                                     selected = selectedTags.contains(tag),
@@ -188,8 +188,8 @@ fun AgentsListScreen(
                             .fillMaxSize()
                             .padding(horizontal = 16.dp),
                         contentPadding = PaddingValues(
-                            top = 8.dp,
-                            bottom = 8.dp
+                            top = 16.dp,
+                            bottom = 16.dp
                         ),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {

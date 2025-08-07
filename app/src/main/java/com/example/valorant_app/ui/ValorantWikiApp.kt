@@ -2,7 +2,6 @@ package com.example.valorant_app.ui
 
 import android.view.View
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -27,10 +26,6 @@ import com.example.valorant_app.ui.pages.home.HomeContent
 import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
 import com.example.valorant_app.ui.pages.weapon.list.WeaponListScreen
 import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
-import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
-import com.example.valorant_app.ui.reusable_comp.AppScaffold
-import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
-import com.example.valorant_app.ui.reusable_comp.WeaponTopBar
 import com.example.valorant_app.ui.theme.AppTheme
 
 @Composable
@@ -61,32 +56,25 @@ fun ValorantWikiApp() {
             }
 
             composable(WeaponRoute.route) {
-                AppScaffold(
-                    navController = navController,
-                    currentRoute = WeaponRoute.route,
-                    topBar = { WeaponTopBar(navController) }) { padding ->
-                    WeaponListScreen(navController)
-                }
+                WeaponListScreen(navController, WeaponRoute.route)
             }
 
             composable("AgentSingleRoute/{uuid}") { backStack ->
                 val id = backStack.arguments?.getString("uuid") ?: return@composable
-                AppScaffold(
-                    navController = navController,
+                AgentSingleScreen(
+                    agentId = id,
                     currentRoute = AgentRoute.route,
-                    topBar = { AgentSingleTopBar(navController) }) { padding ->
-                    AgentSingleScreen(agentId = id, modifier = Modifier.padding(padding))
-                }
+                    navController = navController
+                )
             }
 
             composable("WeaponSingleRoute/{uuid}") { backStack ->
                 val id = backStack.arguments?.getString("uuid") ?: return@composable
-                AppScaffold(
-                    navController = navController,
+                WeaponSingleScreen(
+                    weaponId = id,
                     currentRoute = WeaponRoute.route,
-                    topBar = { WeaponSingleTopBar(navController) }) { padding ->
-                    WeaponSingleScreen(weaponId = id)
-                }
+                    navController = navController
+                )
             }
 
             composable("agentsXml") {

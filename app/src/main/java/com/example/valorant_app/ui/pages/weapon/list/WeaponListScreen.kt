@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,43 +33,56 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.valorant_app.data.entities.card.WeaponCard
+import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
+import com.example.valorant_app.ui.reusable_comp.WeaponTopBar
 
 @Composable
 fun WeaponListScreen(
     navController: NavController,
+    currentRoute: String,
     weaponScreenViewModel: WeaponListViewModel = hiltViewModel()
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.inverseOnSurface)
-    ) {
-        when (state) {
-            is WeaponListUiState.Loading -> {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+    Scaffold(
+        topBar = {
+            WeaponTopBar(navController)
+        },
+        bottomBar = {
+            BottomAppBarNav(navController = navController, currentRoute = currentRoute)
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.inverseOnSurface)
+        ) {
+            when (state) {
+                is WeaponListUiState.Loading -> {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+                    }
                 }
-            }
 
-            is WeaponListUiState.Error -> {
-                Text(
-                    (state as WeaponListUiState.Error).message,
-                    color = Color.Red,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize()
-                )
-            }
+                is WeaponListUiState.Error -> {
+                    Text(
+                        (state as WeaponListUiState.Error).message,
+                        color = Color.Red,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize()
+                    )
+                }
 
-            is WeaponListUiState.Success -> {
-                val weapons = (state as WeaponListUiState.Success).weapons
+                is WeaponListUiState.Success -> {
+                    val weapons = (state as WeaponListUiState.Success).weapons
 
-                WeaponListContent(
-                    navController = navController,
-                    weapons = weapons
-                )
+                    WeaponListContent(
+                        paddingValues = paddingValues,
+                        navController = navController,
+                        weapons = weapons
+                    )
+                }
             }
         }
     }
@@ -77,22 +90,22 @@ fun WeaponListScreen(
 
 @Composable
 fun WeaponListContent(
+    paddingValues: PaddingValues,
     navController: NavController,
     weapons: List<WeaponCard>
 ) {
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .padding(top = 80.dp),
-        contentPadding = PaddingValues(vertical = 12.dp)
+            .padding(paddingValues),
+        contentPadding = PaddingValues(vertical = 16.dp)
     ) {
         items(items = weapons) { weapon ->
-            Spacer(modifier = Modifier.height(20.dp))
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = 16.dp)
             ) {
                 Card(
                     modifier = Modifier
@@ -133,9 +146,6 @@ fun WeaponListContent(
                     }
                 }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(100.dp))
         }
     }
 }
