@@ -35,7 +35,7 @@ fun HomeContent(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
             .padding(16.dp)
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
@@ -44,7 +44,7 @@ fun HomeContent(
                     .fillMaxWidth()
                     .height(140.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(12.dp)
                     ),
                 contentAlignment = Alignment.Center,
@@ -58,8 +58,7 @@ fun HomeContent(
             }
 
             SectionCard(
-                title = stringResource(R.string.about_app),
-                accent = MaterialTheme.colorScheme.primary
+                title = stringResource(R.string.about_app)
             ) {
                 Text(
                     text = stringResource(R.string.about_app_desc),
@@ -72,8 +71,7 @@ fun HomeContent(
             }
 
             SectionCard(
-                title = stringResource(R.string.features_header),
-                accent = MaterialTheme.colorScheme.primary
+                title = stringResource(R.string.features_header)
             ) {
                 FeatureRow(Icons.Default.Person, stringResource(R.string.explore_agents))
                 FeatureRow(Icons.Default.Build, stringResource(R.string.search_for_guns))
@@ -81,8 +79,7 @@ fun HomeContent(
             }
 
             SectionCard(
-                title = stringResource(R.string.data_source),
-                accent = MaterialTheme.colorScheme.primary
+                title = stringResource(R.string.data_source)
             ) {
                 Text(
                     text = "• ${stringResource(R.string.vava_api_text)}",

@@ -52,10 +52,6 @@ import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.data.utils.getCountryInfo
 import com.example.valorant_app.data.utils.toComposeColor
-import kotlin.collections.filterNot
-import kotlin.collections.joinToString
-import kotlin.collections.orEmpty
-import kotlin.text.isNullOrBlank
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +66,7 @@ fun AgentsListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
     ) {
         when (state) {
             is AgentListUiState.Loading -> {
@@ -135,7 +131,8 @@ fun AgentsListScreen(
                                 label = {
                                     Text(
                                         text = tag,
-                                        style = MaterialTheme.typography.labelLarge
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = if (selectedTags.contains(tag)) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                                     )
                                 },
                                 shape = RoundedCornerShape(50),

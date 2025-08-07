@@ -1,5 +1,6 @@
 package com.example.valorant_app.ui.pages.weapon.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,30 +41,36 @@ fun WeaponListScreen(
 ) {
     val state by weaponScreenViewModel.uiState.collectAsStateWithLifecycle()
 
-    when (state) {
-        is WeaponListUiState.Loading -> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
+    ) {
+        when (state) {
+            is WeaponListUiState.Loading -> {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primaryContainer)
+                }
             }
-        }
 
-        is WeaponListUiState.Error -> {
-            Text(
-                (state as WeaponListUiState.Error).message,
-                color = Color.Red,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize()
-            )
-        }
+            is WeaponListUiState.Error -> {
+                Text(
+                    (state as WeaponListUiState.Error).message,
+                    color = Color.Red,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize()
+                )
+            }
 
-        is WeaponListUiState.Success -> {
-            val weapons = (state as WeaponListUiState.Success).weapons
+            is WeaponListUiState.Success -> {
+                val weapons = (state as WeaponListUiState.Success).weapons
 
-            WeaponListContent(
-                navController = navController,
-                weapons = weapons
-            )
+                WeaponListContent(
+                    navController = navController,
+                    weapons = weapons
+                )
+            }
         }
     }
 }
@@ -95,7 +102,7 @@ fun WeaponListContent(
                             navController.navigate("WeaponSingleRoute/${weapon.uuid}")
                         },
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF2C2C2C)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
                     Column(
@@ -119,7 +126,7 @@ fun WeaponListContent(
                         Text(
                             text = weapon.displayName,
                             fontSize = 18.sp,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.primary,
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(top = 8.dp)
                         )
