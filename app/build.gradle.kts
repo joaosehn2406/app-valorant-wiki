@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.ads.mobile.sdk)
+    implementation(libs.androidx.animation)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX

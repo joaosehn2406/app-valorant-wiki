@@ -4,11 +4,7 @@ import android.view.View
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -32,9 +28,7 @@ import com.example.valorant_app.ui.pages.initial_screen.InitialScreen
 import com.example.valorant_app.ui.pages.weapon.list.WeaponListScreen
 import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleScreen
 import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
-import com.example.valorant_app.ui.reusable_comp.AgentTopBar
 import com.example.valorant_app.ui.reusable_comp.AppScaffold
-import com.example.valorant_app.ui.reusable_comp.HomeTopBar
 import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.WeaponTopBar
 import com.example.valorant_app.ui.theme.AppTheme
@@ -51,34 +45,19 @@ fun ValorantWikiApp() {
             }
 
             composable(HomePageRoute.route) {
-                AppScaffold(
+                HomeContent(
                     navController = navController,
                     currentRoute = HomePageRoute.route,
-                    topBar = { HomeTopBar(navController, agentScreenViewModel) }) { padding ->
-                    HomeContent(Modifier.padding(padding))
-                }
+                    agentScreenViewModel = agentScreenViewModel
+                )
             }
 
             composable(AgentRoute.route) {
-                var showFilter by rememberSaveable { mutableStateOf(false) }
-
-                AppScaffold(
+                AgentsListScreen(
                     navController = navController,
-                    currentRoute = AgentRoute.route,
-                    topBar = {
-                        AgentTopBar(
-                            onFilterClick = { showFilter = !showFilter },
-                            navController = navController
-                        )
-                    }
-                ) { padding ->
-                    AgentsListScreen(
-                        navController = navController,
-                        viewModel = agentScreenViewModel,
-                        showFilter = showFilter,
-                        modifier = Modifier.padding(padding)
-                    )
-                }
+                    viewModel = agentScreenViewModel,
+                    currentRoute = AgentRoute.route
+                )
             }
 
             composable(WeaponRoute.route) {
