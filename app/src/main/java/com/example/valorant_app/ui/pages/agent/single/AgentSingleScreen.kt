@@ -40,7 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.data.utils.toComposeColor
-import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.utils.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import dagger.hilt.android.EntryPointAccessors

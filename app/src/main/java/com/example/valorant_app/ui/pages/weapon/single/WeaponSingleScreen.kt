@@ -51,7 +51,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.single.WeaponSingle
-import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
+import com.example.valorant_app.ui.utils.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
 import dagger.hilt.android.EntryPointAccessors

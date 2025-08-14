@@ -1,4 +1,4 @@
-package com.example.valorant_app.ui
+package com.example.valorant_app.ui.utils
 
 import com.example.valorant_app.ui.pages.agent.single.AgentSingleViewModel
 import com.example.valorant_app.ui.pages.weapon.single.WeaponSingleViewModel
