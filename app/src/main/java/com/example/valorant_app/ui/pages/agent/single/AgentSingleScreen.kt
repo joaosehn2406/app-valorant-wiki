@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
@@ -38,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
+import com.example.valorant_app.data.utils.toComposeColor
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.reusable_comp.AgentSingleTopBar
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
@@ -110,6 +112,14 @@ fun AgentSingleScreen(
                 val agent = (state as AgentSingleUiState.Success).agent
                 val scrollState = rememberScrollState()
 
+                val palette = agent.backgroundGradientColors
+                    .orEmpty()
+                    .map { it.toComposeColor() }
+
+                val accent = palette.firstOrNull() ?: MaterialTheme.colorScheme.primary
+                val accent2 = palette.getOrNull(1) ?: palette.lastOrNull() ?: accent
+                val headerGradient = Brush.verticalGradient(listOf(accent, accent2))
+
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -125,12 +135,12 @@ fun AgentSingleScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(500.dp)
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .background(headerGradient)
                         ) {
                             Image(
                                 painter = rememberAsyncImagePainter(
                                     model = agent.background,
-                                    placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                                    placeholder = SimpleColorPainter(Color.Transparent),
                                     error = SimpleColorPainter(Color.Black)
                                 ),
                                 contentDescription = "Foto do background",
@@ -162,7 +172,7 @@ fun AgentSingleScreen(
                             Text(
                                 text = agent.displayName,
                                 style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
+                                color = accent,
                                 modifier = Modifier.padding(bottom = 8.dp)
                             )
 
@@ -173,18 +183,27 @@ fun AgentSingleScreen(
                                 modifier = Modifier.padding(bottom = 16.dp)
                             )
 
-                            Text(
-                                text = "Role: ${agent.role?.displayName ?: "Unknown"}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(100))
+                                    .background(accent.copy(alpha = 0.15f))
+                                    .padding(horizontal = 12.dp, vertical = 6.dp)
+                            ) {
+                                Text(
+                                    text = "Role: ${agent.role?.displayName ?: "Unknown"}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = accent
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
 
                             agent.abilities.forEach { ability ->
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(bottom = 8.dp),
+                                        .padding(bottom = 16.dp),
                                     horizontalArrangement = Arrangement.Start,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -198,7 +217,7 @@ fun AgentSingleScreen(
                                         modifier = Modifier
                                             .size(40.dp)
                                             .clip(RoundedCornerShape(8.dp))
-                                            .background(MaterialTheme.colorScheme.onTertiaryContainer)
+                                            .background(accent)
                                     )
 
                                     Spacer(modifier = Modifier.width(16.dp))
