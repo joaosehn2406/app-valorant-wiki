@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.dagger.hilt.android)   
+    alias(libs.plugins.dagger.hilt.android)
     id("org.jetbrains.kotlin.kapt")
 }
 
@@ -16,7 +16,6 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,6 +28,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,16 +39,22 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
 }
 
 dependencies {
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.material3)
+    implementation(libs.ui.graphics)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.ads.mobile.sdk)
+    implementation(libs.androidx.animation)
     kapt(libs.hilt.compiler)
 
     // Core AndroidX
-    implementation("androidx.core:core-ktx:1.16.0")
+    implementation(libs.androidx.core.ktx)
 
     // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -61,6 +67,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.v110beta01)
+    implementation(libs.androidx.ui.text.google.fonts.v160)
 
     // Compose Activity
     implementation(libs.androidx.activity.compose)
@@ -69,9 +77,30 @@ dependencies {
     implementation(libs.coil.ok.http)
     implementation(libs.coil.compose)
 
+    //Fragments, etc..
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v251)
+    implementation(libs.coil)
+
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    //Constraint Layout
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.androidx.cardview)
+
+
+    // Google Play Services - Location
+    implementation(libs.play.services.location)
+
+    // HorizontalPager
+    implementation(libs.androidx.foundation)
+    implementation(libs.accompanist.pager.indicators)
 
     // Testes
     testImplementation(libs.junit)
@@ -81,4 +110,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.navigation.compose)
 }
