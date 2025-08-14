@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,16 +42,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
 import com.example.valorant_app.R
 import com.example.valorant_app.data.entities.card.AgentCard
 import com.example.valorant_app.data.utils.getCountryInfo
@@ -123,59 +124,11 @@ fun AgentsListScreen(
                         }
                         .distinct()
 
-                    AnimatedVisibility(
-                        visible = showFilter,
-                        enter = expandVertically() + fadeIn(),
-                        exit = shrinkVertically() + fadeOut()
-                    ) {
-                        FlowRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                                .animateContentSize(),
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            allTags.forEach { tag ->
-                                val elevation by animateDpAsState(
-                                    if (selectedTags.contains(tag)) 6.dp else 3.dp
-                                )
-                                FilterChip(
-                                    selected = selectedTags.contains(tag),
-                                    onClick = {
-                                        if (selectedTags.contains(tag)) selectedTags.remove(tag)
-                                        else selectedTags.add(tag)
-                                    },
-                                    label = {
-                                        Text(
-                                            text = tag,
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = if (selectedTags.contains(tag))
-                                                MaterialTheme.colorScheme.onPrimary
-                                            else
-                                                MaterialTheme.colorScheme.primary
-                                        )
-                                    },
-                                    shape = RoundedCornerShape(50),
-                                    border = FilterChipDefaults.filterChipBorder(
-                                        borderColor = if (selectedTags.contains(tag))
-                                            MaterialTheme.colorScheme.primaryContainer
-                                        else Color.DarkGray,
-                                        borderWidth = 1.dp,
-                                        enabled = true,
-                                        selected = selectedTags.contains(tag)
-                                    ),
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                        selectedContainerColor = MaterialTheme.colorScheme.primary,
-                                        labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary
-                                    ),
-                                    elevation = FilterChipDefaults.filterChipElevation(elevation = elevation)
-                                )
-                            }
-                        }
-                    }
+                    AgentFilterChip(
+                        showFilter = showFilter,
+                        allTags = allTags,
+                        selectedTags = selectedTags
+                    )
 
                     val filteredAgents = if (selectedTags.isEmpty()) agents else
                         agents.filter {
@@ -193,13 +146,76 @@ fun AgentsListScreen(
                         ),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(filteredAgents) { agent ->
+                        items(filteredAgents.sortedBy {
+                            it.displayName
+                        }) { agent ->
                             AgentCardItem(agent = agent) {
                                 navController.navigate("AgentSingleRoute/${agent.uuid}")
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AgentFilterChip(
+    showFilter: Boolean,
+    allTags: List<String>,
+    selectedTags: SnapshotStateList<String>
+) {
+    AnimatedVisibility(
+        visible = showFilter,
+        enter = expandVertically() + fadeIn(),
+        exit = shrinkVertically() + fadeOut()
+    ) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .animateContentSize(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            allTags.forEach { tag ->
+                val elevation by animateDpAsState(
+                    if (selectedTags.contains(tag)) 6.dp else 3.dp
+                )
+                FilterChip(
+                    selected = selectedTags.contains(tag),
+                    onClick = {
+                        if (selectedTags.contains(tag)) selectedTags.remove(tag)
+                        else selectedTags.add(tag)
+                    },
+                    label = {
+                        Text(
+                            text = tag,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (selectedTags.contains(tag))
+                                MaterialTheme.colorScheme.onPrimary
+                            else
+                                MaterialTheme.colorScheme.primary
+                        )
+                    },
+                    shape = RoundedCornerShape(50),
+                    border = FilterChipDefaults.filterChipBorder(
+                        borderColor = if (selectedTags.contains(tag))
+                            MaterialTheme.colorScheme.primaryContainer
+                        else Color.DarkGray,
+                        borderWidth = 1.dp,
+                        enabled = true,
+                        selected = selectedTags.contains(tag)
+                    ),
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                        labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    elevation = FilterChipDefaults.filterChipElevation(elevation = elevation)
+                )
             }
         }
     }

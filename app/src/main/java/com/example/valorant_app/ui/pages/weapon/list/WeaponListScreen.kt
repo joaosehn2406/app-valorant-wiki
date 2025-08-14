@@ -100,7 +100,9 @@ fun WeaponListContent(
             .padding(paddingValues),
         contentPadding = PaddingValues(vertical = 16.dp)
     ) {
-        items(items = weapons) { weapon ->
+        items(items = weapons.sortedBy {
+            it.displayName
+        }) { weapon ->
 
             Box(
                 modifier = Modifier

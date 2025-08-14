@@ -54,11 +54,6 @@ import com.example.valorant_app.data.entities.single.WeaponSingle
 import com.example.valorant_app.ui.WeaponSingleViewModelEntryPoint
 import com.example.valorant_app.ui.reusable_comp.BottomAppBarNav
 import com.example.valorant_app.ui.reusable_comp.WeaponSingleTopBar
-import com.example.valorant_app.ui.theme.backgroundLight
-import com.example.valorant_app.ui.theme.onBackgroundLight
-import com.example.valorant_app.ui.theme.onSurfaceVariantLight
-import com.example.valorant_app.ui.theme.primaryLight
-import com.example.valorant_app.ui.theme.surfaceContainerLowLight
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
@@ -68,35 +63,28 @@ fun WeaponSingleScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
-
     val factory = EntryPointAccessors.fromActivity(
         context as Activity,
         WeaponSingleViewModelEntryPoint::class.java
     ).weaponSingleViewModelFactory()
-
     val viewModel: WeaponSingleViewModel = viewModel(
         factory = WeaponSingleViewModelFactory(factory, weaponId)
     )
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = {
-            WeaponSingleTopBar(navController)
-        },
-        bottomBar = {
-            BottomAppBarNav(navController = navController, currentRoute = currentRoute)
-        }
+        topBar = { WeaponSingleTopBar(navController) },
+        bottomBar = { BottomAppBarNav(navController = navController, currentRoute = currentRoute) }
     ) { paddingValues ->
         when (uiState) {
             is WeaponSingleUiState.Loading -> {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundLight),
+                        .background(MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = primaryLight)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
 
@@ -104,12 +92,12 @@ fun WeaponSingleScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(backgroundLight),
+                        .background(MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = (uiState as WeaponSingleUiState.Error).message,
-                        color = onBackgroundLight,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.wrapContentSize()
                     )
                 }
@@ -137,7 +125,7 @@ fun WeaponDetailsContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.surface)
     ) {
         Column(
             modifier = Modifier
@@ -177,13 +165,10 @@ fun WeaponDetailsContent(
                                 .height(200.dp)
                                 .padding(bottom = 12.dp)
                         )
-
                         Text(
                             text = currentSkin.displayName,
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            color = onBackgroundLight,
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+                            color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     } else {
@@ -195,7 +180,7 @@ fun WeaponDetailsContent(
                         ) {
                             Text(
                                 text = stringResource(R.string.skin_unavailable),
-                                color = onSurfaceVariantLight,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -205,10 +190,8 @@ fun WeaponDetailsContent(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = stringResource(R.string.variants).uppercase(),
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            color = primaryLight,
+                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         LazyRow(
@@ -217,6 +200,7 @@ fun WeaponDetailsContent(
                         ) {
                             items(currentSkin.chromas) { chroma ->
                                 if (!chroma.swatch.isNullOrEmpty()) {
+                                    val isSelected = chroma == selectedChroma
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         modifier = Modifier.padding(horizontal = 4.dp)
@@ -228,20 +212,20 @@ fun WeaponDetailsContent(
                                                 .size(50.dp)
                                                 .clip(RoundedCornerShape(8.dp))
                                                 .background(
-                                                    if (chroma == selectedChroma) primaryLight
-                                                    else surfaceContainerLowLight
+                                                    if (isSelected) MaterialTheme.colorScheme.primary.copy(
+                                                        alpha = 0.15f
+                                                    )
+                                                    else MaterialTheme.colorScheme.surfaceContainerLow
                                                 )
                                                 .padding(4.dp)
-                                                .clickable {
-                                                    selectedChroma = chroma
-                                                },
+                                                .clickable { selectedChroma = chroma },
                                             contentScale = ContentScale.Fit
                                         )
                                         Spacer(Modifier.height(4.dp))
                                         Text(
                                             text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = onSurfaceVariantLight
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                     }
                                 } else {
@@ -259,7 +243,7 @@ fun WeaponDetailsContent(
                                         Text(
                                             text = if (chroma.displayName.isNullOrEmpty()) "Padrão" else chroma.displayName,
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = onSurfaceVariantLight
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                     }
                                 }
@@ -283,7 +267,7 @@ fun WeaponDetailsContent(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 0.5.sp
                         ),
-                        color = primaryLight,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
 
@@ -366,22 +350,20 @@ fun WeaponStatItem(
             modifier = Modifier
                 .size(32.dp)
                 .clip(RoundedCornerShape(6.dp))
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                 .padding(4.dp)
         )
-
         Spacer(modifier = Modifier.width(12.dp))
-
         Column {
             Text(
                 text = statName,
                 style = MaterialTheme.typography.bodyLarge,
-                color = onBackgroundLight
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = statValue,
                 style = MaterialTheme.typography.bodyMedium,
-                color = onSurfaceVariantLight
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }

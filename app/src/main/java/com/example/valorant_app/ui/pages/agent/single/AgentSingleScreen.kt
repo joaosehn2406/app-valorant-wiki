@@ -187,7 +187,7 @@ fun AgentSingleScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(100))
-                                    .background(accent.copy(alpha = 0.15f))
+                                    .background(accent.copy(alpha = 0.05f))
                                     .padding(horizontal = 12.dp, vertical = 6.dp)
                             ) {
                                 Text(
@@ -210,8 +210,7 @@ fun AgentSingleScreen(
                                     Image(
                                         painter = rememberAsyncImagePainter(
                                             model = ability.displayIcon,
-                                            placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant),
-                                            error = SimpleColorPainter(Color.Black)
+                                            placeholder = SimpleColorPainter(MaterialTheme.colorScheme.surfaceVariant)
                                         ),
                                         contentDescription = ability.displayName,
                                         modifier = Modifier
