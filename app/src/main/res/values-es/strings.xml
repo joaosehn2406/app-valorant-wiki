@@ -1,0 +1,49 @@
+<resources>
+    <!-- existentes traducidos para es-ES -->
+    <string name="app_name">Valorant Wiki</string>
+    <string name="lets_start">¿Empezamos?</string>
+    <string name="welcome_msg">Bienvenido a Valorant Wiki</string>
+    <string name="about_app">Acerca de la aplicación</string>
+    <string name="about_app_desc">Reúne lo mejor de la API de Valorant de forma rápida y elegante</string>
+    <string name="features_header">Características</string>
+    <string name="explore_agents">Explorar agentes</string>
+    <string name="search_for_guns">Buscar armas</string>
+    <string name="search_skins">Buscar skins</string>
+    <string name="data_source">Fuente de datos</string>
+    <string name="vava_api_text">API oficial del Valorant (valorant-api.com)</string>
+    <string name="agent">Agente</string>
+    <string name="agents">Agentes</string>
+    <string name="weapon">Armas</string>
+    <string name="unknown">Desconocido</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="no_tags_informed">No se informaron etiquetas.</string>
+    <string name="agent_details">Detalles del agente</string>
+    <string name="weapon_skins">Skins</string>
+    <string name="dropdown_portuguese">Portugués</string>
+    <string name="dropdown_english">Inglés</string>
+    <string name="dropdown_spanish">Español</string>
+
+    <!-- WeaponSingleScreen -->
+    <string name="category">Categoría: %1$s</string>
+    <string name="skin_unavailable">Skin no disponible</string>
+    <string name="variants">VARIANTES</string>
+    <string name="ads_statistics">Estadísticas ADS</string>
+
+    <!-- estatísticas individuais -->
+    <string name="stat_fire_rate">Cadencia de disparo</string>
+    <string name="stat_tiros_por_segundo">%1$.2f disparos/s</string>
+    <string name="stat_price">Precio</string>
+    <string name="stat_price_value">$ %1$d</string>
+    <string name="stat_magazine_size">Tamaño del cargador</string>
+    <string name="stat_balas">%1$d balas</string>
+    <string name="stat_equip_time">Tiempo de equipamiento</string>
+    <string name="stat_reload_time">Tiempo de recarga</string>
+    <string name="stat_seconds">%1$.1fs</string>
+    <string name="stat_run_speed">Velocidad de carrera</string>
+    <string name="stat_multiplier">%1$.2fx</string>
+    <string name="stat_first_bullet_accuracy">Precisión del primer disparo</string>
+    <string name="stat_percentage">%1$d%%</string>
+    <string name="stat_wall_penetration">Penetración en pared</string>
+    <string name="stat_zoom_multiplier">Multiplicador de zoom</string>
+    <string name="explore_valorant">Descubre todos los agentes y armas</string>
+</resources>
