@@ -29,14 +29,12 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,12 +61,10 @@ fun AgentsListScreen(
     currentRoute: String
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    var showFilter by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             AgentTopBar(
-                onFilterClick = { showFilter = !showFilter },
                 navController = navController
             )
         },
@@ -76,7 +72,6 @@ fun AgentsListScreen(
             BottomAppBarNav(navController = navController, currentRoute = currentRoute)
         }
     ) { innerPadding ->
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -119,10 +114,12 @@ fun AgentsListScreen(
                         }
                         .distinct()
 
-                    AgentFilterChip(
-                        allTags = allTags,
-                        selectedTags = selectedTags
-                    )
+                    Surface(tonalElevation = 2.dp) {
+                        AgentFilterChip(
+                            allTags = allTags,
+                            selectedTags = selectedTags
+                        )
+                    }
 
                     val filteredAgents = if (selectedTags.isEmpty()) agents else
                         agents.filter {
@@ -159,6 +156,10 @@ private fun AgentFilterChip(
     allTags: List<String>,
     selectedTags: SnapshotStateList<String>
 ) {
+    val ordered = remember(allTags, selectedTags) {
+        allTags.sortedWith(compareBy({ !selectedTags.contains(it) }, { it }))
+    }
+
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -166,7 +167,7 @@ private fun AgentFilterChip(
             .animateContentSize(),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(allTags, key = { it }) { tag ->
+        items(ordered, key = { it }) { tag ->
             val selected = selectedTags.contains(tag)
             val elevation by animateDpAsState(
                 if (selected) 6.dp else 3.dp,
@@ -199,9 +200,9 @@ private fun AgentFilterChip(
                 ),
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    selectedContainerColor = MaterialTheme.colorScheme.primary,
                     labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                    selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer
                 ),
                 elevation = FilterChipDefaults.filterChipElevation(elevation = elevation)
             )

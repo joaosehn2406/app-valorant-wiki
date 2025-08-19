@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,7 +81,6 @@ fun HomeTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentTopBar(
-    onFilterClick: () -> Unit,
     navController: NavController
 ) {
     TopAppBar(
@@ -95,22 +93,7 @@ fun AgentTopBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        actions = {
-            Box(
-                modifier = Modifier.background(Color.Transparent)
-            ) {
-                IconButton(
-                    onClick = onFilterClick
-                ) {
-                    Icon(
-                        painterResource(R.drawable.filter),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-            }
-        }
+        )
     )
 }
 

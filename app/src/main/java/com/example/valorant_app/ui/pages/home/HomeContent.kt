@@ -32,6 +32,7 @@ import com.example.valorant_app.ui.reusable_comp.FeatureRow
 import com.example.valorant_app.ui.reusable_comp.HomeTopBar
 import com.example.valorant_app.ui.reusable_comp.SectionCard
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
